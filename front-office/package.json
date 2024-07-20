@@ -1,0 +1,15 @@
+{
+  "name": "front-office",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "generate-orval-sdk": "orval"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "orval": "6.31.0"
+  }
+}

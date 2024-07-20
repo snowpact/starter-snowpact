@@ -1,0 +1,4 @@
+packages:
+- "backend"
+- "front-office"
+- "back-office"

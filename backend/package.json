@@ -1,0 +1,86 @@
+{
+  "name": "backend",
+  "version": "0.0.0",
+  "main": "src/interface/http/index.ts",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "nodemon",
+
+    "generate-openapi-doc": "ts-node -r tsconfig-paths/register src/infrastructure/http/openApi/generateOpenapiDocJson.ts",
+    "generate-orval-sdk": "orval --config src/infrastructure/sdkGenerator/orval.config.ts",
+    "build": "tsc -p ./tsconfig.build.json && tsc-alias -p ./tsconfig.build.json",
+    "start": "node dist/infrastructure/http/index.js",
+
+    "lint": "eslint --ext .ts src/ ",
+    "lint:fix": "pnpm lint --fix",
+
+    "test": "pnpm test:unit & pnpm test:integration",
+    "test:integration": "vitest run --config=vitest.config.container.ts",
+    "test:unit": "vitest run --config=vitest.config.unit.ts",
+    "test:unit:coverage": "vitest run --config=vitest.config.unit.ts --coverage",
+
+    "migration:generate": "pnpm build && drizzle-kit generate --config=./dist/infrastructure/database/drizzle.config.js --name ",
+    "migration:run": "pnpm build && drizzle-kit migrate --config=./dist/infrastructure/database/drizzle.config.js",
+    "migration:drop": "pnpm build && drizzle-kit drop --config=./dist/infrastructure/database/drizzle.config.js"
+  },
+  "dependencies": {
+    "@hono/node-server": "1.12.0",
+    "@hono/swagger-ui": "0.4.0",
+    "@hono/zod-openapi": "0.15.0",
+    "@hono/zod-validator": "0.2.2",
+    "@scalar/hono-api-reference": "0.5.107",
+    "bcrypt": "5.1.1",
+    "drizzle-orm": "0.32.1",
+    "hono": "4.5.0",
+    "jsonwebtoken": "9.0.2",
+    "nodemailer": "6.9.14",
+    "pg": "8.12.0",
+    "uuid": "10.0.0",
+    "pino": "9.3.1",
+    "pino-pretty": "11.2.1",
+    "zod": "3.23.8"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "8.4.1",
+    "@orval/core": "6.31.0",
+    "@testcontainers/postgresql": "10.10.3",
+    "@types/bcrypt": "5.0.2",
+    "@types/jsonwebtoken": "9.0.6",
+    "@types/node": "20.14.9",
+    "@types/nodemailer": "6.4.15",
+    "@types/pg": "8.11.6",
+    "@types/supertest": "6.0.2",
+    "@types/uuid": "10.0.0",
+    "@typescript-eslint/eslint-plugin": "7.17.0",
+    "@typescript-eslint/parser": "7.17.0",
+    "@vitest/coverage-v8": "2.0.4",
+    "drizzle-kit": "0.23.1",
+    "eslint": "8.57.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-import-resolver-alias": "1.1.2",
+    "eslint-import-resolver-typescript": "3.6.1",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-prettier": "5.2.1",
+    "eslint-plugin-vitest": "0.5.4",
+    "inversify": "6.0.2",
+    "nodemon": "3.1.4",
+    "orval": "6.31.0",
+    "prettier": "3.3.2",
+    "reflect-metadata": "0.2.2",
+    "tsconfig-paths": "4.2.0",
+    "tsc-alias": "1.8.10",
+    "ts-node": "10.9.2",
+    "typescript": "5.5.2",
+    "vitest": "2.0.3"
+  },
+  "resolutions": {
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "6.10.0",
+    "prettier": "^3.1.0"
+  },
+  "repository": "git@github.com:sabalot/test-circle-ci-clever-cloud.git",
+  "author": "Sabalot <s.sabalot@gmail.com>",
+  "license": "MIT"
+}

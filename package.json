@@ -1,0 +1,63 @@
+{
+  "name": "project",
+  "version": "0.0.0",
+  "scripts": {
+    "env:local": "env-cmd -f .env",
+    "env:test": "env-cmd -f .env.test",
+    
+    "fo": "pnpm --filter front-office",
+    "bo": "pnpm --filter back-office",
+    "be": "pnpm --filter backend",
+    "be-local": "pnpm env:local pnpm --filter backend",
+    "be-test": "pnpm env:test pnpm --filter backend",
+    
+    "docker:start": "docker-compose up -d --remove-orphans",
+    "docker:stop": "docker-compose stop",
+    
+    "start:database": "pnpm docker:start database-signaleo adminer e2e-test-database-signaleo",
+    "start:database-proxy": "pnpm docker:start adminer-proxy cloudsql-proxy",
+    "start:mailhog": "pnpm docker:start mailhog",
+    "start:pg-admin": "pnpm docker:start pg-admin",
+    "stop": "pnpm docker:stop database-signaleo adminer mailhog pg-admin e2e-test-database-signaleo",
+
+    "migration:run": " pnpm be-local run migration:run",
+    "migration:drop": " pnpm be-local run migration:drop",
+    "migration:revert": "pnpm be-local run migration:revert",
+    "migration:run-test": "pnpm be-test run migration:run",
+    "migration:revert-test": "pnpm be-test run migration:revert",
+    "migration:create": "pnpm be-local run migration:create",
+    "migration:generate": "pnpm be-local run migration:generate",
+
+    "fixtures:load": "pnpm be-local typeorm:drop && pnpm migration:run && pnpm be-local run fixtures:load",
+    "drop:database": "pnpm be-local typeorm:drop && pnpm be-test typeorm:drop && pnpm migration:run && pnpm migration:run-test",
+
+    "dev:be": "pnpm be-local run dev",
+    "dev:fo": "pnpm fo run dev",
+    "dev:bo": "pnpm bo run dev",
+
+    "test:be": "pnpm be-test test",
+    "test:fo": "pnpm fo run test",
+    "test:bo": "pnpm bo run test",
+    
+    "lint": "pnpm -r run lint",
+    "test": "pnpm -r run test",
+
+    "build:be": "pnpm be-local build",
+    "start:be": "pnpm be-local start",
+
+    "generate-openapi-doc": "pnpm be-local run generate-openapi-doc",
+    "generate-sdk": "pnpm run generate-openapi-doc && pnpm run generate-orval-sdk",
+    "generate-orval-sdk": "pnpm be-local run generate-orval-sdk"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "env-cmd": "^10.1.0"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "author": "SnowPact",
+  "license": "ISC"
+}
