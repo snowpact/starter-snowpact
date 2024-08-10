@@ -45,8 +45,8 @@ describe('LoginUseCase', () => {
 
     expect(userRepository.findByEmail).toHaveBeenCalledWith(user.email);
     expect(passwordService.comparePassword).toHaveBeenCalledWith(clearPassword, user.password);
-    expect(authService.generateAccessToken).toHaveBeenCalledWith({ userId: user.id });
-    expect(authService.generateRefreshToken).toHaveBeenCalledWith({ userId: user.id });
+    expect(authService.generateAccessToken).toHaveBeenCalledWith(user.id);
+    expect(authService.generateRefreshToken).toHaveBeenCalledWith(user.id);
   });
 
   it('should throw an error if user not found', async () => {

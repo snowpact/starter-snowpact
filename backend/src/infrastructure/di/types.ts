@@ -9,9 +9,12 @@ const TYPES = {
   StatelessTokenService: Symbol.for('StatelessTokenService'),
   PasswordService: Symbol.for('PasswordService'),
   ClientDatabase: Symbol.for('ClientDatabase'),
-  UserRepository: Symbol.for('UserRepository'),
   LoggerService: Symbol.for('LoggerService'),
   MailerService: Symbol.for('MailerService'),
+  StateFullTokenService: Symbol.for('StateFullTokenService'),
+
+  UserRepository: Symbol.for('UserRepository'),
+  TokenRepository: Symbol.for('TokenRepository'),
 
   MainHonoApp: Symbol.for('MainHonoApp'),
   SendResetPasswordEmailService: Symbol.for('SendResetPasswordEmailService'),

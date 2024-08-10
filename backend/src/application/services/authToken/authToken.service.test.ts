@@ -1,14 +1,18 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
+import { TokenTypeEnum } from '@/infrastructure/services/stateFullToken/token/token.interface';
+
 import { envConfig } from '@/infrastructure/config/env';
 
+import { getStateFullTokenServiceMock } from '@/infrastructure/services/stateFullToken/stateFullToken.service.mock';
 import { getStatelessTokenServiceMock } from '@/infrastructure/services/statelessToken/statelessToken.service.mock';
 
 import { AuthService } from './authToken.service';
 
 describe('AuthService', () => {
   const statelessTokenServiceMock = getStatelessTokenServiceMock();
-  const authService = new AuthService(statelessTokenServiceMock);
+  const stateFullTokenServiceMock = getStateFullTokenServiceMock();
+  const authService = new AuthService(statelessTokenServiceMock, stateFullTokenServiceMock);
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -16,16 +20,16 @@ describe('AuthService', () => {
 
   describe('generateAccessToken', () => {
     it('should generate an access token', async () => {
-      const payload = { userId: '123' };
+      const userId = '123';
       const token = 'access-token';
 
       statelessTokenServiceMock.generateToken.mockResolvedValue(token);
 
-      const result = await authService.generateAccessToken(payload);
+      const result = await authService.generateAccessToken(userId);
 
       expect(result).toBe(token);
       expect(statelessTokenServiceMock.generateToken).toHaveBeenCalledWith({
-        payload,
+        payload: { userId },
         expiresIn: envConfig.ACCESS_TOKEN_EXPIRATION,
         secret: envConfig.ACCESS_TOKEN_SECRET,
       });
@@ -34,18 +38,19 @@ describe('AuthService', () => {
 
   describe('generateRefreshToken', () => {
     it('should generate a refresh token', async () => {
-      const payload = { userId: '123' };
+      const userId = '123';
       const token = 'refresh-token';
 
-      statelessTokenServiceMock.generateToken.mockResolvedValue(token);
+      stateFullTokenServiceMock.generateToken.mockResolvedValue(token);
 
-      const result = await authService.generateRefreshToken(payload);
+      const result = await authService.generateRefreshToken(userId);
 
       expect(result).toBe(token);
-      expect(statelessTokenServiceMock.generateToken).toHaveBeenCalledWith({
-        payload,
+      expect(stateFullTokenServiceMock.generateToken).toHaveBeenCalledWith({
+        userId,
+        canBeRefreshed: true,
+        tokenType: TokenTypeEnum.refreshToken,
         expiresIn: envConfig.REFRESH_TOKEN_EXPIRATION,
-        secret: envConfig.REFRESH_TOKEN_SECRET,
       });
     });
   });
@@ -68,20 +73,19 @@ describe('AuthService', () => {
     });
   });
 
-  describe('verifyRefreshToken', () => {
-    it('should verify a refresh token', async () => {
-      const token = 'refresh-token';
-      const payload = { userId: '123' };
+  describe('refreshToken', () => {
+    it('should refresh a token', async () => {
+      const tokenValue = 'refresh-token';
+      const newTokenValue = 'new-token';
 
-      statelessTokenServiceMock.verifyToken.mockResolvedValue(payload);
+      stateFullTokenServiceMock.refreshToken.mockResolvedValue(newTokenValue);
 
-      const result = await authService.verifyRefreshToken(token);
+      const result = await authService.refreshToken(tokenValue);
 
-      expect(result).toBe(payload);
-      expect(statelessTokenServiceMock.verifyToken).toHaveBeenCalledWith({
-        token,
-        secret: envConfig.REFRESH_TOKEN_SECRET,
-        ignoreExpiration: false,
+      expect(result).toBe(newTokenValue);
+      expect(stateFullTokenServiceMock.refreshToken).toHaveBeenCalledWith({
+        tokenValue,
+        expiresIn: envConfig.REFRESH_TOKEN_EXPIRATION,
       });
     });
   });

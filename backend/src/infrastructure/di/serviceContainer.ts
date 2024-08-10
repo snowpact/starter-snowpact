@@ -13,6 +13,8 @@ import { TYPES } from './types';
 import { AccountTokenService } from '../../application/services/accountToken/accountToken.service';
 import { SendResetPasswordEmailService } from '../services/mail/sendResetPasswordEmail/sendResetPasswordEmail.service';
 import { SendResetPasswordEmailServiceInterface } from '../services/mail/sendResetPasswordEmail/sendResetPasswordEmail.service.interface';
+import { StateFullTokenService } from '../services/stateFullToken/stateFullToken.service';
+import { StateFullTokenServiceInterface } from '../services/stateFullToken/stateFullToken.service.interface';
 import { StatelessTokenService } from '../services/statelessToken/statelessToken.service';
 import { StatelessTokenServiceInterface } from '../services/statelessToken/statelessToken.service.interface';
 
@@ -25,6 +27,7 @@ const serviceContainer = new ContainerModule((bind: interfaces.Bind) => {
     SendResetPasswordEmailService,
   );
   bind<LoggerServiceInterface>(TYPES.LoggerService).to(LoggerService);
+  bind<StateFullTokenServiceInterface>(TYPES.StateFullTokenService).to(StateFullTokenService);
 });
 
 export { serviceContainer };

@@ -8,6 +8,8 @@ import { TYPES } from './types';
 import { useCaseContainer } from './useCaseContainer';
 import { ClientDatabase } from '../database/clientDatabase/clientDatabase';
 import { ClientDatabaseInterface } from '../database/clientDatabase/clientDatabase.interface';
+import { TokenRepository } from '../repositories/tokenRepository/token.repository';
+import { TokenRepositoryInterface } from '../repositories/tokenRepository/token.repository.interface';
 import { UserRepository } from '../repositories/userRepository/user.repository';
 import { UserRepositoryInterface } from '../repositories/userRepository/user.repository.interface';
 
@@ -23,5 +25,6 @@ mainContainer
   .inSingletonScope();
 
 mainContainer.bind<UserRepositoryInterface>(TYPES.UserRepository).to(UserRepository);
+mainContainer.bind<TokenRepositoryInterface>(TYPES.TokenRepository).to(TokenRepository);
 
 export { mainContainer };

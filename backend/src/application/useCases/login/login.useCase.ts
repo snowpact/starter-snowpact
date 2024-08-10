@@ -38,8 +38,8 @@ export class LoginUseCase implements LoginUseCaseInterface {
       throw new AppError({ message: 'Invalid password', code: AppErrorCodes.BAD_PASSWORD });
     }
 
-    const accessToken = await this.authService.generateAccessToken({ userId: user.id });
-    const refreshToken = await this.authService.generateRefreshToken({ userId: user.id });
+    const accessToken = await this.authService.generateAccessToken(user.id);
+    const refreshToken = await this.authService.generateRefreshToken(user.id);
 
     this.loggerService.debug(`Login successful: User with email ${email} logged in`);
     return { accessToken, refreshToken };

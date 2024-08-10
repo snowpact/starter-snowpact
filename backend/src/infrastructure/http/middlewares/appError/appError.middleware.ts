@@ -55,14 +55,21 @@ const getStatusCodeFromErrorCode = (errorCode?: string): HttpStatuses => {
   switch (errorCode) {
     case AppErrorCodes.USER_NOT_FOUND:
       return HttpStatuses.NOT_FOUND;
-    case AppErrorCodes.INVALID_TOKEN:
-      return HttpStatuses.BAD_REQUEST;
     case AppErrorCodes.INVALID_DATA_PROVIDED:
-      return HttpStatuses.BAD_REQUEST;
     case AppErrorCodes.BAD_PASSWORD:
+    case AppErrorCodes.INVALID_PASSWORD_COMPLEXITY:
       return HttpStatuses.BAD_REQUEST;
     case AppErrorCodes.FAILED_TO_SEND_EMAIL:
       return HttpStatuses.INTERNAL_SERVER_ERROR;
+    case AppErrorCodes.CURRENT_USER_NOT_FOUND:
+    case AppErrorCodes.TOKEN_NOT_FOUND:
+    case AppErrorCodes.INVALID_TOKEN:
+    case AppErrorCodes.TOKEN_EXPIRED:
+      return HttpStatuses.UNAUTHORIZED;
+    case AppErrorCodes.CURRENT_USER_NOT_ALLOWED:
+    case AppErrorCodes.TOKEN_TYPE_MISMATCH:
+    case AppErrorCodes.TOKEN_USER_ID_MISMATCH:
+      return HttpStatuses.FORBIDDEN;
     default:
       return HttpStatuses.INTERNAL_SERVER_ERROR;
   }

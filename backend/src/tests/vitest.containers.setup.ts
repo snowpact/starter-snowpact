@@ -10,7 +10,7 @@ import { mainContainer } from '@/infrastructure/di/mainContainer';
 import { TYPES } from '@/infrastructure/di/types';
 import { bootstrap } from '@/infrastructure/http/server';
 
-import { TestDbHelper } from './helpers/db/testDb.helper';
+import { TestDbHelper } from './helpers/storage/testDb.helper';
 
 vi.mock('@/infrastructure/services/mailService', () => {
   return {

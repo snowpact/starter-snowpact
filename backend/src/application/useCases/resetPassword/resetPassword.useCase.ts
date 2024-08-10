@@ -1,14 +1,12 @@
 import { inject, injectable } from 'inversify';
 
 import { AppErrorCodes } from '@/application/errors/app.error.interface';
-import {
-  AccountTokenType,
-  AccountTokenServiceInterface,
-} from '@/application/services/accountToken/accountToken.service.interface';
+import { AccountTokenServiceInterface } from '@/application/services/accountToken/accountToken.service.interface';
 import { PasswordServiceInterface } from '@/application/services/password/password.service.interface';
 import { UserRepositoryInterface } from '@/infrastructure/repositories/userRepository/user.repository.interface';
 import { LoggerServiceInterface } from '@/infrastructure/services/logger/logger.service.interface';
 import { SendResetPasswordEmailServiceInterface } from '@/infrastructure/services/mail/sendResetPasswordEmail/sendResetPasswordEmail.service.interface';
+import { TokenTypeEnum } from '@/infrastructure/services/stateFullToken/token/token.interface';
 
 import { AppError } from '@/application/errors/app.error';
 import { TYPES } from '@/infrastructure/di/types';
@@ -35,7 +33,7 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
 
     const token = await this.accountTokenService.generateAccountToken({
       userId: user.id,
-      type: AccountTokenType.RESET_PASSWORD,
+      tokenType: TokenTypeEnum.resetPassword,
     });
 
     try {
@@ -59,19 +57,17 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
   }
 
   async executeResetPassword(token: string, newPassword: string): Promise<void> {
-    const { userId, type } = await this.accountTokenService.verifyAccountToken(token);
-
-    if (type !== AccountTokenType.RESET_PASSWORD) {
-      this.loggerService.debug(`Reset password failed: Invalid token type ${type}`);
-      throw new AppError({ message: 'Invalid token', code: AppErrorCodes.INVALID_TOKEN });
-    }
+    const userId = await this.accountTokenService.verifyAccountToken({
+      tokenValue: token,
+      tokenType: TokenTypeEnum.resetPassword,
+    });
 
     const isValidPassword = this.passwordService.checkPasswordComplexity(newPassword);
     if (!isValidPassword) {
       this.loggerService.debug(`Reset password failed: Invalid password complexity`);
       throw new AppError({
         message: 'Invalid password complexity',
-        code: AppErrorCodes.INVALID_DATA_PROVIDED,
+        code: AppErrorCodes.INVALID_PASSWORD_COMPLEXITY,
       });
     }
 

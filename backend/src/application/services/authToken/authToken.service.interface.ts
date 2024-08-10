@@ -3,8 +3,8 @@ export interface UserPayloadOptions {
 }
 
 export interface AuthServiceInterface {
-  generateAccessToken: (payload: UserPayloadOptions) => Promise<string>;
-  generateRefreshToken: (payload: UserPayloadOptions) => Promise<string>;
+  generateAccessToken: (userId: string) => Promise<string>;
+  generateRefreshToken: (userId: string) => Promise<string>;
   verifyAccessToken: (token: string, withExpiration?: boolean) => Promise<UserPayloadOptions>;
-  verifyRefreshToken: (token: string, withExpiration?: boolean) => Promise<UserPayloadOptions>;
+  refreshToken: (token: string) => Promise<string>;
 }
