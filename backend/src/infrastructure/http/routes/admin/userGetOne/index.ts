@@ -5,6 +5,7 @@ import { UserPayloadOptions } from '@/application/services/authToken/authToken.s
 import { GetUserUseCaseInterface } from '@/application/useCases/getUser/getUser.useCase.interface';
 
 import { AppError } from '@/application/errors/app.error';
+import { UserSerializer } from '@/application/serializers/user.serializer';
 import { mainContainer } from '@/infrastructure/di/mainContainer';
 import { TYPES } from '@/infrastructure/di/types';
 import { getHonoApp } from '@/infrastructure/http/config/getHonoApp';
@@ -65,16 +66,7 @@ userGetOneRoute.openapi(route, async (c) => {
   const getUserUseCase = mainContainer.get<GetUserUseCaseInterface>(TYPES.GetUserUseCase);
   const user = await getUserUseCase.executeGetUser({ currentUserId: userId, userId: id });
 
-  return c.json(
-    {
-      id: user.id,
-      email: user.email,
-      admin: user.admin,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    },
-    HttpStatuses.OK,
-  );
+  return c.json(UserSerializer.serialize(user), HttpStatuses.OK);
 });
 
 userGetOneRoute.onError((error, c) => {
