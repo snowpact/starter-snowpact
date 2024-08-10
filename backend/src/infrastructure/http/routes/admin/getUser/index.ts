@@ -1,7 +1,7 @@
 import { createRoute } from '@hono/zod-openapi';
 
 import { AppErrorCodes } from '@/application/errors/app.error.interface';
-import { UserPayloadOptions } from '@/application/helpers/accountToken/accountToken.service.interface';
+import { UserPayloadOptions } from '@/application/services/accountToken/accountToken.service.interface';
 import { GetUserUseCaseInterface } from '@/application/useCases/getUser/getUser.useCase.interface';
 
 import { AppError } from '@/application/errors/app.error';

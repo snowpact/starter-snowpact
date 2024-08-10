@@ -4,8 +4,8 @@ import { AppErrorCodes } from '@/application/errors/app.error.interface';
 import {
   AccountTokenType,
   AccountTokenServiceInterface,
-} from '@/application/helpers/accountToken/accountToken.service.interface';
-import { PasswordServiceInterface } from '@/application/helpers/password/password.service.interface';
+} from '@/application/services/accountToken/accountToken.service.interface';
+import { PasswordServiceInterface } from '@/application/services/password/password.service.interface';
 import { UserRepositoryInterface } from '@/infrastructure/repositories/userRepository/user.repository.interface';
 import { LoggerServiceInterface } from '@/infrastructure/services/logger/logger.service.interface';
 import { SendResetPasswordEmailServiceInterface } from '@/infrastructure/services/mail/sendResetPasswordEmail/sendResetPasswordEmail.service.interface';

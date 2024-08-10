@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { userFactory } from '@/application/entities/user/user.factory';
-import { generateAccessToken } from '@/tests/helpers/auth/auth.helper';
+import { generateAccessToken } from '@/tests/services/auth/auth.helper';
 import { testDbService, app } from '@/tests/vitest.containers.setup';
 
 describe('Get user', () => {

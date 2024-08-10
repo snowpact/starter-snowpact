@@ -1,16 +1,16 @@
 import { ContainerModule, interfaces } from 'inversify';
 
-import { AccountTokenServiceInterface } from '@/application/helpers/accountToken/accountToken.service.interface';
-import { AuthServiceInterface } from '@/application/helpers/authToken/authToken.service.interface';
-import { PasswordServiceInterface } from '@/application/helpers/password/password.service.interface';
+import { AccountTokenServiceInterface } from '@/application/services/accountToken/accountToken.service.interface';
+import { AuthServiceInterface } from '@/application/services/authToken/authToken.service.interface';
+import { PasswordServiceInterface } from '@/application/services/password/password.service.interface';
 import { LoggerServiceInterface } from '@/infrastructure/services/logger/logger.service.interface';
 
-import { AuthService } from '@/application/helpers/authToken/authToken.service';
-import { PasswordService } from '@/application/helpers/password/password.service';
+import { AuthService } from '@/application/services/authToken/authToken.service';
+import { PasswordService } from '@/application/services/password/password.service';
 import { LoggerService } from '@/infrastructure/services/logger/logger.service';
 
 import { TYPES } from './types';
-import { AccountTokenService } from '../../application/helpers/accountToken/accountToken.service';
+import { AccountTokenService } from '../../application/services/accountToken/accountToken.service';
 import { SendResetPasswordEmailService } from '../services/mail/sendResetPasswordEmail/sendResetPasswordEmail.service';
 import { SendResetPasswordEmailServiceInterface } from '../services/mail/sendResetPasswordEmail/sendResetPasswordEmail.service.interface';
 import { StatelessTokenService } from '../services/statelessToken/statelessToken.service';

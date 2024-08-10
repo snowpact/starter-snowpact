@@ -1,8 +1,8 @@
 import { inject, injectable } from 'inversify';
 
 import { AppErrorCodes } from '@/application/errors/app.error.interface';
-import { AuthServiceInterface } from '@/application/helpers/authToken/authToken.service.interface';
-import { PasswordServiceInterface } from '@/application/helpers/password/password.service.interface';
+import { AuthServiceInterface } from '@/application/services/authToken/authToken.service.interface';
+import { PasswordServiceInterface } from '@/application/services/password/password.service.interface';
 import { UserRepositoryInterface } from '@/infrastructure/repositories/userRepository/user.repository.interface';
 import { LoggerServiceInterface } from '@/infrastructure/services/logger/logger.service.interface';
 
