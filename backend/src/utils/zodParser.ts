@@ -2,29 +2,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { ZodTypeAny, z } from 'zod';
 
-import { LoggerService } from '@/infrastructure/services/logger/logger.service';
-
 export type Validation = Record<string, z.ZodTypeAny>;
 export type ZodOutput<T extends Validation> = z.ZodObject<T>['_output'];
-
-/**
- * Function to validate process.env. It will throw an error if the validation fails.
- * @param validationSchema Validation schema
- * @returns Validated process.env
- */
-export const envConfigParser = <T extends Validation>(
-  validationSchema: z.ZodObject<T>,
-): ZodOutput<T> => {
-  try {
-    return validationSchema.parse(process.env);
-  } catch (error) {
-    if (error instanceof Error) {
-      const logger = new LoggerService();
-      logger.error('Error while parsing env variables:', error);
-    }
-    throw error;
-  }
-};
 
 export const parseNumber = <T extends ZodTypeAny>(schema: T) => {
   return z.preprocess((obj) => {

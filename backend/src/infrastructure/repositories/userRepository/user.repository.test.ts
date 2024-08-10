@@ -3,7 +3,7 @@ import { describe, beforeAll, it, expect } from 'vitest';
 import { userFactory } from '@/application/entities/user/user.factory';
 import { mainContainer } from '@/infrastructure/di/mainContainer';
 import { TYPES } from '@/infrastructure/di/types';
-import { testDbHelper } from '@/tests/vitest.containers.setup';
+import { testDbService } from '@/tests/vitest.containers.setup';
 
 import { UserRepositoryInterface } from './user.repository.interface';
 
@@ -16,9 +16,9 @@ describe('User Repository', () => {
     it('should return a user by email', async () => {
       const mainUser = userFactory();
       await Promise.all([
-        testDbHelper.persistUser(mainUser),
-        testDbHelper.persistUser(userFactory()),
-        testDbHelper.persistUser(userFactory()),
+        testDbService.persistUser(mainUser),
+        testDbService.persistUser(userFactory()),
+        testDbService.persistUser(userFactory()),
       ]);
 
       const dbUser = await userRepository.findByEmail(mainUser.email);
@@ -27,7 +27,7 @@ describe('User Repository', () => {
     });
     it('should return undefined if user not found', async () => {
       const user = userFactory();
-      await testDbHelper.persistUser(user);
+      await testDbService.persistUser(user);
 
       const dbUser = await userRepository.findByEmail('not-found-email');
 
@@ -37,11 +37,11 @@ describe('User Repository', () => {
   describe('updateOne', () => {
     it('should update a user', async () => {
       const user = userFactory({ password: 'old-password' });
-      await testDbHelper.persistUser(user);
+      await testDbService.persistUser(user);
 
       await userRepository.updateOne(user.id, { password: 'new-password' });
 
-      const dbUser = await testDbHelper.getUser(user.id);
+      const dbUser = await testDbService.getUser(user.id);
 
       expect(dbUser).toBeDefined();
       expect(dbUser?.password).toBe('new-password');
@@ -50,7 +50,7 @@ describe('User Repository', () => {
   describe('findById', () => {
     it('should return a user by id', async () => {
       const user = userFactory();
-      await testDbHelper.persistUser(user);
+      await testDbService.persistUser(user);
 
       const dbUser = await userRepository.findById(user.id);
 

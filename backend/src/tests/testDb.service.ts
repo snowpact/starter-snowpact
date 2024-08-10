@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { NodePgDatabase, drizzle } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 
@@ -9,9 +9,7 @@ import * as schema from '@/infrastructure/database/schema';
 import { mainContainer } from '@/infrastructure/di/mainContainer';
 import { TYPES } from '@/infrastructure/di/types';
 
-import { truncateAllTables } from './truncate.helper';
-
-export class TestDbHelper {
+export class TestDbService {
   private clientDatabase: ClientDatabaseInterface;
   private db: NodePgDatabase<typeof schema>;
 
@@ -20,13 +18,13 @@ export class TestDbHelper {
     this.db = drizzle(this.clientDatabase.getClient(), { schema });
   }
 
-  public static setup = async (): Promise<TestDbHelper> => {
-    const testDbHelper = new TestDbHelper();
-    await migrate(testDbHelper.db, {
+  public static setup = async (): Promise<TestDbService> => {
+    const testDbService = new TestDbService();
+    await migrate(testDbService.db, {
       migrationsFolder: './src/infrastructure/database/migrations',
     });
 
-    return testDbHelper;
+    return testDbService;
   };
 
   public close = async (): Promise<void> => {
@@ -34,7 +32,18 @@ export class TestDbHelper {
   };
 
   public clear = async (): Promise<void> => {
-    await truncateAllTables(this.db);
+    const tableSchema = this.db._.schema;
+    if (!tableSchema) {
+      throw new Error('No table schema found');
+    }
+
+    const queries = Object.values(tableSchema).map((table) => {
+      return sql.raw(`TRUNCATE TABLE ${table.dbName} CASCADE;`);
+    });
+
+    await this.db.transaction(async (tx) => {
+      await Promise.all(queries.map((query) => tx.execute(query)));
+    });
   };
 
   public persistUser = async (user: UserInterface): Promise<void> => {

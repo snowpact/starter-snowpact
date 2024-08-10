@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import bcrypt from 'bcrypt';
 
-import { buildFactory } from '@/tests/helpers/factories/buildFactory';
+import { buildFactory } from '@/utils/buildFactory';
 
 import { UserInterface } from './user.entity.interface';
 

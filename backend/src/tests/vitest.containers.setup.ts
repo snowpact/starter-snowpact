@@ -10,7 +10,7 @@ import { mainContainer } from '@/infrastructure/di/mainContainer';
 import { TYPES } from '@/infrastructure/di/types';
 import { bootstrap } from '@/infrastructure/http/server';
 
-import { TestDbHelper } from './helpers/db/testDb.helper';
+import { TestDbService } from './testDb.service';
 
 vi.mock('@/infrastructure/services/mailService', () => {
   return {
@@ -18,7 +18,7 @@ vi.mock('@/infrastructure/services/mailService', () => {
   };
 });
 
-export let testDbHelper: TestDbHelper;
+export let testDbService: TestDbService;
 export let app: OpenAPIHono;
 let server: ServerType;
 
@@ -26,17 +26,17 @@ beforeAll(async () => {
   const postgresUri = inject('postgresUri');
   const clientDatabase = mainContainer.get<ClientDatabaseInterface>(TYPES.ClientDatabase);
   await clientDatabase.connect(postgresUri);
-  testDbHelper = await TestDbHelper.setup();
+  testDbService = await TestDbService.setup();
   const bootstrapApp = bootstrap();
   server = bootstrapApp.server;
   app = bootstrapApp.app;
 });
 
 afterEach(async () => {
-  await testDbHelper.clear();
+  await testDbService.clear();
 });
 
 afterAll(async () => {
-  await testDbHelper.close();
+  await testDbService.close();
   server.close();
 });

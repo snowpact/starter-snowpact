@@ -6,7 +6,7 @@ import { SendResetPasswordEmailServiceInterface } from '@/infrastructure/service
 import { userFactory } from '@/application/entities/user/user.factory';
 import { mainContainer } from '@/infrastructure/di/mainContainer';
 import { TYPES } from '@/infrastructure/di/types';
-import { testDbHelper, app } from '@/tests/vitest.containers.setup';
+import { testDbService, app } from '@/tests/vitest.containers.setup';
 
 import { getSendResetPasswordEmailServiceMock } from '@/infrastructure/services/mail/sendResetPasswordEmail/sendResetPasswordEmail.service.mock';
 
@@ -19,7 +19,7 @@ describe('AskResetPassword', () => {
   it('should send a reset password email', async () => {
     const email = faker.internet.email();
     const user = userFactory({ email });
-    await testDbHelper.persistUser(user);
+    await testDbService.persistUser(user);
 
     const response = await app.request('/api/ask-reset-password', {
       method: 'POST',

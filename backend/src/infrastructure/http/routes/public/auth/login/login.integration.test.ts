@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker';
 import { describe, expect, it } from 'vitest';
 
 import { userFactory } from '@/application/entities/user/user.factory';
-import { testDbHelper, app } from '@/tests/vitest.containers.setup';
+import { testDbService, app } from '@/tests/vitest.containers.setup';
 
 describe('Login', () => {
   it('should login a user', async () => {
@@ -11,7 +11,7 @@ describe('Login', () => {
     const password = faker.internet.password();
 
     const user = userFactory({ email, password });
-    await testDbHelper.persistUser(user);
+    await testDbService.persistUser(user);
 
     const response = await app.request('/api/login', {
       method: 'POST',

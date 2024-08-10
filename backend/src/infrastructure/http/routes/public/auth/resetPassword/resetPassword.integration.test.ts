@@ -1,7 +1,7 @@
 import { sign } from 'jsonwebtoken';
 import { describe, expect, it } from 'vitest';
 
-import { testDbHelper, app } from '@/tests/vitest.containers.setup';
+import { testDbService, app } from '@/tests/vitest.containers.setup';
 
 import { userFactory } from '../../../../../../application/entities/user/user.factory';
 import { envConfig } from '../../../../../config/env';
@@ -19,7 +19,7 @@ describe('ResetPassword', () => {
     );
     const newPassword = 'Password1234*';
 
-    await testDbHelper.persistUser(user);
+    await testDbService.persistUser(user);
 
     const response = await app.request('/api/reset-password', {
       method: 'POST',
@@ -33,7 +33,7 @@ describe('ResetPassword', () => {
       code: 'PASSWORD_RESET_SUCCESSFULLY',
     });
 
-    const updatedUser = await testDbHelper.getUser(user.id);
+    const updatedUser = await testDbService.getUser(user.id);
     expect(updatedUser).not.toBeNull();
     expect(updatedUser?.password).not.toBe(user.password);
   });
