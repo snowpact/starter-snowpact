@@ -1,8 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { describe, beforeEach, it, vi, expect } from 'vitest';
 
-import { AppErrorCodes } from '@/application/errors/app.error.interface';
-import { AccountTokenType } from '@/application/services/accountToken/accountToken.service.interface';
+import { TokenTypeEnum } from '@/infrastructure/services/stateFullToken/token/token.interface';
 
 import { userFactory } from '@/application/entities/user/user.factory';
 import { AppError } from '@/application/errors/app.error';
@@ -45,7 +44,7 @@ describe('ResetPasswordUseCase', () => {
       expect(userRepository.findByEmail).toHaveBeenCalledWith(user.email);
       expect(accountTokenService.generateAccountToken).toHaveBeenCalledWith({
         userId: user.id,
-        type: AccountTokenType.RESET_PASSWORD,
+        tokenType: TokenTypeEnum.resetPassword,
       });
       expect(sendResetPasswordEmailService.sendResetPasswordEmail).toHaveBeenCalledWith({
         email: user.email,
@@ -62,48 +61,26 @@ describe('ResetPasswordUseCase', () => {
   describe('executeResetPassword', () => {
     it('should reset password', async () => {
       const user = userFactory();
-      const token = faker.string.alphanumeric(30);
+      const tokenValue = faker.string.alphanumeric(30);
       const newPassword = faker.internet.password();
       const hashedPassword = faker.string.alphanumeric(30);
-      accountTokenService.verifyAccountToken.mockResolvedValue({
-        userId: user.id,
-        type: AccountTokenType.RESET_PASSWORD,
-      });
+      accountTokenService.verifyAccountToken.mockResolvedValue(user.id);
       userRepository.findById.mockResolvedValue(user);
       passwordService.hashPassword.mockResolvedValue(hashedPassword);
       passwordService.checkPasswordComplexity.mockReturnValue(true);
 
-      await loginUseCase.executeResetPassword(token, newPassword);
+      await loginUseCase.executeResetPassword(tokenValue, newPassword);
 
-      expect(accountTokenService.verifyAccountToken).toHaveBeenCalledWith(token);
+      expect(accountTokenService.verifyAccountToken).toHaveBeenCalledWith({
+        tokenValue,
+        tokenType: TokenTypeEnum.resetPassword,
+      });
       expect(userRepository.findById).toHaveBeenCalledWith(user.id);
       expect(passwordService.hashPassword).toHaveBeenCalledWith(newPassword);
       expect(userRepository.updateOne).toHaveBeenCalledWith(user.id, { password: hashedPassword });
     });
-    it('should throw an error if token has invalid type', async () => {
-      accountTokenService.verifyAccountToken.mockResolvedValue({
-        userId: faker.string.uuid(),
-        type: AccountTokenType.VERIFY_ACCOUNT,
-      });
-
-      await expect(
-        loginUseCase.executeResetPassword(faker.string.alphanumeric(30), faker.internet.password()),
-      ).rejects.toThrow(AppError);
-    });
-    it('should throw an error if token is invalid', async () => {
-      accountTokenService.verifyAccountToken.mockImplementation(() => {
-        throw new AppError({ message: 'Invalid token', code: AppErrorCodes.INVALID_DATA_PROVIDED });
-      });
-
-      await expect(
-        loginUseCase.executeResetPassword(faker.string.alphanumeric(30), faker.internet.password()),
-      ).rejects.toThrow(AppError);
-    });
     it('should throw an error if password is invalid', async () => {
-      accountTokenService.verifyAccountToken.mockResolvedValue({
-        userId: faker.string.uuid(),
-        type: AccountTokenType.RESET_PASSWORD,
-      });
+      accountTokenService.verifyAccountToken.mockResolvedValue(faker.string.uuid());
       passwordService.checkPasswordComplexity.mockReturnValue(false);
 
       await expect(
@@ -112,10 +89,7 @@ describe('ResetPasswordUseCase', () => {
     });
     it('should throw an error if user not found', async () => {
       const token = faker.string.alphanumeric(30);
-      accountTokenService.verifyAccountToken.mockResolvedValue({
-        userId: faker.string.uuid(),
-        type: AccountTokenType.RESET_PASSWORD,
-      });
+      accountTokenService.verifyAccountToken.mockResolvedValue(faker.string.uuid());
       passwordService.checkPasswordComplexity.mockReturnValue(true);
       userRepository.findById.mockResolvedValue(undefined);
 

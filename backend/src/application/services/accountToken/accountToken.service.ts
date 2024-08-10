@@ -1,32 +1,42 @@
 import { inject, injectable } from 'inversify';
 
-import { StatelessTokenServiceInterface } from '@/infrastructure/services/statelessToken/statelessToken.service.interface';
+import { StateFullTokenServiceInterface } from '@/infrastructure/services/stateFullToken/stateFullToken.service.interface';
 
 import { envConfig } from '@/infrastructure/config/env';
 import { TYPES } from '@/infrastructure/di/types';
 
-import { AccountTokenServiceInterface, UserPayloadOptions } from './accountToken.service.interface';
+import {
+  AccountTokenServiceInterface,
+  GenerateAccountTokenOptions,
+  VerifyTokenOptions,
+} from './accountToken.service.interface';
 
 @injectable()
 export class AccountTokenService implements AccountTokenServiceInterface {
   constructor(
-    @inject(TYPES.StatelessTokenService)
-    private statelessTokenService: StatelessTokenServiceInterface,
+    @inject(TYPES.StateFullTokenService)
+    private stateFullTokenService: StateFullTokenServiceInterface,
   ) {}
 
-  generateAccountToken(userPayload: UserPayloadOptions): Promise<string> {
-    return this.statelessTokenService.generateToken({
-      payload: userPayload,
+  generateAccountToken(userPayload: GenerateAccountTokenOptions): Promise<string> {
+    return this.stateFullTokenService.generateToken({
+      userId: userPayload.userId,
       expiresIn: envConfig.ACCOUNT_TOKEN_EXPIRATION,
-      secret: envConfig.ACCOUNT_TOKEN_SECRET,
+      canBeRefreshed: false,
+      tokenType: userPayload.tokenType,
     });
   }
 
-  verifyAccountToken(token: string, ignoreExpiration = false): Promise<UserPayloadOptions> {
-    return this.statelessTokenService.verifyToken<UserPayloadOptions>({
-      token,
-      secret: envConfig.ACCOUNT_TOKEN_SECRET,
-      ignoreExpiration,
+  async verifyAccountToken({ tokenValue, tokenType }: VerifyTokenOptions): Promise<string> {
+    const token = await this.stateFullTokenService.verifyToken({
+      tokenValue,
+      tokenType,
+      ignoreExpiration: false,
     });
+    return token.userId;
+  }
+
+  deleteAccountToken(token: string): Promise<void> {
+    return this.stateFullTokenService.removeToken(token);
   }
 }

@@ -4,6 +4,7 @@ import { migrate } from 'drizzle-orm/node-postgres/migrator';
 
 import { UserInterface } from '@/application/entities/user/user.entity.interface';
 import { ClientDatabaseInterface } from '@/infrastructure/database/clientDatabase/clientDatabase.interface';
+import { TokenInterface } from '@/infrastructure/services/stateFullToken/token/token.interface';
 
 import * as schema from '@/infrastructure/database/schema';
 import { mainContainer } from '@/infrastructure/di/mainContainer';
@@ -55,6 +56,19 @@ export class TestDbService {
       .select()
       .from(schema.users)
       .where(eq(schema.users.id, id))
+      .limit(1);
+    return results[0];
+  };
+
+  public persistToken = async (token: TokenInterface): Promise<void> => {
+    await this.db.insert(schema.tokens).values(token);
+  };
+
+  public getToken = async (tokenValue: string): Promise<TokenInterface | undefined> => {
+    const results = await this.db
+      .select()
+      .from(schema.tokens)
+      .where(eq(schema.tokens.value, tokenValue))
       .limit(1);
     return results[0];
   };

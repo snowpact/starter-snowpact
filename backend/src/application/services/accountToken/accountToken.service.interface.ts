@@ -1,14 +1,22 @@
+import { TokenTypeEnum } from '@/infrastructure/services/stateFullToken/token/token.interface';
+
 export enum AccountTokenType {
   VERIFY_ACCOUNT = 'verify-account',
   RESET_PASSWORD = 'reset-password',
 }
 
-export interface UserPayloadOptions {
+export interface GenerateAccountTokenOptions {
   userId: string;
-  type: AccountTokenType;
+  tokenType: TokenTypeEnum;
+}
+
+export interface VerifyTokenOptions {
+  tokenValue: string;
+  tokenType: TokenTypeEnum;
 }
 
 export interface AccountTokenServiceInterface {
-  generateAccountToken: (userPayload: UserPayloadOptions) => Promise<string>;
-  verifyAccountToken: (token: string, withExpiration?: boolean) => Promise<UserPayloadOptions>;
+  generateAccountToken: (options: GenerateAccountTokenOptions) => Promise<string>;
+  verifyAccountToken: (options: VerifyTokenOptions) => Promise<string>;
+  deleteAccountToken: (token: string) => Promise<void>;
 }

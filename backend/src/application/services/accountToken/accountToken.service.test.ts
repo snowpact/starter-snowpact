@@ -1,13 +1,15 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
+import { tokenFactory } from '@/infrastructure/services/stateFullToken/token/token.factory';
+
+import { getStateFullTokenServiceMock } from '@/infrastructure/services/stateFullToken/stateFullToken.service.mock';
+
 import { AccountTokenService } from './accountToken.service';
-import { AccountTokenType } from './accountToken.service.interface';
 import { envConfig } from '../../../infrastructure/config/env';
-import { getStatelessTokenServiceMock } from '../../../infrastructure/services/statelessToken/statelessToken.service.mock';
 
 describe('AccountTokenService', () => {
-  const statelessTokenServiceMock = getStatelessTokenServiceMock();
-  const accountTokenService = new AccountTokenService(statelessTokenServiceMock);
+  const stateFullTokenServiceMock = getStateFullTokenServiceMock();
+  const accountTokenService = new AccountTokenService(stateFullTokenServiceMock);
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -15,37 +17,52 @@ describe('AccountTokenService', () => {
 
   describe('generateAccountToken', () => {
     it('should generate an account token', async () => {
-      const userPayload = { userId: '123', type: AccountTokenType.VERIFY_ACCOUNT };
-      const token = 'account-token';
+      const token = tokenFactory({ canBeRefreshed: false });
 
-      statelessTokenServiceMock.generateToken.mockResolvedValue(token);
+      stateFullTokenServiceMock.generateToken.mockResolvedValue(token.value);
 
-      const result = await accountTokenService.generateAccountToken(userPayload);
+      const result = await accountTokenService.generateAccountToken({
+        tokenType: token.tokenType,
+        userId: token.userId,
+      });
 
-      expect(result).toBe(token);
-      expect(statelessTokenServiceMock.generateToken).toHaveBeenCalledWith({
-        payload: userPayload,
+      expect(result).toBe(token.value);
+      expect(stateFullTokenServiceMock.generateToken).toHaveBeenCalledWith({
+        userId: token.userId,
         expiresIn: envConfig.ACCOUNT_TOKEN_EXPIRATION,
-        secret: envConfig.ACCOUNT_TOKEN_SECRET,
+        canBeRefreshed: token.canBeRefreshed,
+        tokenType: token.tokenType,
       });
     });
   });
 
   describe('verifyAccountToken', () => {
     it('should verify an account token', async () => {
-      const token = 'account-token';
-      const userPayload = { userId: '123' };
+      const token = tokenFactory({ canBeRefreshed: false });
 
-      statelessTokenServiceMock.verifyToken.mockResolvedValue(userPayload);
+      stateFullTokenServiceMock.verifyToken.mockResolvedValue(token);
 
-      const result = await accountTokenService.verifyAccountToken(token);
+      const result = await accountTokenService.verifyAccountToken({
+        tokenValue: token.value,
+        tokenType: token.tokenType,
+      });
 
-      expect(result).toBe(userPayload);
-      expect(statelessTokenServiceMock.verifyToken).toHaveBeenCalledWith({
-        token,
-        secret: envConfig.ACCOUNT_TOKEN_SECRET,
+      expect(result).toBe(token.userId);
+      expect(stateFullTokenServiceMock.verifyToken).toHaveBeenCalledWith({
+        tokenValue: token.value,
+        tokenType: token.tokenType,
         ignoreExpiration: false,
       });
+    });
+  });
+
+  describe('deleteAccountToken', () => {
+    it('should delete an account token', async () => {
+      const token = tokenFactory({ canBeRefreshed: false });
+
+      await accountTokenService.deleteAccountToken(token.value);
+
+      expect(stateFullTokenServiceMock.removeToken).toHaveBeenCalledWith(token.value);
     });
   });
 });

@@ -42,6 +42,7 @@ resetPasswordRoute.openapi(route, async (c) => {
   );
 
   await resetPasswordUseCase.executeResetPassword(token, password);
+
   return c.json(
     { message: 'Password reset successfully', code: 'PASSWORD_RESET_SUCCESSFULLY' },
     HttpStatuses.OK,

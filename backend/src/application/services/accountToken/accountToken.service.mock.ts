@@ -6,5 +6,6 @@ export const getAccountTokenServiceMock = (): Mocked<AccountTokenServiceInterfac
   return {
     generateAccountToken: vi.fn(),
     verifyAccountToken: vi.fn(),
+    deleteAccountToken: vi.fn(),
   };
 };

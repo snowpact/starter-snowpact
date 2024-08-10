@@ -7,6 +7,6 @@ export const getAuthServiceMock = (): Mocked<AuthServiceInterface> => {
     generateAccessToken: vi.fn(),
     generateRefreshToken: vi.fn(),
     verifyAccessToken: vi.fn(),
-    verifyRefreshToken: vi.fn(),
+    refreshToken: vi.fn(),
   };
 };
