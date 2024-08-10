@@ -2,12 +2,11 @@ import { describe, expect, it } from 'vitest';
 
 import { TokenTypeEnum } from '@/infrastructure/services/stateFullToken/token/token.interface';
 
+import { userFactory } from '@/application/entities/user/user.factory';
 import { tokenFactory } from '@/infrastructure/services/stateFullToken/token/token.factory';
 import { testDbService, app } from '@/tests/vitest.containers.setup';
 
-import { userFactory } from '../../../../../../application/entities/user/user.factory';
-
-describe('ResetPassword', () => {
+describe('authResetPassword', () => {
   it('should reset the password', async () => {
     const user = userFactory();
     const token = tokenFactory({ tokenType: TokenTypeEnum.resetPassword, userId: user.id });

@@ -1,6 +1,6 @@
 import { z } from '@hono/zod-openapi';
 
-export const loginSchema = {
+export const authLoginSchema = {
   body: z.object({
     email: z.string().email().openapi({ example: 'john.doe@example.com' }),
     password: z.string().openapi({ example: 'password' }),

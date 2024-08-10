@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { buildFactory } from '@/tests/helpers/factories/buildFactory';
+import { buildFactory } from '@/utils/buildFactory';
 
 import { TokenInterface, TokenTypeValues } from './token.interface';
 

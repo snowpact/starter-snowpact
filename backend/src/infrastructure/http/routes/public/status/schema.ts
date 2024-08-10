@@ -1,6 +1,6 @@
 import { z } from '@hono/zod-openapi';
 
-export const getStatusResponseSchema = z
+export const statusResponseSchema = z
   .object({
     message: z.string(),
   })

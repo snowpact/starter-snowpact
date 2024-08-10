@@ -1,9 +1,9 @@
-import { getOrder } from './getOrder';
-import { getOrders } from './getOrders';
+import { orderGetListRoute } from './orderGetList';
+import { orderGetOneRoute } from './orderGetOne';
 import { getHonoApp } from '../../config/getHonoApp';
 
 const protectedRouter = getHonoApp();
 
-protectedRouter.get('/orders', getOrders).get('/orders/:id', getOrder);
+protectedRouter.get('/orders', orderGetListRoute).get('/orders/:id', orderGetOneRoute);
 
 export { protectedRouter };

@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { userFactory } from '@/application/entities/user/user.factory';
 import { testDbService, app } from '@/tests/vitest.containers.setup';
 
-describe('Login', () => {
+describe('authLogin', () => {
   it('should login a user', async () => {
     const email = faker.internet.email();
     const password = faker.internet.password();

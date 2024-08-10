@@ -3,7 +3,7 @@ import { createRoute } from '@hono/zod-openapi';
 import { getProductParamsSchema, getProductResponseSchema } from './schema';
 import { getHonoApp } from '../../../config/getHonoApp';
 
-const getProductRoute = getHonoApp();
+const productGetOneRoute = getHonoApp();
 
 const route = createRoute({
   method: 'get',
@@ -23,9 +23,9 @@ const route = createRoute({
   },
 });
 
-getProductRoute.openapi(route, (c) => {
+productGetOneRoute.openapi(route, (c) => {
   const { id } = c.req.valid('param');
   return c.json({ id });
 });
 
-export { getProductRoute };
+export { productGetOneRoute };

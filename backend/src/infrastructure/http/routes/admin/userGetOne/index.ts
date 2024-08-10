@@ -1,20 +1,20 @@
 import { createRoute } from '@hono/zod-openapi';
 
 import { AppErrorCodes } from '@/application/errors/app.error.interface';
-import { UserPayloadOptions } from '@/application/services/accountToken/accountToken.service.interface';
+import { UserPayloadOptions } from '@/application/services/authToken/authToken.service.interface';
 import { GetUserUseCaseInterface } from '@/application/useCases/getUser/getUser.useCase.interface';
 
 import { AppError } from '@/application/errors/app.error';
 import { mainContainer } from '@/infrastructure/di/mainContainer';
 import { TYPES } from '@/infrastructure/di/types';
+import { getHonoApp } from '@/infrastructure/http/config/getHonoApp';
 import { HttpCodes } from '@/infrastructure/http/config/httpCode';
 import { HttpStatuses } from '@/infrastructure/http/config/httpStatuses';
+import { defaultResponseSchema } from '@/infrastructure/http/schemas/common.schema';
 
 import { getUserSchema } from './schema';
-import { getHonoApp } from '../../../config/getHonoApp';
-import { defaultResponseSchema } from '../../shared/schema/default.response.schema';
 
-const getUserRoute = getHonoApp();
+const userGetOneRoute = getHonoApp();
 
 const route = createRoute({
   method: 'get',
@@ -58,7 +58,7 @@ const route = createRoute({
   },
 });
 
-getUserRoute.openapi(route, async (c) => {
+userGetOneRoute.openapi(route, async (c) => {
   const { id } = c.req.valid('param');
   const { userId } = c.get('jwtPayload') as UserPayloadOptions;
 
@@ -77,7 +77,7 @@ getUserRoute.openapi(route, async (c) => {
   );
 });
 
-getUserRoute.onError((error, c) => {
+userGetOneRoute.onError((error, c) => {
   if (!(error instanceof AppError)) {
     throw error;
   }
@@ -94,4 +94,4 @@ getUserRoute.onError((error, c) => {
   }
 });
 
-export { getUserRoute };
+export { userGetOneRoute };

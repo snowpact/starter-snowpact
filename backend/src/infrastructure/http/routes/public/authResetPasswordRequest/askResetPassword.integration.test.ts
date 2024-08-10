@@ -10,7 +10,7 @@ import { testDbService, app } from '@/tests/vitest.containers.setup';
 
 import { getSendResetPasswordEmailServiceMock } from '@/infrastructure/services/mail/sendResetPasswordEmail/sendResetPasswordEmail.service.mock';
 
-describe('AskResetPassword', () => {
+describe('authResetPasswordRequest', () => {
   const sendResetPasswordEmailServiceMock = getSendResetPasswordEmailServiceMock();
   mainContainer
     .rebind<SendResetPasswordEmailServiceInterface>(TYPES.SendResetPasswordEmailService)

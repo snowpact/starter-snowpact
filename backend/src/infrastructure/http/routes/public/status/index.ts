@@ -3,7 +3,7 @@ import { createRoute } from '@hono/zod-openapi';
 import { getHonoApp } from '@/infrastructure/http/config/getHonoApp';
 import { HttpStatuses } from '@/infrastructure/http/config/httpStatuses';
 
-import { getStatusResponseSchema } from './schema';
+import { statusResponseSchema } from './schema';
 
 const statusRoute = getHonoApp();
 
@@ -14,7 +14,7 @@ const route = createRoute({
     200: {
       content: {
         'application/json': {
-          schema: getStatusResponseSchema,
+          schema: statusResponseSchema,
         },
       },
       description: 'Status OK',
@@ -23,10 +23,6 @@ const route = createRoute({
 });
 
 statusRoute.openapi(route, (c) => {
-  console.log('adazdazd');
-  console.log('adazdazd');
-  console.log('adazdazd');
-  console.log('adazdazd');
   return c.json({ message: 'OK' }, HttpStatuses.OK);
 });
 

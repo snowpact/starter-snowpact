@@ -1,14 +1,15 @@
 import { createRoute } from '@hono/zod-openapi';
 
+import { ResetPasswordUseCaseInterface } from '@/application/useCases/resetPassword/resetPassword.useCase.interface';
+
 import { mainContainer } from '@/infrastructure/di/mainContainer';
+import { TYPES } from '@/infrastructure/di/types';
+import { getHonoApp } from '@/infrastructure/http/config/getHonoApp';
+import { HttpStatuses } from '@/infrastructure/http/config/httpStatuses';
 
-import { resetPasswordBodySchema, resetPasswordResponseSchema } from './schema';
-import { ResetPasswordUseCaseInterface } from '../../../../../../application/useCases/resetPassword/resetPassword.useCase.interface';
-import { TYPES } from '../../../../../di/types';
-import { getHonoApp } from '../../../../config/getHonoApp';
-import { HttpStatuses } from '../../../../config/httpStatuses';
+import { authResetPasswordBodySchema, authResetPasswordResponseSchema } from './schema';
 
-const resetPasswordRoute = getHonoApp();
+const authResetPasswordRoute = getHonoApp();
 
 const route = createRoute({
   method: 'post',
@@ -17,7 +18,7 @@ const route = createRoute({
     body: {
       content: {
         'application/json': {
-          schema: resetPasswordBodySchema,
+          schema: authResetPasswordBodySchema,
         },
       },
     },
@@ -26,7 +27,7 @@ const route = createRoute({
     200: {
       content: {
         'application/json': {
-          schema: resetPasswordResponseSchema,
+          schema: authResetPasswordResponseSchema,
         },
       },
       description: 'Password reset successfully',
@@ -34,7 +35,7 @@ const route = createRoute({
   },
 });
 
-resetPasswordRoute.openapi(route, async (c) => {
+authResetPasswordRoute.openapi(route, async (c) => {
   const { token, password } = c.req.valid('json');
 
   const resetPasswordUseCase = mainContainer.get<ResetPasswordUseCaseInterface>(
@@ -49,4 +50,4 @@ resetPasswordRoute.openapi(route, async (c) => {
   );
 });
 
-export { resetPasswordRoute };
+export { authResetPasswordRoute };

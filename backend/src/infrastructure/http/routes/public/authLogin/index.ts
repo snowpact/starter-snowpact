@@ -9,11 +9,11 @@ import { TYPES } from '@/infrastructure/di/types';
 import { getHonoApp } from '@/infrastructure/http/config/getHonoApp';
 import { HttpCodes } from '@/infrastructure/http/config/httpCode';
 import { HttpStatuses } from '@/infrastructure/http/config/httpStatuses';
-import { defaultResponseSchema } from '@/infrastructure/http/routes/shared/schema/default.response.schema';
+import { defaultResponseSchema } from '@/infrastructure/http/schemas/common.schema';
 
-import { loginSchema } from './schema';
+import { authLoginSchema } from './schema';
 
-const loginRoute = getHonoApp();
+const authLoginRoute = getHonoApp();
 
 const route = createRoute({
   method: 'post',
@@ -22,7 +22,7 @@ const route = createRoute({
     body: {
       content: {
         'application/json': {
-          schema: loginSchema.body,
+          schema: authLoginSchema.body,
         },
       },
     },
@@ -31,7 +31,7 @@ const route = createRoute({
     200: {
       content: {
         'application/json': {
-          schema: loginSchema.response,
+          schema: authLoginSchema.response,
         },
       },
       description: 'Login successfully',
@@ -47,7 +47,7 @@ const route = createRoute({
   },
 });
 
-loginRoute.openapi(route, async (c) => {
+authLoginRoute.openapi(route, async (c) => {
   const { email, password } = c.req.valid('json');
 
   const loginUseCase = mainContainer.get<LoginUseCaseInterface>(TYPES.LoginUseCase);
@@ -56,7 +56,7 @@ loginRoute.openapi(route, async (c) => {
   return c.json({ accessToken, refreshToken }, HttpStatuses.OK);
 });
 
-loginRoute.onError((error, c) => {
+authLoginRoute.onError((error, c) => {
   if (!(error instanceof AppError)) {
     throw error;
   }
@@ -73,4 +73,4 @@ loginRoute.onError((error, c) => {
   }
 });
 
-export { loginRoute };
+export { authLoginRoute };

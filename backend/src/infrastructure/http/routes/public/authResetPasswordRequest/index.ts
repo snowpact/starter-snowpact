@@ -8,11 +8,11 @@ import { mainContainer } from '@/infrastructure/di/mainContainer';
 import { TYPES } from '@/infrastructure/di/types';
 import { getHonoApp } from '@/infrastructure/http/config/getHonoApp';
 import { HttpStatuses } from '@/infrastructure/http/config/httpStatuses';
-import { defaultResponseSchema } from '@/infrastructure/http/routes/shared/schema/default.response.schema';
+import { defaultResponseSchema } from '@/infrastructure/http/schemas/common.schema';
 
-import { askResetPasswordSchema } from './schema';
+import { authResetPasswordRequestSchema } from './schema';
 
-const askResetPasswordRoute = getHonoApp();
+const authResetPasswordRequestRoute = getHonoApp();
 
 const route = createRoute({
   method: 'post',
@@ -21,7 +21,7 @@ const route = createRoute({
     body: {
       content: {
         'application/json': {
-          schema: askResetPasswordSchema.body,
+          schema: authResetPasswordRequestSchema.body,
         },
       },
     },
@@ -38,7 +38,7 @@ const route = createRoute({
   },
 });
 
-askResetPasswordRoute.openapi(route, async (c) => {
+authResetPasswordRequestRoute.openapi(route, async (c) => {
   const { email } = c.req.valid('json');
 
   const resetPasswordUseCase = mainContainer.get<ResetPasswordUseCaseInterface>(
@@ -49,7 +49,7 @@ askResetPasswordRoute.openapi(route, async (c) => {
   return c.json({ message: 'Email sent', code: 'EMAIL_SENT' }, HttpStatuses.OK);
 });
 
-askResetPasswordRoute.onError((error, c) => {
+authResetPasswordRequestRoute.onError((error, c) => {
   if (!(error instanceof AppError)) {
     throw error;
   }
@@ -63,4 +63,4 @@ askResetPasswordRoute.onError((error, c) => {
   }
 });
 
-export { askResetPasswordRoute };
+export { authResetPasswordRequestRoute };

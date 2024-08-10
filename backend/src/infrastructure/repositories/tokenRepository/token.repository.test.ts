@@ -5,7 +5,7 @@ import { describe, beforeAll, it, expect } from 'vitest';
 import { mainContainer } from '@/infrastructure/di/mainContainer';
 import { TYPES } from '@/infrastructure/di/types';
 import { tokenFactory } from '@/infrastructure/services/stateFullToken/token/token.factory';
-import { testDbHelper } from '@/tests/vitest.containers.setup';
+import { testDbService } from '@/tests/vitest.containers.setup';
 
 import { TokenRepositoryInterface } from './token.repository.interface';
 
@@ -20,7 +20,7 @@ describe('Token Repository', () => {
 
       await tokenRepository.create(token);
 
-      const storedToken = await testDbHelper.getToken(token.value);
+      const storedToken = await testDbService.getToken(token.value);
       expect(storedToken).toEqual(token);
     });
   });
@@ -28,7 +28,7 @@ describe('Token Repository', () => {
   describe('findByTokenValue', () => {
     it('should return a token by tokenValue', async () => {
       const token = tokenFactory();
-      await testDbHelper.persistToken(token);
+      await testDbService.persistToken(token);
 
       const storedToken = await tokenRepository.findByTokenValue(token.value);
       expect(storedToken).toEqual(token);
@@ -42,11 +42,11 @@ describe('Token Repository', () => {
   describe('delete', () => {
     it('should delete a token by token value', async () => {
       const token = tokenFactory();
-      await testDbHelper.persistToken(token);
+      await testDbService.persistToken(token);
 
       await tokenRepository.delete(token.value);
 
-      const storedToken = await testDbHelper.getToken(token.value);
+      const storedToken = await testDbService.getToken(token.value);
       expect(storedToken).toBeUndefined();
     });
   });
@@ -54,7 +54,7 @@ describe('Token Repository', () => {
   describe('update', () => {
     it('should update a token', async () => {
       const token = tokenFactory();
-      await testDbHelper.persistToken(token);
+      await testDbService.persistToken(token);
       const newTokenValue = 'new-token-value';
       const newExpirationDate = faker.date.future();
 
@@ -64,7 +64,7 @@ describe('Token Repository', () => {
         expirationDate: newExpirationDate,
       });
 
-      const storedToken = await testDbHelper.getToken(newTokenValue);
+      const storedToken = await testDbService.getToken(newTokenValue);
 
       expect(storedToken).toEqual({
         ...token,
