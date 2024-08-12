@@ -1,20 +1,18 @@
 import { faker } from '@faker-js/faker';
 import { describe, expect, it } from 'vitest';
 
-import { SendResetPasswordEmailServiceInterface } from '@/gateways/mailer/mailSender/sendResetPasswordEmail/sendResetPasswordEmail.service.interface';
+import { MailSenderInterface } from '@/gateways/mailer/mailSender/mailSender.interface';
 
 import { userFactory } from '@/core/entities/user/user.factory';
 import { mainContainer } from '@/infrastructure/di/mainContainer';
 import { TYPES } from '@/infrastructure/di/types';
 import { testDbService, app } from '@/infrastructure/tests/vitest.containers.setup';
 
-import { getSendResetPasswordEmailServiceMock } from '@/gateways/mailer/mailSender/sendResetPasswordEmail/sendResetPasswordEmail.service.mock';
+import { getMailSenderMock } from '@/gateways/mailer/mailSender/mailSender.mock';
 
 describe('authResetPasswordRequest', () => {
-  const sendResetPasswordEmailServiceMock = getSendResetPasswordEmailServiceMock();
-  mainContainer
-    .rebind<SendResetPasswordEmailServiceInterface>(TYPES.SendResetPasswordEmailService)
-    .toConstantValue(sendResetPasswordEmailServiceMock);
+  const mailSenderMock = getMailSenderMock();
+  mainContainer.rebind<MailSenderInterface>(TYPES.MailSender).toConstantValue(mailSenderMock);
 
   it('should send a reset password email', async () => {
     const email = faker.internet.email();
@@ -32,7 +30,7 @@ describe('authResetPasswordRequest', () => {
       message: 'Email sent',
       code: 'EMAIL_SENT',
     });
-    expect(sendResetPasswordEmailServiceMock.sendResetPasswordEmail).toHaveBeenCalledWith({
+    expect(mailSenderMock.sendResetPasswordEmail).toHaveBeenCalledWith({
       email,
       token: expect.any(String) as string,
     });

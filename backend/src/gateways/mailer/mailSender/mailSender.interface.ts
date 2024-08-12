@@ -3,6 +3,6 @@ export interface SendResetPasswordEmailOptions {
   token: string;
 }
 
-export interface SendResetPasswordEmailServiceInterface {
+export interface MailSenderInterface {
   sendResetPasswordEmail: (options: SendResetPasswordEmailOptions) => Promise<void>;
 }

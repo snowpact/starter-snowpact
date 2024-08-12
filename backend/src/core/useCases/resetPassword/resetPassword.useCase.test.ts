@@ -10,19 +10,19 @@ import { getAccountTokenServiceMock } from '@/core/services/accountToken/account
 import { getPasswordServiceMock } from '@/core/services/password/password.service.mock';
 import { getUserRepositoryMock } from '@/gateways/database/repositories/userRepository/user.repository.mock';
 import { getLoggerServiceMock } from '@/gateways/logger/logger.service.mock';
-import { getSendResetPasswordEmailServiceMock } from '@/gateways/mailer/mailSender/sendResetPasswordEmail/sendResetPasswordEmail.service.mock';
+import { getMailSenderMock } from '@/gateways/mailer/mailSender/mailSender.mock';
 
 import { ResetPasswordUseCase } from './resetPassword.useCase';
 
 describe('ResetPasswordUseCase', () => {
   const accountTokenService = getAccountTokenServiceMock();
-  const sendResetPasswordEmailService = getSendResetPasswordEmailServiceMock();
+  const mailSender = getMailSenderMock();
   const userRepository = getUserRepositoryMock();
   const passwordService = getPasswordServiceMock();
   const loggerService = getLoggerServiceMock();
   const loginUseCase = new ResetPasswordUseCase(
     accountTokenService,
-    sendResetPasswordEmailService,
+    mailSender,
     userRepository,
     passwordService,
     loggerService,
@@ -46,7 +46,7 @@ describe('ResetPasswordUseCase', () => {
         userId: user.id,
         tokenType: TokenTypeEnum.resetPassword,
       });
-      expect(sendResetPasswordEmailService.sendResetPasswordEmail).toHaveBeenCalledWith({
+      expect(mailSender.sendResetPasswordEmail).toHaveBeenCalledWith({
         email: user.email,
         token,
       });

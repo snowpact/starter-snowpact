@@ -1,11 +1,11 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
-import { SendResetPasswordEmailService } from './sendResetPasswordEmail.service';
-import { getMailerServiceMock } from '../../clientMailer/mailer.service.mock';
+import { MailSender } from './mailSender';
+import { getMailerServiceMock } from '../clientMailer/mailer.service.mock';
 
-describe('SendResetPasswordEmailService', () => {
+describe('MailSender', () => {
   const mailerServiceMock = getMailerServiceMock();
-  const sendResetPasswordEmailService = new SendResetPasswordEmailService(mailerServiceMock);
+  const mailSenderService = new MailSender(mailerServiceMock);
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -15,7 +15,7 @@ describe('SendResetPasswordEmailService', () => {
     const email = 'test@example.com';
     const token = 'test-token';
 
-    await sendResetPasswordEmailService.sendResetPasswordEmail({ email, token });
+    await mailSenderService.sendResetPasswordEmail({ email, token });
 
     expect(mailerServiceMock.sendMail).toHaveBeenCalledWith({
       to: email,

@@ -6,7 +6,7 @@ import { AccountTokenServiceInterface } from '@/core/services/accountToken/accou
 import { PasswordServiceInterface } from '@/core/services/password/password.service.interface';
 import { UserRepositoryInterface } from '@/gateways/database/repositories/userRepository/user.repository.interface';
 import { LoggerServiceInterface } from '@/gateways/logger/logger.service.interface';
-import { SendResetPasswordEmailServiceInterface } from '@/gateways/mailer/mailSender/sendResetPasswordEmail/sendResetPasswordEmail.service.interface';
+import { MailSenderInterface } from '@/gateways/mailer/mailSender/mailSender.interface';
 
 import { AppError } from '@/core/errors/app.error';
 import { TYPES } from '@/infrastructure/di/types';
@@ -17,8 +17,7 @@ import { ResetPasswordUseCaseInterface } from './resetPassword.useCase.interface
 export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
   constructor(
     @inject(TYPES.AccountTokenService) private accountTokenService: AccountTokenServiceInterface,
-    @inject(TYPES.SendResetPasswordEmailService)
-    private sendResetPasswordEmailService: SendResetPasswordEmailServiceInterface,
+    @inject(TYPES.MailSender) private mailSender: MailSenderInterface,
     @inject(TYPES.UserRepository) private userRepository: UserRepositoryInterface,
     @inject(TYPES.PasswordService) private passwordService: PasswordServiceInterface,
     @inject(TYPES.LoggerService) private loggerService: LoggerServiceInterface,
@@ -37,7 +36,7 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
     });
 
     try {
-      await this.sendResetPasswordEmailService.sendResetPasswordEmail({
+      await this.mailSender.sendResetPasswordEmail({
         email,
         token,
       });

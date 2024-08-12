@@ -18,6 +18,7 @@ const TYPES = {
 
   MainHonoApp: Symbol.for('MainHonoApp'),
   SendResetPasswordEmailService: Symbol.for('SendResetPasswordEmailService'),
+  MailSender: Symbol.for('MailSender'),
   AccountTokenService: Symbol.for('AccountTokenService'),
 };
 

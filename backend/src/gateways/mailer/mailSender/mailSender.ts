@@ -2,14 +2,11 @@ import { inject, injectable } from 'inversify';
 
 import { TYPES } from '@/infrastructure/di/types';
 
-import {
-  SendResetPasswordEmailServiceInterface,
-  SendResetPasswordEmailOptions,
-} from './sendResetPasswordEmail.service.interface';
-import { MailerServiceInterface } from '../../clientMailer/mailer.service.interface';
+import { MailSenderInterface, SendResetPasswordEmailOptions } from './mailSender.interface';
+import { MailerServiceInterface } from '../clientMailer/mailer.service.interface';
 
 @injectable()
-export class SendResetPasswordEmailService implements SendResetPasswordEmailServiceInterface {
+export class MailSender implements MailSenderInterface {
   constructor(@inject(TYPES.MailerService) private mailerService: MailerServiceInterface) {}
 
   async sendResetPasswordEmail(options: SendResetPasswordEmailOptions): Promise<void> {
