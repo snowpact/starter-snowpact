@@ -1,22 +1,22 @@
 import { ContainerModule, interfaces } from 'inversify';
 
-import { AccountTokenServiceInterface } from '@/application/services/accountToken/accountToken.service.interface';
-import { AuthServiceInterface } from '@/application/services/authToken/authToken.service.interface';
-import { PasswordServiceInterface } from '@/application/services/password/password.service.interface';
-import { LoggerServiceInterface } from '@/infrastructure/services/logger/logger.service.interface';
+import { AccountTokenServiceInterface } from '@/core/services/accountToken/accountToken.service.interface';
+import { AuthServiceInterface } from '@/core/services/authToken/authToken.service.interface';
+import { PasswordServiceInterface } from '@/core/services/password/password.service.interface';
+import { StateFullTokenServiceInterface } from '@/core/services/stateFullToken/stateFullToken.service.interface';
+import { StatelessTokenServiceInterface } from '@/core/services/statelessToken/statelessToken.service.interface';
+import { LoggerServiceInterface } from '@/gateways/logger/logger.service.interface';
+import { SendResetPasswordEmailServiceInterface } from '@/gateways/mailer/mailSender/sendResetPasswordEmail/sendResetPasswordEmail.service.interface';
 
-import { AuthService } from '@/application/services/authToken/authToken.service';
-import { PasswordService } from '@/application/services/password/password.service';
-import { LoggerService } from '@/infrastructure/services/logger/logger.service';
+import { AccountTokenService } from '@/core/services/accountToken/accountToken.service';
+import { AuthService } from '@/core/services/authToken/authToken.service';
+import { PasswordService } from '@/core/services/password/password.service';
+import { StateFullTokenService } from '@/core/services/stateFullToken/stateFullToken.service';
+import { StatelessTokenService } from '@/core/services/statelessToken/statelessToken.service';
+import { LoggerService } from '@/gateways/logger/logger.service';
+import { SendResetPasswordEmailService } from '@/gateways/mailer/mailSender/sendResetPasswordEmail/sendResetPasswordEmail.service';
 
 import { TYPES } from './types';
-import { AccountTokenService } from '../../application/services/accountToken/accountToken.service';
-import { SendResetPasswordEmailService } from '../services/mail/sendResetPasswordEmail/sendResetPasswordEmail.service';
-import { SendResetPasswordEmailServiceInterface } from '../services/mail/sendResetPasswordEmail/sendResetPasswordEmail.service.interface';
-import { StateFullTokenService } from '../services/stateFullToken/stateFullToken.service';
-import { StateFullTokenServiceInterface } from '../services/stateFullToken/stateFullToken.service.interface';
-import { StatelessTokenService } from '../services/statelessToken/statelessToken.service';
-import { StatelessTokenServiceInterface } from '../services/statelessToken/statelessToken.service.interface';
 
 const serviceContainer = new ContainerModule((bind: interfaces.Bind) => {
   bind<AuthServiceInterface>(TYPES.AuthService).to(AuthService);

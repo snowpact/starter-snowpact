@@ -26,7 +26,7 @@
     ".eslintrc.js",
     ".prettierrc.js",
     "vitest.config.container.ts",
-    "vitest.config.unit.ts",
+    "vitest.config.unit.ts"
   ],
   "outDir": "dist",
   "exclude": ["node_modules", "dist"]

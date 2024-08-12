@@ -1,8 +1,9 @@
 import { z } from 'zod';
 
-import { envConfigParser, parseBoolean, parseNumber } from '../utils/zodParser';
+import { LoggerService } from '@/gateways/logger/logger.service';
+import { parseNumber, parseBoolean } from '@/utils/zodParser';
 
-const Config = z.object({
+const ConfigParser = z.object({
   NODE_ENV: z.string().default('development'),
   PORT: parseNumber(z.number()).default(8080),
   LOG_LEVEL: z.enum(['debug', 'info', 'warning', 'error']).default('info'),
@@ -21,10 +22,23 @@ const Config = z.object({
   FROM_EMAIL: z.string(),
   EMAIL_SEND: parseBoolean(z.boolean()).default(false),
 });
-export type Config = z.infer<typeof Config>;
+export type Config = z.infer<typeof ConfigParser>;
 
+/**
+ * Function to validate process.env. It will throw an error if the validation fails.
+ * @param validationSchema Validation schema
+ * @returns Validated process.env
+ */
 export const buildConfig = (): Config => {
-  return envConfigParser(Config);
+  try {
+    return ConfigParser.parse(process.env);
+  } catch (error) {
+    if (error instanceof Error) {
+      const logger = new LoggerService();
+      logger.error('Error while parsing env variables:', error);
+    }
+    throw error;
+  }
 };
 
 export const envConfig = buildConfig();

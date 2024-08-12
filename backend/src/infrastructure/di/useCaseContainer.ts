@@ -1,12 +1,12 @@
 import { ContainerModule, interfaces } from 'inversify';
 
-import { GetUserUseCaseInterface } from '@/application/useCases/getUser/getUser.useCase.interface';
-import { LoginUseCaseInterface } from '@/application/useCases/login/login.useCase.interface';
-import { ResetPasswordUseCaseInterface } from '@/application/useCases/resetPassword/resetPassword.useCase.interface';
+import { GetUserUseCaseInterface } from '@/core/useCases/getUser/getUser.useCase.interface';
+import { LoginUseCaseInterface } from '@/core/useCases/login/login.useCase.interface';
+import { ResetPasswordUseCaseInterface } from '@/core/useCases/resetPassword/resetPassword.useCase.interface';
 
-import { GetUserUseCase } from '@/application/useCases/getUser/getUser.useCase';
-import { LoginUseCase } from '@/application/useCases/login/login.useCase';
-import { ResetPasswordUseCase } from '@/application/useCases/resetPassword/resetPassword.useCase';
+import { GetUserUseCase } from '@/core/useCases/getUser/getUser.useCase';
+import { LoginUseCase } from '@/core/useCases/login/login.useCase';
+import { ResetPasswordUseCase } from '@/core/useCases/resetPassword/resetPassword.useCase';
 
 import { TYPES } from './types';
 
