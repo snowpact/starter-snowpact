@@ -2,7 +2,9 @@
 
 ## Architecture Overview
 
-This folder contains the backend code for our application. The architecture is organized to separate concerns and follow the principles of hexagonal architecture.
+This folder contains the backend code for our application. The architecture is organized to separate concerns and follow the principles of clean architecture.
+
+![Snowpact architecture](clean-architecture-schema.jpg)
 
 ### Directory Structure
 
@@ -14,15 +16,15 @@ src/
 │   ├── services                # Business services (reusable logic)
 │   └── useCases                # Use cases (specific application logic)
 ├── entrypoints             # Application entry points
-│   ├── api                     # API configuration and routes
+│   ├── api                     # API and routes
 │   └── ...                     # ... can be jobs, queues consumer, cli...
-├── gateways                # Adapters for external systems
+├── gateways                # Gateways interface adapter to interact with external services
 │   ├── database                # Database interactions (repositories, migrations)
 │   ├── logger                  # Logging service
 │   ├── mailer                  # Email sending service
 │   ├── cache                   # Cache database
 │   └── ...                     # Can be other services (e.g. payment gateway, file storage, queue management ...)
-├── infrastructure          # Technical details and configuration
+├── infrastructure          # Everything that wires the application, configuration
 │   ├── config                  # Configuration files
 │   ├── di                      # Dependency injection setup
 │   ├── sdkGenerator            # SDK generation scripts
