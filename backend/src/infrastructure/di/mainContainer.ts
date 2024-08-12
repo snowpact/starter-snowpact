@@ -2,16 +2,18 @@ import 'reflect-metadata';
 
 import { Container } from 'inversify';
 
+import { ClientDatabaseInterface } from '@/gateways/database/clientDatabase/clientDatabase.interface';
+import { TokenRepositoryInterface } from '@/gateways/database/repositories/tokenRepository/token.repository.interface';
+import { UserRepositoryInterface } from '@/gateways/database/repositories/userRepository/user.repository.interface';
+
+import { ClientDatabase } from '@/gateways/database/clientDatabase/clientDatabase';
+import { TokenRepository } from '@/gateways/database/repositories/tokenRepository/token.repository';
+import { UserRepository } from '@/gateways/database/repositories/userRepository/user.repository';
+
 import { entityContainer } from './entityContainer';
 import { serviceContainer } from './serviceContainer';
 import { TYPES } from './types';
 import { useCaseContainer } from './useCaseContainer';
-import { ClientDatabase } from '../database/clientDatabase/clientDatabase';
-import { ClientDatabaseInterface } from '../database/clientDatabase/clientDatabase.interface';
-import { TokenRepository } from '../repositories/tokenRepository/token.repository';
-import { TokenRepositoryInterface } from '../repositories/tokenRepository/token.repository.interface';
-import { UserRepository } from '../repositories/userRepository/user.repository';
-import { UserRepositoryInterface } from '../repositories/userRepository/user.repository.interface';
 
 const mainContainer = new Container();
 

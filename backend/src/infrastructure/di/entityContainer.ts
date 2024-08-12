@@ -1,8 +1,8 @@
 import { ContainerModule, interfaces } from 'inversify';
 
-import { UserInterface } from '@/application/entities/user/user.entity.interface';
+import { UserInterface } from '@/core/entities/user/user.entity.interface';
 
-import { User } from '@/application/entities/user/user.entity';
+import { User } from '@/core/entities/user/user.entity';
 
 import { TYPES } from './types';
 

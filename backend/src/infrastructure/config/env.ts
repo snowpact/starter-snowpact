@@ -1,8 +1,7 @@
 import { z } from 'zod';
 
-import { LoggerService } from '@/infrastructure/services/logger/logger.service';
-
-import { parseBoolean, parseNumber } from '../..//utils/zodParser';
+import { LoggerService } from '@/gateways/logger/logger.service';
+import { parseNumber, parseBoolean } from '@/utils/zodParser';
 
 const ConfigParser = z.object({
   NODE_ENV: z.string().default('development'),
