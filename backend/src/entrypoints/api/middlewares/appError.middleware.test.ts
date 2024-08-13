@@ -1,9 +1,9 @@
 import { OpenAPIHono } from '@hono/zod-openapi';
 import { describe, it, expect, beforeEach } from 'vitest';
 
-import { AppErrorCodes } from '@/core/errors/app.error.interface';
+import { AppErrorCodes } from '@/application/errors/app.error.interface';
 
-import { AppError } from '@/core/errors/app.error';
+import { AppError } from '@/application/errors/app.error';
 
 import { appErrorMiddleware } from './appError.middleware';
 

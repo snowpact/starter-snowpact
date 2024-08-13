@@ -1,12 +1,12 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import { LoggerService } from '@/adapters/external/logger/logger.service';
+import { Logger } from '@/gateways/logger/logger';
 
-import { bootstrap } from '../server';
+import { bootstrap } from '../loader/server';
 
 const generateOpenapiDocJson = async (): Promise<void> => {
-  const logger = new LoggerService();
+  const logger = new Logger();
   try {
     const { app, server } = bootstrap();
 

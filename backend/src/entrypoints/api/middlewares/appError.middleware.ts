@@ -2,15 +2,15 @@ import { ErrorHandler, Env } from 'hono';
 import { HTTPException } from 'hono/http-exception';
 import { ZodError } from 'zod';
 
-import { AppErrorCodes } from '@/core/errors/app.error.interface';
+import { AppErrorCodes } from '@/application/errors/app.error.interface';
 
-import { isAppError } from '@/core/errors/error.util';
-import { LoggerService } from '@/gateways/logger/logger.service';
+import { isAppError } from '@/application/errors/error.util';
+import { Logger } from '@/gateways/logger/logger';
 
 import { HttpStatuses } from '../config/httpStatuses';
 
 export const appErrorMiddleware: ErrorHandler<Env> = (error, c) => {
-  const logger = new LoggerService();
+  const logger = new Logger();
   if (isAppError(error)) {
     const { code, context, message } = error;
     const statusCode = getStatusCodeFromErrorCode(code);

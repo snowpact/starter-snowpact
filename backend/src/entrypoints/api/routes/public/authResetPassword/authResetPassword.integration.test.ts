@@ -1,10 +1,10 @@
 import { describe, expect, it } from 'vitest';
 
-import { TokenTypeEnum } from '@/core/entities/token/token.interface';
+import { TokenTypeEnum } from '@/domain/entities/token/token.entity.interface';
 
-import { tokenFactory } from '@/core/entities/token/token.factory';
-import { userFactory } from '@/core/entities/user/user.factory';
-import { testDbService, app } from '@/infrastructure/tests/vitest.containers.setup';
+import { testDbService, app } from '@/configuration/tests/vitest.containers.setup';
+import { tokenFactory } from '@/domain/entities/token/token.entity.factory';
+import { userFactory } from '@/domain/entities/user/user.factory';
 
 describe('authResetPassword', () => {
   it('should reset the password', async () => {

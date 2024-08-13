@@ -1,14 +1,14 @@
 import { faker } from '@faker-js/faker';
 import { describe, expect, it } from 'vitest';
 
-import { MailSenderInterface } from '@/gateways/mailer/mailSender/mailSender.interface';
+import { MailSenderInterface } from '@/domain/interfaces/mailSender.interface';
 
-import { userFactory } from '@/core/entities/user/user.factory';
-import { mainContainer } from '@/infrastructure/di/mainContainer';
-import { TYPES } from '@/infrastructure/di/types';
-import { testDbService, app } from '@/infrastructure/tests/vitest.containers.setup';
+import { mainContainer } from '@/configuration/di/mainContainer';
+import { TYPES } from '@/configuration/di/types';
+import { testDbService, app } from '@/configuration/tests/vitest.containers.setup';
+import { userFactory } from '@/domain/entities/user/user.factory';
 
-import { getMailSenderMock } from '@/gateways/mailer/mailSender/mailSender.mock';
+import { getMailSenderMock } from '@/gateways/mailSender/mailSender.mock';
 
 describe('authResetPasswordRequest', () => {
   const mailSenderMock = getMailSenderMock();

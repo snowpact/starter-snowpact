@@ -1,14 +1,14 @@
 import { createRoute } from '@hono/zod-openapi';
 
-import { AppErrorCodes } from '@/core/errors/app.error.interface';
-import { ResetPasswordUseCaseInterface } from '@/core/useCases/resetPassword/resetPassword.useCase.interface';
+import { AppErrorCodes } from '@/application/errors/app.error.interface';
+import { ResetPasswordUseCaseInterface } from '@/application/useCases/resetPassword/resetPassword.useCase.interface';
 
-import { AppError } from '@/core/errors/app.error';
+import { AppError } from '@/application/errors/app.error';
+import { mainContainer } from '@/configuration/di/mainContainer';
+import { TYPES } from '@/configuration/di/types';
 import { HttpStatuses } from '@/entrypoints/api/config/httpStatuses';
 import { getHonoApp } from '@/entrypoints/api/loader/getHonoApp';
 import { defaultResponseSchema } from '@/entrypoints/api/schemas/common.schema';
-import { mainContainer } from '@/infrastructure/di/mainContainer';
-import { TYPES } from '@/infrastructure/di/types';
 
 import { authResetPasswordRequestSchema } from './schema';
 

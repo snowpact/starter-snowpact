@@ -1,6 +1,6 @@
 import { jwt } from 'hono/jwt';
 
-import { envConfig } from '@/infrastructure/config/env';
+import { envConfig } from '@/configuration/config/env';
 
 import { userGetOneRoute } from './userGetOne';
 import { getHonoApp } from '../../loader/getHonoApp';

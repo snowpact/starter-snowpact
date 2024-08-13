@@ -7,8 +7,8 @@ export default defineConfig({
     silent: false,
     globals: true,
     environment: 'node',
-    globalSetup: './src/infrastructure/tests/vitest.globalSetup.ts',
-    setupFiles: ['./src/infrastructure/tests/vitest.containers.setup.ts'],
+    globalSetup: './src/configuration/tests/vitest.globalSetup.ts',
+    setupFiles: ['./src/configuration/tests/vitest.containers.setup.ts'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html', 'github-actions'],

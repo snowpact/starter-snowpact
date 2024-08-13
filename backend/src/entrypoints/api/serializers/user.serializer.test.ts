@@ -1,11 +1,11 @@
 import { describe, it, expect } from 'vitest';
 
-import { User } from '@/core/entities/user/user.entity';
+import { UserInterface } from '@/domain/entities/user/user.entity.interface';
 
 import { UserSerializer, PublicUserLite, PublicUser } from './user.serializer';
 
 describe('UserSerializer', () => {
-  const mockUser: User = {
+  const mockUser: UserInterface = {
     id: '123e4567-e89b-12d3-a456-426614174000',
     email: 'test@example.com',
     admin: false,
@@ -26,7 +26,7 @@ describe('UserSerializer', () => {
 
     it('should throw an error when serializing an invalid user', () => {
       const invalidUser = { ...mockUser, email: 'invalid-email' };
-      expect(() => UserSerializer.serializeLite(invalidUser as User)).toThrow();
+      expect(() => UserSerializer.serializeLite(invalidUser)).toThrow();
     });
   });
 
@@ -45,7 +45,7 @@ describe('UserSerializer', () => {
 
     it('should throw an error when serializing an invalid user', () => {
       const invalidUser = { ...mockUser, id: 'invalid-uuid' };
-      expect(() => UserSerializer.serialize(invalidUser as User)).toThrow();
+      expect(() => UserSerializer.serialize(invalidUser)).toThrow();
     });
   });
 });

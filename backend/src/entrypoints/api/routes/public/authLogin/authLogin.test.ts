@@ -1,23 +1,21 @@
 import { OpenAPIHono } from '@hono/zod-openapi';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
-import { AppErrorCodes } from '@/core/errors/app.error.interface';
+import { AppErrorCodes } from '@/application/errors/app.error.interface';
 
-import { AppError } from '@/core/errors/app.error';
-import { mainContainer } from '@/infrastructure/di/mainContainer';
+import { AppError } from '@/application/errors/app.error';
+import { mainContainer } from '@/configuration/di/mainContainer';
 
-import { getLoginUseCaseMock } from '@/core/useCases/login/login.useCase.mock';
+import { getLoginUseCaseMock } from '@/application/useCases/login/login.useCase.mock';
 
 import { authLoginRoute } from './index';
 
-// Mock the DI container
-vi.mock('@/infrastructure/di/mainContainer', () => ({
+vi.mock('@/configuration/di/mainContainer', () => ({
   mainContainer: {
     get: vi.fn(),
   },
 }));
 
-// Mock the getHonoApp function
 vi.mock('@/entrypoints/api/loader/getHonoApp', () => ({
   getHonoApp: () => new OpenAPIHono(),
 }));

@@ -6,8 +6,8 @@ import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import { prettyJSON } from 'hono/pretty-json';
 
-import { LoggerService } from '@/gateways/logger/logger.service';
-import { envConfig } from '@/infrastructure/config/env';
+import { envConfig } from '@/configuration/config/env';
+import { Logger } from '@/gateways/logger/logger';
 
 import { getHonoApp } from './getHonoApp';
 import { apiDocMiddleware } from '../middlewares/apiDoc.middleware';
@@ -37,7 +37,7 @@ export const bootstrap = (): { app: OpenAPIHono; server: ServerType } => {
       port: envConfig.PORT,
     },
     () => {
-      const logger = new LoggerService();
+      const logger = new Logger();
       logger.info(`Server is running on port ${envConfig.PORT}`);
     },
   );

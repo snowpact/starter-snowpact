@@ -1,12 +1,12 @@
 import 'reflect-metadata';
 import { ServerType } from '@hono/node-server';
 
-import { ClientDatabaseInterface } from '@/gateways/database/clientDatabase/clientDatabase.interface';
+import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatabase/clientDatabase.interface';
 
-import { LoggerService } from '@/gateways/logger/logger.service';
-import { envConfig } from '@/infrastructure/config/env';
-import { mainContainer } from '@/infrastructure/di/mainContainer';
-import { TYPES } from '@/infrastructure/di/types';
+import { envConfig } from '@/configuration/config/env';
+import { mainContainer } from '@/configuration/di/mainContainer';
+import { TYPES } from '@/configuration/di/types';
+import { Logger } from '@/gateways/logger/logger';
 
 import { bootstrap } from './loader/server';
 
@@ -21,7 +21,7 @@ const init = async () => {
     const bootstrapData = bootstrap();
     server = bootstrapData.server;
   } catch (error) {
-    const logger = new LoggerService();
+    const logger = new Logger();
     if (error instanceof Error) {
       logger.error('Error starting server', error);
     } else {
