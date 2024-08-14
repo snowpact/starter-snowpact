@@ -7,6 +7,6 @@ import { getHonoApp } from '../../loader/getHonoApp';
 
 const adminRouter = getHonoApp();
 
-adminRouter.use(jwt({ secret: envConfig.ACCESS_TOKEN_SECRET })).route('/user/:id', userGetOneRoute);
+adminRouter.use(jwt({ secret: envConfig.ACCESS_TOKEN_SECRET })).route('/user', userGetOneRoute);
 
 export { adminRouter };

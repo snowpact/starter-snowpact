@@ -39,7 +39,7 @@ describe('authLoginRoute', () => {
 
     loginUseCaseMock.executeLogin.mockResolvedValue({ accessToken, refreshToken });
 
-    const response = await authLoginRoute.request('/', {
+    const response = await authLoginRoute.request('/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -58,7 +58,7 @@ describe('authLoginRoute', () => {
       new AppError({ message: 'User not found', code: AppErrorCodes.USER_NOT_FOUND }),
     );
 
-    const response = await authLoginRoute.request('/', {
+    const response = await authLoginRoute.request('/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),
@@ -80,7 +80,7 @@ describe('authLoginRoute', () => {
       new AppError({ message: 'Invalid password', code: AppErrorCodes.BAD_PASSWORD }),
     );
 
-    const response = await authLoginRoute.request('/', {
+    const response = await authLoginRoute.request('/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password }),

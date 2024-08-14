@@ -17,7 +17,7 @@ const authLoginRoute = getHonoApp();
 
 const route = createRoute({
   method: 'post',
-  path: '/',
+  path: '/login',
   request: {
     body: {
       content: {

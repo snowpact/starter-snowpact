@@ -16,7 +16,7 @@ const authResetPasswordRequestRoute = getHonoApp();
 
 const route = createRoute({
   method: 'post',
-  path: '/',
+  path: '/reset-password-request',
   request: {
     body: {
       content: {

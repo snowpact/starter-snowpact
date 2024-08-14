@@ -19,7 +19,7 @@ const userGetOneRoute = getHonoApp();
 
 const route = createRoute({
   method: 'get',
-  path: '/',
+  path: '/:id',
   request: {
     params: getUserSchema.params,
   },
@@ -61,7 +61,7 @@ const route = createRoute({
 
 userGetOneRoute.openapi(route, async (c) => {
   const { id } = c.req.valid('param');
-  const { userId } = c.get('jwtPayload') as UserPayloadOptions;
+  const userId = (c.get('jwtPayload') as UserPayloadOptions)?.userId;
 
   const getUserUseCase = mainContainer.get<GetUserUseCaseInterface>(TYPES.GetUserUseCase);
   const user = await getUserUseCase.executeGetUser({ currentUserId: userId, userId: id });
