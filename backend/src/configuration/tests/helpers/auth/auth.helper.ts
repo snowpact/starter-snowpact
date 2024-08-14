@@ -1,7 +1,7 @@
-import { StatelessTokenService } from '@/application/services/statelessToken/statelessToken.service';
-import { envConfig, envConfig } from '@/configuration/env/envConfig';
 import { mainContainer } from '@/configuration/di/mainContainer';
 import { TYPES } from '@/configuration/di/types';
+import { envConfig } from '@/configuration/env/envConfig';
+import { StatelessTokenService } from '@/gateways/helpers/statelessToken/statelessToken.service';
 
 export interface GenerateAccessTokenOptions {
   userId: string;

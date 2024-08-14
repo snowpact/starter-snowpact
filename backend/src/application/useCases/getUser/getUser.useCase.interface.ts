@@ -1,8 +1,9 @@
 import { UserInterface } from '@/domain/entities/user/user.entity.interface';
 
 export interface ExecuteGetUserOptions {
-  currentUserId: string;
+  currentUser?: UserInterface;
   userId: string;
+  shouldBeSameUser?: boolean;
 }
 
 export interface GetUserUseCaseInterface {

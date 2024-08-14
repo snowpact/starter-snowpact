@@ -17,55 +17,46 @@ describe('GetUserUseCase', () => {
     vi.clearAllMocks();
   });
 
-  it('should return user - current user is admin', async () => {
-    const currentUser = userFactory({ admin: true });
+  it('should return user - should not be same user', async () => {
+    const currentUser = userFactory();
     const user = userFactory();
-    userRepositoryMock.findById.mockResolvedValueOnce(currentUser);
-    userRepositoryMock.findById.mockResolvedValueOnce(user);
+    userRepositoryMock.findById.mockResolvedValue(user);
 
     const responseUser = await getUserUseCase.executeGetUser({
-      currentUserId: currentUser.id,
+      currentUser,
       userId: user.id,
+      shouldBeSameUser: false,
     });
 
     expect(responseUser).toEqual(user);
   });
-  it('should return user - current user is same as user and not admin', async () => {
-    const currentUser = userFactory({ admin: false });
-    userRepositoryMock.findById.mockResolvedValueOnce(currentUser);
+  it('should return user - should be same user', async () => {
+    const currentUser = userFactory();
+    userRepositoryMock.findById.mockResolvedValue(currentUser);
 
     const responseUser = await getUserUseCase.executeGetUser({
-      currentUserId: currentUser.id,
+      currentUser,
       userId: currentUser.id,
+      shouldBeSameUser: true,
     });
 
     expect(responseUser).toEqual(currentUser);
   });
-  it('should throw error - current user is different from user and not admin', async () => {
-    const currentUser = userFactory({ admin: false });
+  it('should throw error - current user is different from user', async () => {
+    const currentUser = userFactory();
     const user = userFactory();
-    userRepositoryMock.findById.mockResolvedValueOnce(currentUser);
-    userRepositoryMock.findById.mockResolvedValueOnce(user);
+    userRepositoryMock.findById.mockResolvedValue(user);
 
     await expect(
-      getUserUseCase.executeGetUser({ currentUserId: currentUser.id, userId: user.id }),
-    ).rejects.toThrow(AppError);
-  });
-  it('should throw error - current user not found', async () => {
-    userRepositoryMock.findById.mockResolvedValueOnce(undefined);
-    userRepositoryMock.findById.mockResolvedValueOnce(undefined);
-
-    await expect(
-      getUserUseCase.executeGetUser({ currentUserId: '1', userId: '2' }),
+      getUserUseCase.executeGetUser({ currentUser, userId: user.id, shouldBeSameUser: true }),
     ).rejects.toThrow(AppError);
   });
   it('should throw error - user not found', async () => {
-    const currentUser = userFactory({ admin: true });
-    userRepositoryMock.findById.mockResolvedValueOnce(currentUser);
-    userRepositoryMock.findById.mockResolvedValueOnce(undefined);
+    const currentUser = userFactory();
+    userRepositoryMock.findById.mockResolvedValue(undefined);
 
     await expect(
-      getUserUseCase.executeGetUser({ currentUserId: currentUser.id, userId: '2' }),
+      getUserUseCase.executeGetUser({ currentUser, userId: '2', shouldBeSameUser: false }),
     ).rejects.toThrow(AppError);
   });
 });

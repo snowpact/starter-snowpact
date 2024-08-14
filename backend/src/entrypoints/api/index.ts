@@ -3,9 +3,9 @@ import { ServerType } from '@hono/node-server';
 
 import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatabase/clientDatabase.interface';
 
-import { envConfig } from '@/configuration/env/envConfig';
 import { mainContainer } from '@/configuration/di/mainContainer';
 import { TYPES } from '@/configuration/di/types';
+import { envConfig } from '@/configuration/env/envConfig';
 import { Logger } from '@/gateways/logger/logger';
 
 import { bootstrap } from './loader/server';

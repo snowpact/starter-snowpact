@@ -1,5 +1,5 @@
-export interface GenerateStatelessTokenOptions<PayloadType> {
-  payload: PayloadType;
+export interface GenerateStatelessTokenOptions {
+  payload: string | object | Buffer;
   expiresIn: number;
   secret: string;
 }
@@ -11,8 +11,6 @@ export interface VerifyStatelessTokenOptions {
 }
 
 export interface StatelessTokenServiceInterface {
-  generateToken<PayloadType extends string | object | Buffer>(
-    options: GenerateStatelessTokenOptions<PayloadType>,
-  ): Promise<string>;
-  verifyToken<PayloadType>(options: VerifyStatelessTokenOptions): Promise<PayloadType>;
+  generateToken(options: GenerateStatelessTokenOptions): Promise<string>;
+  verifyToken(options: VerifyStatelessTokenOptions): Promise<unknown>;
 }

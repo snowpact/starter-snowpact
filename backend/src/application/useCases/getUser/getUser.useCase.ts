@@ -16,19 +16,18 @@ export class GetUserUseCase implements GetUserUseCaseInterface {
     @inject(TYPES.UserRepository) private userRepository: UserRepositoryInterface,
     @inject(TYPES.Logger) private loggerService: LoggerInterface,
   ) {}
-  async executeGetUser({ currentUserId, userId }: ExecuteGetUserOptions): Promise<UserInterface> {
-    const isSameUser = currentUserId === userId;
-    const currentUser = await this.userRepository.findById(currentUserId);
-    if (!currentUser) {
-      this.loggerService.debug('Current user not found', { currentUserId });
-      throw new AppError({
-        code: AppErrorCodes.CURRENT_USER_NOT_FOUND,
-        message: 'Current user not found',
-      });
-    }
+  async executeGetUser({
+    currentUser,
+    userId,
+    shouldBeSameUser = false,
+  }: ExecuteGetUserOptions): Promise<UserInterface> {
+    const isSameUser = currentUser?.id === userId;
 
-    if (!currentUser.admin && !isSameUser) {
-      this.loggerService.debug('User not allowed to access this user', { currentUserId, userId });
+    if (shouldBeSameUser && !isSameUser) {
+      this.loggerService.debug('User not allowed to access this user', {
+        currentUserId: currentUser?.id,
+        userId,
+      });
       throw new AppError({
         code: AppErrorCodes.CURRENT_USER_NOT_ALLOWED,
         message: 'User not allowed to access this user',

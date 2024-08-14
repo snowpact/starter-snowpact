@@ -6,7 +6,7 @@ import { userFactory } from '@/domain/entities/user/user.factory';
 
 describe('Get user', () => {
   it('should get a user', async () => {
-    const user = userFactory();
+    const user = userFactory({ admin: true });
     await testDbService.persistUser(user);
     const token = await generateAccessToken({ userId: user.id });
 

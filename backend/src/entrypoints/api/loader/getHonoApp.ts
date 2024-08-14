@@ -1,8 +1,19 @@
 import { OpenAPIHono } from '@hono/zod-openapi';
 import { ZodError } from 'zod';
 
-export const getHonoApp = (): OpenAPIHono => {
-  const app = new OpenAPIHono({
+import { UserPayloadOptions } from '@/gateways/authToken/authToken.service.interface';
+
+import { User } from '@/domain/entities/user/user.entity';
+
+export interface CustomEnvInterface {
+  Variables: {
+    jwtPayload?: UserPayloadOptions;
+    currentUser?: User;
+  };
+}
+
+export const getHonoApp = (): OpenAPIHono<CustomEnvInterface> => {
+  const app = new OpenAPIHono<CustomEnvInterface>({
     defaultHook: (result, c): Response | undefined => {
       if (!result.success) {
         return c.json(

@@ -3,12 +3,11 @@ import { NodePgDatabase, drizzle } from 'drizzle-orm/node-postgres';
 import { inject, injectable } from 'inversify';
 
 import { UserInterface } from '@/domain/entities/user/user.entity.interface';
+import { UserRepositoryInterface } from '@/domain/interfaces/repositories/user.repository.interface';
+import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatabase/clientDatabase.interface';
 
 import { TYPES } from '@/configuration/di/types';
 import * as schema from '@/gateways/helpers/database/schema';
-
-import { UserRepositoryInterface } from '../../../domain/interfaces/repositories/user.repository.interface';
-import { ClientDatabaseInterface } from '../../clientDatabase/clientDatabase.interface';
 
 @injectable()
 export class UserRepository implements UserRepositoryInterface {

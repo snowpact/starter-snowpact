@@ -63,7 +63,7 @@ describe('AuthService', () => {
 
       const result = await authService.verifyAccessToken(token);
 
-      expect(result).toBe(payload);
+      expect(result).toEqual(payload);
       expect(statelessTokenServiceMock.verifyToken).toHaveBeenCalledWith({
         token,
         secret: envConfig.ACCESS_TOKEN_SECRET,

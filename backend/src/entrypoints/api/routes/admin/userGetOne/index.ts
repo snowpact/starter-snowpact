@@ -2,7 +2,6 @@ import { createRoute } from '@hono/zod-openapi';
 
 import { AppErrorCodes } from '@/application/errors/app.error.interface';
 import { GetUserUseCaseInterface } from '@/application/useCases/getUser/getUser.useCase.interface';
-import { UserPayloadOptions } from '@/gateways/authToken/authToken.service.interface';
 
 import { AppError } from '@/application/errors/app.error';
 import { mainContainer } from '@/configuration/di/mainContainer';
@@ -61,10 +60,10 @@ const route = createRoute({
 
 userGetOneRoute.openapi(route, async (c) => {
   const { id } = c.req.valid('param');
-  const userId = (c.get('jwtPayload') as UserPayloadOptions)?.userId;
+  const currentUser = c.get('currentUser');
 
   const getUserUseCase = mainContainer.get<GetUserUseCaseInterface>(TYPES.GetUserUseCase);
-  const user = await getUserUseCase.executeGetUser({ currentUserId: userId, userId: id });
+  const user = await getUserUseCase.executeGetUser({ currentUser, userId: id });
 
   return c.json(UserSerializer.serialize(user), HttpStatuses.OK);
 });

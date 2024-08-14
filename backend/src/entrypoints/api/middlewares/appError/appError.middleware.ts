@@ -1,4 +1,4 @@
-import { ErrorHandler, Env } from 'hono';
+import { ErrorHandler } from 'hono';
 import { HTTPException } from 'hono/http-exception';
 import { ZodError } from 'zod';
 
@@ -7,9 +7,10 @@ import { AppErrorCodes } from '@/application/errors/app.error.interface';
 import { isAppError } from '@/application/errors/error.util';
 import { Logger } from '@/gateways/logger/logger';
 
-import { HttpStatuses } from '../config/httpStatuses';
+import { HttpStatuses } from '../../config/httpStatuses';
+import { CustomEnvInterface } from '../../loader/getHonoApp';
 
-export const appErrorMiddleware: ErrorHandler<Env> = (error, c) => {
+export const appErrorMiddleware: ErrorHandler<CustomEnvInterface> = (error, c) => {
   const logger = new Logger();
   if (isAppError(error)) {
     const { code, context, message } = error;
@@ -51,7 +52,7 @@ export const appErrorMiddleware: ErrorHandler<Env> = (error, c) => {
   );
 };
 
-const getStatusCodeFromErrorCode = (errorCode?: string): HttpStatuses => {
+export const getStatusCodeFromErrorCode = (errorCode?: string): HttpStatuses => {
   switch (errorCode) {
     case AppErrorCodes.USER_NOT_FOUND:
       return HttpStatuses.NOT_FOUND;
@@ -64,6 +65,7 @@ const getStatusCodeFromErrorCode = (errorCode?: string): HttpStatuses => {
     case AppErrorCodes.CURRENT_USER_NOT_FOUND:
     case AppErrorCodes.TOKEN_NOT_FOUND:
     case AppErrorCodes.INVALID_TOKEN:
+    case AppErrorCodes.INVALID_JWT_TOKEN:
     case AppErrorCodes.TOKEN_EXPIRED:
       return HttpStatuses.UNAUTHORIZED;
     case AppErrorCodes.CURRENT_USER_NOT_ALLOWED:

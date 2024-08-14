@@ -1,5 +1,11 @@
-import { injectable } from 'inversify';
+import { inject, injectable } from 'inversify';
 import jwt from 'jsonwebtoken';
+
+import { AppErrorCodes } from '@/application/errors/app.error.interface';
+import { LoggerInterface } from '@/domain/interfaces/logger.interface';
+
+import { AppError } from '@/application/errors/app.error';
+import { TYPES } from '@/configuration/di/types';
 
 import {
   GenerateStatelessTokenOptions,
@@ -9,11 +15,12 @@ import {
 
 @injectable()
 export class StatelessTokenService implements StatelessTokenServiceInterface {
-  async generateToken<PayloadType extends string | object | Buffer>({
+  constructor(@inject(TYPES.Logger) private logger: LoggerInterface) {}
+  async generateToken({
     payload,
     secret,
     expiresIn,
-  }: GenerateStatelessTokenOptions<PayloadType>): Promise<string> {
+  }: GenerateStatelessTokenOptions): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       jwt.sign(payload, secret, { expiresIn }, (err, token) => {
         if (err) {
@@ -25,17 +32,23 @@ export class StatelessTokenService implements StatelessTokenServiceInterface {
     });
   }
 
-  async verifyToken<PayloadType>({
+  async verifyToken({
     token,
     secret,
     ignoreExpiration = false,
-  }: VerifyStatelessTokenOptions): Promise<PayloadType> {
-    return new Promise<PayloadType>((resolve, reject) => {
+  }: VerifyStatelessTokenOptions): Promise<unknown> {
+    return new Promise<unknown>((resolve, reject) => {
       jwt.verify(token, secret, { ignoreExpiration }, (err, decoded) => {
         if (err) {
-          reject(err);
+          this.logger.error('Invalid jwt token', err, { token });
+          reject(
+            new AppError({
+              message: 'Invalid jwt token',
+              code: AppErrorCodes.INVALID_JWT_TOKEN,
+            }),
+          );
         } else {
-          resolve(decoded as PayloadType);
+          resolve(decoded);
         }
       });
     });

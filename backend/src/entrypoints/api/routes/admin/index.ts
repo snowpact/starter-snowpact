@@ -1,12 +1,12 @@
-import { jwt } from 'hono/jwt';
-
-import { envConfig } from '@/configuration/env/envConfig';
+import { authorizationMiddleware } from '@/entrypoints/api/middlewares/authorization/authorization.middleware';
 
 import { userGetOneRoute } from './userGetOne';
 import { getHonoApp } from '../../loader/getHonoApp';
 
 const adminRouter = getHonoApp();
 
-adminRouter.use(jwt({ secret: envConfig.ACCESS_TOKEN_SECRET })).route('/user', userGetOneRoute);
+adminRouter
+  .use(authorizationMiddleware({ shouldBeAdmin: true, optional: false }))
+  .route('/user', userGetOneRoute);
 
 export { adminRouter };

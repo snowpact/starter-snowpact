@@ -5,7 +5,7 @@ import { AppErrorCodes } from '@/application/errors/app.error.interface';
 
 import { AppError } from '@/application/errors/app.error';
 
-import { appErrorMiddleware } from './appError.middleware';
+import { appErrorMiddleware } from '../appError/appError.middleware';
 
 describe('appErrorMiddleware', () => {
   let app: OpenAPIHono;

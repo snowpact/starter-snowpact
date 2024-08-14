@@ -9,15 +9,22 @@ import { prettyJSON } from 'hono/pretty-json';
 import { envConfig } from '@/configuration/env/envConfig';
 import { Logger } from '@/gateways/logger/logger';
 
-import { getHonoApp } from './getHonoApp';
-import { apiDocMiddleware } from '../middlewares/apiDoc.middleware';
-import { appErrorMiddleware } from '../middlewares/appError.middleware';
-import { requestId } from '../middlewares/requestId.middleware';
+import { CustomEnvInterface, getHonoApp } from './getHonoApp';
+import { apiDocMiddleware } from '../middlewares/apiDoc/apiDoc.middleware';
+import { appErrorMiddleware } from '../middlewares/appError/appError.middleware';
+import { authenticationMiddleware } from '../middlewares/authentication/authentication.middleware';
+import { requestId } from '../middlewares/requestId/requestId.middleware';
 import { routes } from '../routes';
 
-export const bootstrap = (): { app: OpenAPIHono; server: ServerType } => {
+export const bootstrap = (): { app: OpenAPIHono<CustomEnvInterface>; server: ServerType } => {
   const app = getHonoApp();
-  app.use(cors()).use(logger()).use(prettyJSON()).use(requestId).route('/api', routes);
+  app
+    .use(cors())
+    .use(logger())
+    .use(prettyJSON())
+    .use(requestId)
+    .use(authenticationMiddleware)
+    .route('/api', routes);
 
   app.onError(appErrorMiddleware);
   app.doc('api/doc', apiDocMiddleware);

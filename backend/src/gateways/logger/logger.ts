@@ -2,7 +2,7 @@ import { injectable } from 'inversify';
 import pino from 'pino';
 
 import { envConfig } from '@/configuration/env/envConfig';
-import { asyncLocalStorage } from '@/entrypoints/api/middlewares/requestId.middleware';
+import { asyncLocalStorage } from '@/entrypoints/api/middlewares/requestId/requestId.middleware';
 
 import { LoggerInterface } from '../../domain/interfaces/logger.interface';
 
