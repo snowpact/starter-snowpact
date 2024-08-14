@@ -1,11 +1,12 @@
 import { OpenAPIHono } from '@hono/zod-openapi';
+import { Env } from 'hono';
 import { ZodError } from 'zod';
 
 import { UserPayloadOptions } from '@/gateways/authToken/authToken.service.interface';
 
 import { User } from '@/domain/entities/user/user.entity';
 
-export interface CustomEnvInterface {
+export interface CustomEnvInterface extends Env {
   Variables: {
     jwtPayload?: UserPayloadOptions;
     currentUser?: User;

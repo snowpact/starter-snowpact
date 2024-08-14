@@ -3,8 +3,8 @@ import { createTransport } from 'nodemailer';
 
 import { LoggerInterface } from '@/domain/interfaces/logger.interface';
 
-import { envConfig } from '@/configuration/env/envConfig';
 import { TYPES } from '@/configuration/di/types';
+import { envConfig } from '@/configuration/env/envConfig';
 
 import { MailerInterface, SendEmailOptions } from './mailer.interface';
 

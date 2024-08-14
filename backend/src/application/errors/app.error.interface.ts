@@ -21,6 +21,7 @@ export interface AppErrorOptions {
   message: string;
   code: AppErrorCodes;
   context?: unknown;
+  privateContext?: unknown;
 }
 
 export interface AppErrorInterface extends Error {

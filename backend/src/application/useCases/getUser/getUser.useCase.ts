@@ -24,24 +24,22 @@ export class GetUserUseCase implements GetUserUseCaseInterface {
     const isSameUser = currentUser?.id === userId;
 
     if (shouldBeSameUser && !isSameUser) {
-      this.loggerService.debug('User not allowed to access this user', {
-        currentUserId: currentUser?.id,
-        userId,
-      });
       throw new AppError({
         code: AppErrorCodes.CURRENT_USER_NOT_ALLOWED,
         message: 'User not allowed to access this user',
+        privateContext: { currentUserId: currentUser?.id, userId, shouldBeSameUser },
       });
     }
 
     const user = isSameUser ? currentUser : await this.userRepository.findById(userId);
     if (!user) {
-      this.loggerService.debug('User not found ', { userId });
       throw new AppError({
         code: AppErrorCodes.USER_NOT_FOUND,
         message: 'User not found',
+        privateContext: { userId },
       });
     }
+
     this.loggerService.debug('User found', { userId });
     return user;
   }

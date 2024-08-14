@@ -1,11 +1,9 @@
-import { inject, injectable } from 'inversify';
+import { injectable } from 'inversify';
 import jwt from 'jsonwebtoken';
 
 import { AppErrorCodes } from '@/application/errors/app.error.interface';
-import { LoggerInterface } from '@/domain/interfaces/logger.interface';
 
 import { AppError } from '@/application/errors/app.error';
-import { TYPES } from '@/configuration/di/types';
 
 import {
   GenerateStatelessTokenOptions,
@@ -15,7 +13,6 @@ import {
 
 @injectable()
 export class StatelessTokenService implements StatelessTokenServiceInterface {
-  constructor(@inject(TYPES.Logger) private logger: LoggerInterface) {}
   async generateToken({
     payload,
     secret,
@@ -40,11 +37,14 @@ export class StatelessTokenService implements StatelessTokenServiceInterface {
     return new Promise<unknown>((resolve, reject) => {
       jwt.verify(token, secret, { ignoreExpiration }, (err, decoded) => {
         if (err) {
-          this.logger.error('Invalid jwt token', err, { token });
           reject(
             new AppError({
               message: 'Invalid jwt token',
               code: AppErrorCodes.INVALID_JWT_TOKEN,
+              privateContext: {
+                error: err,
+                token,
+              },
             }),
           );
         } else {

@@ -28,8 +28,11 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
   async executeAskResetPassword(email: string): Promise<void> {
     const user = await this.userRepository.findByEmail(email);
     if (!user) {
-      this.loggerService.debug(`Ask reset password failed: User not found with email ${email}`);
-      throw new AppError({ message: 'User not found', code: AppErrorCodes.USER_NOT_FOUND });
+      throw new AppError({
+        message: 'User not found',
+        code: AppErrorCodes.USER_NOT_FOUND,
+        privateContext: { email },
+      });
     }
 
     const token = await this.userTokenService.generateToken({
@@ -53,6 +56,7 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
       throw new AppError({
         message: 'Failed to send reset password email',
         code: AppErrorCodes.FAILED_TO_SEND_EMAIL,
+        privateContext: { email },
       });
     }
 
@@ -67,17 +71,20 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
 
     const isValidPassword = this.passwordService.checkPasswordComplexity(newPassword);
     if (!isValidPassword) {
-      this.loggerService.debug(`Reset password failed: Invalid password complexity`);
       throw new AppError({
         message: 'Invalid password complexity',
         code: AppErrorCodes.INVALID_PASSWORD_COMPLEXITY,
+        privateContext: { token },
       });
     }
 
     const user = await this.userRepository.findById(userId);
     if (!user) {
-      this.loggerService.debug(`Reset password failed: User not found with id ${userId}`);
-      throw new AppError({ message: 'User not found', code: AppErrorCodes.USER_NOT_FOUND });
+      throw new AppError({
+        message: 'User not found',
+        code: AppErrorCodes.USER_NOT_FOUND,
+        privateContext: { userId },
+      });
     }
 
     const hashedPassword = await this.passwordService.hashPassword(newPassword);

@@ -1,10 +1,10 @@
 import { inject, injectable } from 'inversify';
 
 import { AppErrorCodes } from '@/application/errors/app.error.interface';
-import { AuthServiceInterface } from '@/gateways/authToken/authToken.service.interface';
 import { PasswordServiceInterface } from '@/application/services/password/password.service.interface';
 import { LoggerInterface } from '@/domain/interfaces/logger.interface';
 import { UserRepositoryInterface } from '@/domain/interfaces/repositories/user.repository.interface';
+import { AuthServiceInterface } from '@/gateways/authToken/authToken.service.interface';
 
 import { AppError } from '@/application/errors/app.error';
 import { TYPES } from '@/configuration/di/types';
@@ -26,16 +26,20 @@ export class LoginUseCase implements LoginUseCaseInterface {
   ): Promise<{ accessToken: string; refreshToken: string }> {
     const user = await this.userRepository.findByEmail(email);
     if (!user) {
-      this.loggerService.debug(`Login failed: User not found with email ${email}`);
-      throw new AppError({ message: 'User not found', code: AppErrorCodes.USER_NOT_FOUND });
+      throw new AppError({
+        message: 'User not found',
+        code: AppErrorCodes.USER_NOT_FOUND,
+        privateContext: { email },
+      });
     }
 
     const goodPassword = await this.passwordService.comparePassword(password, user.password);
     if (!goodPassword) {
-      this.loggerService.debug(
-        `Login failed: Password does not match for user with email ${email}`,
-      );
-      throw new AppError({ message: 'Invalid password', code: AppErrorCodes.BAD_PASSWORD });
+      throw new AppError({
+        message: 'Invalid password',
+        code: AppErrorCodes.BAD_PASSWORD,
+        privateContext: { email },
+      });
     }
 
     const accessToken = await this.authService.generateAccessToken(user.id);

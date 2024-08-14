@@ -53,6 +53,11 @@ export class AuthService implements AuthServiceInterface {
       throw new AppError({
         message: 'Invalid jwt token',
         code: AppErrorCodes.INVALID_JWT_TOKEN,
+        privateContext: {
+          message: 'Payload have invalid format',
+          payload,
+          token,
+        },
       });
     }
 

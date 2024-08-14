@@ -53,18 +53,27 @@ export class UserTokenService implements UserTokenServiceInterface {
     const token = await this.userTokenRepository.findByTokenValue(tokenValue);
 
     if (!token) {
-      throw new AppError({ code: AppErrorCodes.TOKEN_NOT_FOUND, message: 'Token not found' });
+      throw new AppError({
+        code: AppErrorCodes.TOKEN_NOT_FOUND,
+        message: 'Token not found',
+        privateContext: { userId, tokenType, tokenValue, ignoreExpiration },
+      });
     }
 
     if (token.expirationDate < new Date() && !ignoreExpiration) {
       await this.userTokenRepository.delete(tokenValue);
-      throw new AppError({ code: AppErrorCodes.TOKEN_EXPIRED, message: 'Token expired' });
+      throw new AppError({
+        code: AppErrorCodes.TOKEN_EXPIRED,
+        message: 'Token expired',
+        privateContext: { userId, tokenType, tokenValue, ignoreExpiration },
+      });
     }
 
     if (token.tokenType !== tokenType) {
       throw new AppError({
         code: AppErrorCodes.TOKEN_TYPE_MISMATCH,
         message: 'Token type mismatch',
+        privateContext: { userId, tokenType, tokenValue, ignoreExpiration },
       });
     }
 
@@ -72,6 +81,7 @@ export class UserTokenService implements UserTokenServiceInterface {
       throw new AppError({
         code: AppErrorCodes.TOKEN_USER_ID_MISMATCH,
         message: 'Token user id mismatch',
+        privateContext: { userId, tokenType, tokenValue, ignoreExpiration },
       });
     }
 
@@ -88,7 +98,11 @@ export class UserTokenService implements UserTokenServiceInterface {
     const token = await this.userTokenRepository.findByTokenValue(tokenValue);
 
     if (!token) {
-      throw new AppError({ code: AppErrorCodes.TOKEN_NOT_FOUND, message: 'Token not found' });
+      throw new AppError({
+        code: AppErrorCodes.TOKEN_NOT_FOUND,
+        message: 'Token not found',
+        privateContext: { tokenValue },
+      });
     }
 
     await this.userTokenRepository.update({

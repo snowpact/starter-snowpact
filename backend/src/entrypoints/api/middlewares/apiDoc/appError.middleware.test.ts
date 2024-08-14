@@ -5,13 +5,14 @@ import { AppErrorCodes } from '@/application/errors/app.error.interface';
 
 import { AppError } from '@/application/errors/app.error';
 
+import { CustomEnvInterface, getHonoApp } from '../../loader/getHonoApp';
 import { appErrorMiddleware } from '../appError/appError.middleware';
 
 describe('appErrorMiddleware', () => {
-  let app: OpenAPIHono;
+  let app: OpenAPIHono<CustomEnvInterface>;
 
   beforeEach(() => {
-    app = new OpenAPIHono();
+    app = getHonoApp();
   });
 
   it('should handle AppError and return the correct response', async () => {
