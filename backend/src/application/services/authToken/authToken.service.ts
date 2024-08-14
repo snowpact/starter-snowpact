@@ -9,8 +9,8 @@ import { TYPES } from '@/configuration/di/types';
 import { envConfig } from '@/configuration/env/envConfig';
 
 import { AuthServiceInterface, UserPayloadOptions } from './authToken.service.interface';
-import { UserTokenServiceInterface } from '../../application/services/userToken/userToken.service.interface';
-import { StatelessTokenServiceInterface } from '../helpers/statelessToken/statelessToken.service.interface';
+import { StatelessTokenServiceInterface } from '../../../gateways/helpers/statelessToken/statelessToken.service.interface';
+import { UserTokenServiceInterface } from '../userToken/userToken.service.interface';
 
 const UserPayloadOptionsSchema = z.object({
   userId: z.string(),

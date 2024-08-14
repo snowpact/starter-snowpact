@@ -5,8 +5,8 @@ import { UserTokenTypeEnum } from '@/domain/entities/userToken/userToken.entity.
 import { envConfig } from '@/configuration/env/envConfig';
 
 import { AuthService } from './authToken.service';
-import { getUserTokenServiceMock } from '../../application/services/userToken/userToken.service.mock';
-import { getStatelessTokenServiceMock } from '../helpers/statelessToken/statelessToken.service.mock';
+import { getStatelessTokenServiceMock } from '../../../gateways/helpers/statelessToken/statelessToken.service.mock';
+import { getUserTokenServiceMock } from '../userToken/userToken.service.mock';
 
 describe('AuthService', () => {
   const statelessTokenServiceMock = getStatelessTokenServiceMock();

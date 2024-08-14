@@ -1,10 +1,10 @@
 import { inject, injectable } from 'inversify';
 
 import { AppErrorCodes } from '@/application/errors/app.error.interface';
+import { AuthServiceInterface } from '@/application/services/authToken/authToken.service.interface';
 import { PasswordServiceInterface } from '@/application/services/password/password.service.interface';
 import { LoggerInterface } from '@/domain/interfaces/logger.interface';
 import { UserRepositoryInterface } from '@/domain/interfaces/repositories/user.repository.interface';
-import { AuthServiceInterface } from '@/gateways/authToken/authToken.service.interface';
 
 import { AppError } from '@/application/errors/app.error';
 import { TYPES } from '@/configuration/di/types';

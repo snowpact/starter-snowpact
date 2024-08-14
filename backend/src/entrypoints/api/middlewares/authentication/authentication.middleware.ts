@@ -1,7 +1,7 @@
 import { createMiddleware } from 'hono/factory';
 import { HTTPException } from 'hono/http-exception';
 
-import { AuthServiceInterface } from '@/gateways/authToken/authToken.service.interface';
+import { AuthServiceInterface } from '@/application/services/authToken/authToken.service.interface';
 
 import { mainContainer } from '@/configuration/di/mainContainer';
 import { TYPES } from '@/configuration/di/types';

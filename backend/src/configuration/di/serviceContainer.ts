@@ -4,12 +4,12 @@ import { PasswordServiceInterface } from '@/application/services/password/passwo
 import { UserTokenServiceInterface } from '@/application/services/userToken/userToken.service.interface';
 import { LoggerInterface } from '@/domain/interfaces/logger.interface';
 import { MailSenderInterface } from '@/domain/interfaces/mailSender.interface';
-import { AuthServiceInterface } from '@/gateways/authToken/authToken.service.interface';
+import { AuthServiceInterface } from '@/application/services/authToken/authToken.service.interface';
 import { StatelessTokenServiceInterface } from '@/gateways/helpers/statelessToken/statelessToken.service.interface';
 
 import { PasswordService } from '@/application/services/password/password.service';
 import { UserTokenService } from '@/application/services/userToken/userToken.service';
-import { AuthService } from '@/gateways/authToken/authToken.service';
+import { AuthService } from '@/application/services/authToken/authToken.service';
 import { StatelessTokenService } from '@/gateways/helpers/statelessToken/statelessToken.service';
 import { Logger } from '@/gateways/logger/logger';
 import { MailSender } from '@/gateways/mailSender/mailSender';
