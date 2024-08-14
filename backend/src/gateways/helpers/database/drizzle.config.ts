@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { defineConfig } from 'drizzle-kit';
 
-import { envConfig } from '@/configuration/config/env';
+import { envConfig } from '@/configuration/env/envConfig';
 
 export default defineConfig({
   schema: './src/gateways/database/schema/*',

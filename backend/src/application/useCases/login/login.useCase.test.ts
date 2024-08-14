@@ -4,8 +4,8 @@ import { describe, beforeEach, expect, it, vi } from 'vitest';
 import { AppError } from '@/application/errors/app.error';
 import { userFactory } from '@/domain/entities/user/user.factory';
 
-import { getAuthServiceMock } from '@/application/services/authToken/authToken.service.mock';
 import { getPasswordServiceMock } from '@/application/services/password/password.service.mock';
+import { getAuthServiceMock } from '@/gateways/authToken/authToken.service.mock';
 import { getLoggerMock } from '@/gateways/logger/logger.mock';
 import { getUserRepositoryMock } from '@/gateways/repositories/userRepository/user.repository.mock';
 

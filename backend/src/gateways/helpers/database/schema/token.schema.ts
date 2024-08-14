@@ -1,9 +1,12 @@
 import { boolean, index, pgEnum, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 
-import { TokenTypeValues, TokenInterface } from '@/domain/entities/token/token.entity.interface';
+import {
+  UserTokenTypeValues,
+  UserTokenInterface,
+} from '@/domain/entities/userToken/userToken.entity.interface';
 
 // Définir un enum PostgreSQL pour les types de token
-export const tokenTypeEnum = pgEnum('token_type', TokenTypeValues);
+export const tokenTypeEnum = pgEnum('token_type', UserTokenTypeValues);
 
 export const tokens = pgTable(
   'tokens',
@@ -29,5 +32,5 @@ export const tokens = pgTable(
 
 type TokenModel = typeof tokens.$inferSelect;
 
-export const assertTokenType: TokenInterface extends TokenModel ? true : false = true;
-export const assertTokenTypeReverse: TokenModel extends TokenInterface ? true : false = true;
+export const assertTokenType: UserTokenInterface extends TokenModel ? true : false = true;
+export const assertTokenTypeReverse: TokenModel extends UserTokenInterface ? true : false = true;

@@ -1,7 +1,7 @@
 import { createTransport } from 'nodemailer';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-import { envConfig } from '@/configuration/config/env';
+import { envConfig } from '@/configuration/env/envConfig';
 
 import { getLoggerMock } from '@/gateways/logger/logger.mock';
 

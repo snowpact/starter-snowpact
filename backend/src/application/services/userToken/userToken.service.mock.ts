@@ -1,8 +1,8 @@
 import { vi, Mocked } from 'vitest';
 
-import { StateFullTokenServiceInterface } from './stateFullToken.service.interface';
+import { UserTokenServiceInterface } from './userToken.service.interface';
 
-export const getStateFullTokenServiceMock = (): Mocked<StateFullTokenServiceInterface> => ({
+export const getUserTokenServiceMock = (): Mocked<UserTokenServiceInterface> => ({
   generateToken: vi.fn().mockResolvedValue(undefined),
   verifyToken: vi.fn().mockResolvedValue(undefined),
   removeToken: vi.fn().mockResolvedValue(undefined),

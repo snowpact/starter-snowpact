@@ -2,18 +2,18 @@
 import { faker } from '@faker-js/faker';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { TokenTypeValues } from '@/domain/entities/token/token.entity.interface';
+import { UserTokenTypeValues } from '@/domain/entities/userToken/userToken.entity.interface';
 
 import { AppError } from '@/application/errors/app.error';
-import { tokenFactory } from '@/domain/entities/token/token.entity.factory';
+import { userTokenFactory } from '@/domain/entities/userToken/userToken.entity.factory';
 
-import { getTokenRepositoryMock } from '@/gateways/repositories/tokenRepository/token.repository.mock';
+import { getUserTokenRepositoryMock } from '@/gateways/repositories/userTokenRepository/userToken.repository.mock';
 
-import { StateFullTokenService } from './stateFullToken.service';
+import { UserTokenService } from './userToken.service';
 
-describe('StateFullTokenService', () => {
-  const tokenRepositoryMock = getTokenRepositoryMock();
-  const stateFullTokenService = new StateFullTokenService(tokenRepositoryMock);
+describe('UserTokenService', () => {
+  const userTokenRepositoryMock = getUserTokenRepositoryMock();
+  const userTokenService = new UserTokenService(userTokenRepositoryMock);
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -21,10 +21,10 @@ describe('StateFullTokenService', () => {
 
   describe('generateToken', () => {
     it('should generate a token', async () => {
-      const token = tokenFactory();
-      tokenRepositoryMock.create.mockResolvedValue(undefined);
+      const token = userTokenFactory();
+      userTokenRepositoryMock.create.mockResolvedValue(undefined);
 
-      const generatedToken = await stateFullTokenService.generateToken({
+      const generatedToken = await userTokenService.generateToken({
         userId: token.userId,
         expiresIn: 1000,
         canBeRefreshed: token.canBeRefreshed,
@@ -32,7 +32,7 @@ describe('StateFullTokenService', () => {
       });
 
       expect(generatedToken).toBeDefined();
-      expect(tokenRepositoryMock.create).toHaveBeenCalledWith({
+      expect(userTokenRepositoryMock.create).toHaveBeenCalledWith({
         id: expect.any(String),
         userId: token.userId,
         value: expect.any(String),
@@ -48,17 +48,17 @@ describe('StateFullTokenService', () => {
   describe('removeToken', () => {
     it('should remove a token', async () => {
       const token = 'token';
-      await stateFullTokenService.removeToken(token);
-      expect(tokenRepositoryMock.delete).toHaveBeenCalledWith(token);
+      await userTokenService.removeToken(token);
+      expect(userTokenRepositoryMock.delete).toHaveBeenCalledWith(token);
     });
   });
 
   describe('verifyToken', () => {
     it('should verify a token', async () => {
-      const token = tokenFactory();
-      tokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
+      const token = userTokenFactory();
+      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
 
-      const verifiedToken = await stateFullTokenService.verifyToken({
+      const verifiedToken = await userTokenService.verifyToken({
         tokenValue: token.value,
         tokenType: token.tokenType,
         userId: token.userId,
@@ -66,14 +66,14 @@ describe('StateFullTokenService', () => {
 
       expect(verifiedToken).toBeDefined();
       expect(verifiedToken.value).toBe(token.value);
-      expect(tokenRepositoryMock.findByTokenValue).toHaveBeenCalledWith(token.value);
+      expect(userTokenRepositoryMock.findByTokenValue).toHaveBeenCalledWith(token.value);
     });
     it('should throw an error if token is not found', async () => {
-      const token = tokenFactory();
-      tokenRepositoryMock.findByTokenValue.mockResolvedValue(undefined);
+      const token = userTokenFactory();
+      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(undefined);
 
       await expect(
-        stateFullTokenService.verifyToken({
+        userTokenService.verifyToken({
           tokenValue: token.value,
           tokenType: token.tokenType,
           userId: token.userId,
@@ -81,12 +81,12 @@ describe('StateFullTokenService', () => {
       ).rejects.toThrow(AppError);
     });
     it('should throw an error if token expired - ignoreExpiration = false', async () => {
-      const token = tokenFactory();
+      const token = userTokenFactory();
       token.expirationDate = new Date(Date.now() - 1000);
-      tokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
+      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
 
       await expect(
-        stateFullTokenService.verifyToken({
+        userTokenService.verifyToken({
           tokenValue: token.value,
           tokenType: token.tokenType,
           userId: token.userId,
@@ -94,31 +94,31 @@ describe('StateFullTokenService', () => {
       ).rejects.toThrow(AppError);
     });
     it('should throw an error if token type is different', async () => {
-      const originalTokenType = faker.helpers.arrayElement(TokenTypeValues);
-      const token = tokenFactory({ tokenType: originalTokenType });
-      tokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
+      const originalTokenType = faker.helpers.arrayElement(UserTokenTypeValues);
+      const token = userTokenFactory({ tokenType: originalTokenType });
+      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
 
       const differentTokenType = faker.helpers.arrayElement(
-        TokenTypeValues.filter((type) => type !== originalTokenType),
+        UserTokenTypeValues.filter((type) => type !== originalTokenType),
       );
 
       await expect(
-        stateFullTokenService.verifyToken({
+        userTokenService.verifyToken({
           tokenValue: token.value,
           tokenType: differentTokenType,
           userId: token.userId,
         }),
       ).rejects.toThrow(AppError);
 
-      expect(tokenRepositoryMock.findByTokenValue).toHaveBeenCalledWith(token.value);
+      expect(userTokenRepositoryMock.findByTokenValue).toHaveBeenCalledWith(token.value);
     });
     it('should not throw an error if token expired - ignoreExpiration = true', async () => {
-      const token = tokenFactory();
+      const token = userTokenFactory();
       token.expirationDate = new Date(Date.now() - 1000);
-      tokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
+      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
 
       await expect(
-        stateFullTokenService.verifyToken({
+        userTokenService.verifyToken({
           tokenValue: token.value,
           tokenType: token.tokenType,
           userId: token.userId,
@@ -127,11 +127,11 @@ describe('StateFullTokenService', () => {
       ).resolves.not.toThrow(AppError);
     });
     it('should throw an error if userId is not the same', async () => {
-      const token = tokenFactory();
-      tokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
+      const token = userTokenFactory();
+      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
 
       await expect(
-        stateFullTokenService.verifyToken({
+        userTokenService.verifyToken({
           tokenValue: token.value,
           tokenType: token.tokenType,
           userId: 'differentUserId',
@@ -140,11 +140,11 @@ describe('StateFullTokenService', () => {
       ).rejects.toThrow(AppError);
     });
     it('should not throw an error if userId not provided', async () => {
-      const token = tokenFactory();
-      tokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
+      const token = userTokenFactory();
+      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
 
       await expect(
-        stateFullTokenService.verifyToken({
+        userTokenService.verifyToken({
           tokenValue: token.value,
           tokenType: token.tokenType,
         }),
@@ -154,19 +154,19 @@ describe('StateFullTokenService', () => {
 
   describe('refreshToken', () => {
     it('should refresh a token', async () => {
-      const token = tokenFactory();
-      tokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
-      await stateFullTokenService.refreshToken({ tokenValue: token.value, expiresIn: 1000 });
-      expect(tokenRepositoryMock.update).toHaveBeenCalled();
+      const token = userTokenFactory();
+      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
+      await userTokenService.refreshToken({ tokenValue: token.value, expiresIn: 1000 });
+      expect(userTokenRepositoryMock.update).toHaveBeenCalled();
     });
     it('should throw an error if token is not found', async () => {
       const token = 'token';
-      tokenRepositoryMock.findByTokenValue.mockResolvedValue(undefined);
+      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(undefined);
 
       await expect(
-        stateFullTokenService.refreshToken({ tokenValue: token, expiresIn: 1000 }),
+        userTokenService.refreshToken({ tokenValue: token, expiresIn: 1000 }),
       ).rejects.toThrow(AppError);
-      expect(tokenRepositoryMock.update).not.toHaveBeenCalled();
+      expect(userTokenRepositoryMock.update).not.toHaveBeenCalled();
     });
   });
 });

@@ -1,22 +1,24 @@
 import { inject, injectable } from 'inversify';
 
 import { AppErrorCodes } from '@/application/errors/app.error.interface';
-import { AccountTokenServiceInterface } from '@/application/services/accountToken/accountToken.service.interface';
 import { PasswordServiceInterface } from '@/application/services/password/password.service.interface';
-import { TokenTypeEnum } from '@/domain/entities/token/token.entity.interface';
+import { UserTokenServiceInterface } from '@/application/services/userToken/userToken.service.interface';
+import { UserTokenTypeEnum } from '@/domain/entities/userToken/userToken.entity.interface';
 import { LoggerInterface } from '@/domain/interfaces/logger.interface';
 import { MailSenderInterface } from '@/domain/interfaces/mailSender.interface';
 import { UserRepositoryInterface } from '@/domain/interfaces/repositories/user.repository.interface';
 
 import { AppError } from '@/application/errors/app.error';
 import { TYPES } from '@/configuration/di/types';
+import { envConfig } from '@/configuration/env/envConfig';
 
 import { ResetPasswordUseCaseInterface } from './resetPassword.useCase.interface';
 
 @injectable()
 export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
   constructor(
-    @inject(TYPES.AccountTokenService) private accountTokenService: AccountTokenServiceInterface,
+    @inject(TYPES.UserTokenService)
+    private userTokenService: UserTokenServiceInterface,
     @inject(TYPES.MailSender) private mailSender: MailSenderInterface,
     @inject(TYPES.UserRepository) private userRepository: UserRepositoryInterface,
     @inject(TYPES.PasswordService) private passwordService: PasswordServiceInterface,
@@ -30,9 +32,11 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
       throw new AppError({ message: 'User not found', code: AppErrorCodes.USER_NOT_FOUND });
     }
 
-    const token = await this.accountTokenService.generateAccountToken({
+    const token = await this.userTokenService.generateToken({
       userId: user.id,
-      tokenType: TokenTypeEnum.resetPassword,
+      tokenType: UserTokenTypeEnum.resetPassword,
+      canBeRefreshed: false,
+      expiresIn: envConfig.ACCOUNT_TOKEN_EXPIRATION,
     });
 
     try {
@@ -56,9 +60,9 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
   }
 
   async executeResetPassword(token: string, newPassword: string): Promise<void> {
-    const userId = await this.accountTokenService.verifyAccountToken({
+    const { userId } = await this.userTokenService.verifyToken({
       tokenValue: token,
-      tokenType: TokenTypeEnum.resetPassword,
+      tokenType: UserTokenTypeEnum.resetPassword,
     });
 
     const isValidPassword = this.passwordService.checkPasswordComplexity(newPassword);

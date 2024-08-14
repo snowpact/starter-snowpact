@@ -1,17 +1,17 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
-import { TokenTypeEnum } from '@/domain/entities/token/token.entity.interface';
+import { UserTokenTypeEnum } from '@/domain/entities/userToken/userToken.entity.interface';
 
-import { envConfig } from '@/configuration/config/env';
+import { envConfig } from '@/configuration/env/envConfig';
 
 import { AuthService } from './authToken.service';
-import { getStateFullTokenServiceMock } from '../stateFullToken/stateFullToken.service.mock';
-import { getStatelessTokenServiceMock } from '../statelessToken/statelessToken.service.mock';
+import { getUserTokenServiceMock } from '../../application/services/userToken/userToken.service.mock';
+import { getStatelessTokenServiceMock } from '../helpers/statelessToken/statelessToken.service.mock';
 
 describe('AuthService', () => {
   const statelessTokenServiceMock = getStatelessTokenServiceMock();
-  const stateFullTokenServiceMock = getStateFullTokenServiceMock();
-  const authService = new AuthService(statelessTokenServiceMock, stateFullTokenServiceMock);
+  const userTokenServiceMock = getUserTokenServiceMock();
+  const authService = new AuthService(statelessTokenServiceMock, userTokenServiceMock);
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -40,15 +40,15 @@ describe('AuthService', () => {
       const userId = '123';
       const token = 'refresh-token';
 
-      stateFullTokenServiceMock.generateToken.mockResolvedValue(token);
+      userTokenServiceMock.generateToken.mockResolvedValue(token);
 
       const result = await authService.generateRefreshToken(userId);
 
       expect(result).toBe(token);
-      expect(stateFullTokenServiceMock.generateToken).toHaveBeenCalledWith({
+      expect(userTokenServiceMock.generateToken).toHaveBeenCalledWith({
         userId,
         canBeRefreshed: true,
-        tokenType: TokenTypeEnum.refreshToken,
+        tokenType: UserTokenTypeEnum.refreshToken,
         expiresIn: envConfig.REFRESH_TOKEN_EXPIRATION,
       });
     });
@@ -77,12 +77,12 @@ describe('AuthService', () => {
       const tokenValue = 'refresh-token';
       const newTokenValue = 'new-token';
 
-      stateFullTokenServiceMock.refreshToken.mockResolvedValue(newTokenValue);
+      userTokenServiceMock.refreshToken.mockResolvedValue(newTokenValue);
 
       const result = await authService.refreshToken(tokenValue);
 
       expect(result).toBe(newTokenValue);
-      expect(stateFullTokenServiceMock.refreshToken).toHaveBeenCalledWith({
+      expect(userTokenServiceMock.refreshToken).toHaveBeenCalledWith({
         tokenValue,
         expiresIn: envConfig.REFRESH_TOKEN_EXPIRATION,
       });

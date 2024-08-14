@@ -2,13 +2,13 @@ import 'reflect-metadata';
 
 import { Container } from 'inversify';
 
-import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatabase/clientDatabase.interface';
-import { TokenRepositoryInterface } from '@/domain/interfaces/repositories/token.repository.interface';
 import { UserRepositoryInterface } from '@/domain/interfaces/repositories/user.repository.interface';
+import { UserTokenRepositoryInterface } from '@/domain/interfaces/repositories/userToken.repository.interface';
+import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatabase/clientDatabase.interface';
 
 import { ClientDatabase } from '@/gateways/helpers/database/clientDatabase/clientDatabase';
-import { TokenRepository } from '@/gateways/repositories/tokenRepository/token.repository';
 import { UserRepository } from '@/gateways/repositories/userRepository/user.repository';
+import { UserTokenRepository } from '@/gateways/repositories/userTokenRepository/userToken.repository';
 
 import { entityContainer } from './entityContainer';
 import { serviceContainer } from './serviceContainer';
@@ -27,6 +27,6 @@ mainContainer
   .inSingletonScope();
 
 mainContainer.bind<UserRepositoryInterface>(TYPES.UserRepository).to(UserRepository);
-mainContainer.bind<TokenRepositoryInterface>(TYPES.TokenRepository).to(TokenRepository);
+mainContainer.bind<UserTokenRepositoryInterface>(TYPES.UserTokenRepository).to(UserTokenRepository);
 
 export { mainContainer };

@@ -1,21 +1,21 @@
 import { inject, injectable } from 'inversify';
 
-import { TokenTypeEnum } from '@/domain/entities/token/token.entity.interface';
+import { UserTokenTypeEnum } from '@/domain/entities/userToken/userToken.entity.interface';
 
-import { envConfig } from '@/configuration/config/env';
 import { TYPES } from '@/configuration/di/types';
+import { envConfig } from '@/configuration/env/envConfig';
 
 import { AuthServiceInterface, UserPayloadOptions } from './authToken.service.interface';
-import { StateFullTokenServiceInterface } from '../stateFullToken/stateFullToken.service.interface';
-import { StatelessTokenServiceInterface } from '../statelessToken/statelessToken.service.interface';
+import { UserTokenServiceInterface } from '../../application/services/userToken/userToken.service.interface';
+import { StatelessTokenServiceInterface } from '../helpers/statelessToken/statelessToken.service.interface';
 
 @injectable()
 export class AuthService implements AuthServiceInterface {
   constructor(
     @inject(TYPES.StatelessTokenService)
     private statelessTokenService: StatelessTokenServiceInterface,
-    @inject(TYPES.StateFullTokenService)
-    private stateFullTokenService: StateFullTokenServiceInterface,
+    @inject(TYPES.UserTokenService)
+    private userTokenService: UserTokenServiceInterface,
   ) {}
 
   generateAccessToken(userId: string): Promise<string> {
@@ -26,11 +26,11 @@ export class AuthService implements AuthServiceInterface {
     });
   }
   generateRefreshToken(userId: string): Promise<string> {
-    return this.stateFullTokenService.generateToken({
+    return this.userTokenService.generateToken({
       userId,
       canBeRefreshed: true,
       expiresIn: envConfig.REFRESH_TOKEN_EXPIRATION,
-      tokenType: TokenTypeEnum.refreshToken,
+      tokenType: UserTokenTypeEnum.refreshToken,
     });
   }
   verifyAccessToken(token: string, ignoreExpiration = false): Promise<UserPayloadOptions> {
@@ -41,7 +41,7 @@ export class AuthService implements AuthServiceInterface {
     });
   }
   refreshToken(token: string): Promise<string> {
-    return this.stateFullTokenService.refreshToken({
+    return this.userTokenService.refreshToken({
       tokenValue: token,
       expiresIn: envConfig.REFRESH_TOKEN_EXPIRATION,
     });

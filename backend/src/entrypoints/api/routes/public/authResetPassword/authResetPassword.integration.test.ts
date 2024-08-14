@@ -1,15 +1,15 @@
 import { describe, expect, it } from 'vitest';
 
-import { TokenTypeEnum } from '@/domain/entities/token/token.entity.interface';
+import { UserTokenTypeEnum } from '@/domain/entities/userToken/userToken.entity.interface';
 
 import { testDbService, app } from '@/configuration/tests/vitest.containers.setup';
-import { tokenFactory } from '@/domain/entities/token/token.entity.factory';
 import { userFactory } from '@/domain/entities/user/user.factory';
+import { userTokenFactory } from '@/domain/entities/userToken/userToken.entity.factory';
 
 describe('authResetPassword', () => {
   it('should reset the password', async () => {
     const user = userFactory();
-    const token = tokenFactory({ tokenType: TokenTypeEnum.resetPassword, userId: user.id });
+    const token = userTokenFactory({ tokenType: UserTokenTypeEnum.resetPassword, userId: user.id });
     const newPassword = 'Password1234*';
 
     await testDbService.persistUser(user);

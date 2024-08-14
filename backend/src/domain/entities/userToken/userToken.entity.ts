@@ -1,6 +1,6 @@
-import { TokenInterface, TokenType } from './token.entity.interface';
+import { UserTokenInterface, UserTokenType } from './userToken.entity.interface';
 
-export class Token implements TokenInterface {
+export class UserToken implements UserTokenInterface {
   constructor(
     public id: string,
     public userId: string,
@@ -8,7 +8,7 @@ export class Token implements TokenInterface {
     public canBeRefreshed: boolean,
     public createdAt: Date,
     public updatedAt: Date,
-    public tokenType: TokenType,
+    public tokenType: UserTokenType,
     public expirationDate: Date,
   ) {}
 }

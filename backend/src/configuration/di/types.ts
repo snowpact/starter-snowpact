@@ -11,10 +11,10 @@ const TYPES = {
   ClientDatabase: Symbol.for('ClientDatabase'),
   Logger: Symbol.for('Logger'),
   Mailer: Symbol.for('Mailer'),
-  StateFullTokenService: Symbol.for('StateFullTokenService'),
+  UserTokenService: Symbol.for('UserTokenService'),
 
   UserRepository: Symbol.for('UserRepository'),
-  TokenRepository: Symbol.for('TokenRepository'),
+  UserTokenRepository: Symbol.for('UserTokenRepository'),
 
   MainHonoApp: Symbol.for('MainHonoApp'),
   SendResetPasswordEmailService: Symbol.for('SendResetPasswordEmailService'),

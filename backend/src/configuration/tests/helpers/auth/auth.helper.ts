@@ -1,5 +1,5 @@
 import { StatelessTokenService } from '@/application/services/statelessToken/statelessToken.service';
-import { envConfig, envConfig } from '@/configuration/config/env';
+import { envConfig, envConfig } from '@/configuration/env/envConfig';
 import { mainContainer } from '@/configuration/di/mainContainer';
 import { TYPES } from '@/configuration/di/types';
 

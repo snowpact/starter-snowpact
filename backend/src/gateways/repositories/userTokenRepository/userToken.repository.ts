@@ -2,27 +2,27 @@ import { eq } from 'drizzle-orm';
 import { NodePgDatabase, drizzle } from 'drizzle-orm/node-postgres';
 import { inject, injectable } from 'inversify';
 
-import { TokenInterface } from '@/domain/entities/token/token.entity.interface';
+import { UserTokenInterface } from '@/domain/entities/userToken/userToken.entity.interface';
 import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatabase/clientDatabase.interface';
 
 import { TYPES } from '@/configuration/di/types';
 import * as schema from '@/gateways/helpers/database/schema';
 
 import {
-  TokenRepositoryInterface,
+  UserTokenRepositoryInterface,
   UpdateOptions,
-} from '../../../domain/interfaces/repositories/token.repository.interface';
+} from '../../../domain/interfaces/repositories/userToken.repository.interface';
 
 @injectable()
-export class TokenRepository implements TokenRepositoryInterface {
+export class UserTokenRepository implements UserTokenRepositoryInterface {
   private db: NodePgDatabase<typeof schema>;
   constructor(@inject(TYPES.ClientDatabase) clientDatabase: ClientDatabaseInterface) {
     this.db = drizzle(clientDatabase.getClient(), { schema });
   }
-  create = async (token: TokenInterface): Promise<void> => {
+  create = async (token: UserTokenInterface): Promise<void> => {
     await this.db.insert(schema.tokens).values(token);
   };
-  findByTokenValue = async (tokenValue: string): Promise<TokenInterface | undefined> => {
+  findByTokenValue = async (tokenValue: string): Promise<UserTokenInterface | undefined> => {
     const result = await this.db
       .select()
       .from(schema.tokens)

@@ -2,8 +2,8 @@ import { eq, sql } from 'drizzle-orm';
 import { NodePgDatabase, drizzle } from 'drizzle-orm/node-postgres';
 import { migrate } from 'drizzle-orm/node-postgres/migrator';
 
-import { TokenInterface } from '@/domain/entities/token/token.entity.interface';
 import { UserInterface } from '@/domain/entities/user/user.entity.interface';
+import { UserTokenInterface } from '@/domain/entities/userToken/userToken.entity.interface';
 import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatabase/clientDatabase.interface';
 
 import * as schema from '@/gateways/helpers/database/schema';
@@ -61,11 +61,11 @@ export class TestDbService {
     return results[0];
   };
 
-  public persistToken = async (token: TokenInterface): Promise<void> => {
+  public persistToken = async (token: UserTokenInterface): Promise<void> => {
     await this.db.insert(schema.tokens).values(token);
   };
 
-  public getToken = async (tokenValue: string): Promise<TokenInterface | undefined> => {
+  public getToken = async (tokenValue: string): Promise<UserTokenInterface | undefined> => {
     const results = await this.db
       .select()
       .from(schema.tokens)

@@ -6,7 +6,7 @@ import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import { prettyJSON } from 'hono/pretty-json';
 
-import { envConfig } from '@/configuration/config/env';
+import { envConfig } from '@/configuration/env/envConfig';
 import { Logger } from '@/gateways/logger/logger';
 
 import { getHonoApp } from './getHonoApp';

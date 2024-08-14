@@ -1,16 +1,19 @@
-import { TokenType, TokenInterface } from '@/domain/entities/token/token.interface';
+import {
+  UserTokenType,
+  UserTokenInterface,
+} from '@/domain/entities/userToken/userToken.entity.interface';
 
 export interface GenerateTokenOptions {
   userId: string;
   expiresIn: number;
   canBeRefreshed: boolean;
-  tokenType: TokenType;
+  tokenType: UserTokenType;
 }
 
 export interface VerifyTokenOptions {
   tokenValue: string;
   ignoreExpiration?: boolean;
-  tokenType: TokenType;
+  tokenType: UserTokenType;
   userId?: string;
 }
 
@@ -19,9 +22,9 @@ export interface RefreshTokenOptions {
   expiresIn: number;
 }
 
-export interface StateFullTokenServiceInterface {
+export interface UserTokenServiceInterface {
   generateToken(options: GenerateTokenOptions): Promise<string>;
   removeToken(tokenValue: string): Promise<void>;
-  verifyToken(options: VerifyTokenOptions): Promise<TokenInterface>;
+  verifyToken(options: VerifyTokenOptions): Promise<UserTokenInterface>;
   refreshToken(options: RefreshTokenOptions): Promise<string>;
 }

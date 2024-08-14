@@ -2,8 +2,8 @@ import { inject, injectable } from 'inversify';
 import { v4 } from 'uuid';
 
 import { AppErrorCodes } from '@/application/errors/app.error.interface';
-import { TokenInterface } from '@/domain/entities/token/token.interface';
-import { TokenRepositoryInterface } from '@/domain/interfaces/repositories/token.repository.interface';
+import { UserTokenInterface } from '@/domain/entities/userToken/userToken.entity.interface';
+import { UserTokenRepositoryInterface } from '@/domain/interfaces/repositories/userToken.repository.interface';
 
 import { AppError } from '@/application/errors/app.error';
 import { TYPES } from '@/configuration/di/types';
@@ -11,13 +11,16 @@ import { TYPES } from '@/configuration/di/types';
 import {
   GenerateTokenOptions,
   RefreshTokenOptions,
-  StateFullTokenServiceInterface,
+  UserTokenServiceInterface,
   VerifyTokenOptions,
-} from './stateFullToken.service.interface';
+} from './userToken.service.interface';
 
 @injectable()
-export class StateFullTokenService implements StateFullTokenServiceInterface {
-  constructor(@inject(TYPES.TokenRepository) private tokenRepository: TokenRepositoryInterface) {}
+export class UserTokenService implements UserTokenServiceInterface {
+  constructor(
+    @inject(TYPES.UserTokenRepository)
+    private userTokenRepository: UserTokenRepositoryInterface,
+  ) {}
 
   async generateToken({
     userId,
@@ -26,7 +29,7 @@ export class StateFullTokenService implements StateFullTokenServiceInterface {
     tokenType,
   }: GenerateTokenOptions): Promise<string> {
     const tokenValue = v4();
-    const token: TokenInterface = {
+    const token: UserTokenInterface = {
       id: v4(),
       userId,
       value: tokenValue,
@@ -37,7 +40,7 @@ export class StateFullTokenService implements StateFullTokenServiceInterface {
       tokenType,
     };
 
-    await this.tokenRepository.create(token);
+    await this.userTokenRepository.create(token);
 
     return tokenValue;
   }
@@ -46,15 +49,15 @@ export class StateFullTokenService implements StateFullTokenServiceInterface {
     ignoreExpiration = false,
     tokenType,
     userId,
-  }: VerifyTokenOptions): Promise<TokenInterface> {
-    const token = await this.tokenRepository.findByTokenValue(tokenValue);
+  }: VerifyTokenOptions): Promise<UserTokenInterface> {
+    const token = await this.userTokenRepository.findByTokenValue(tokenValue);
 
     if (!token) {
       throw new AppError({ code: AppErrorCodes.TOKEN_NOT_FOUND, message: 'Token not found' });
     }
 
     if (token.expirationDate < new Date() && !ignoreExpiration) {
-      await this.tokenRepository.delete(tokenValue);
+      await this.userTokenRepository.delete(tokenValue);
       throw new AppError({ code: AppErrorCodes.TOKEN_EXPIRED, message: 'Token expired' });
     }
 
@@ -76,19 +79,19 @@ export class StateFullTokenService implements StateFullTokenServiceInterface {
   }
 
   async removeToken(tokenValue: string): Promise<void> {
-    await this.tokenRepository.delete(tokenValue);
+    await this.userTokenRepository.delete(tokenValue);
   }
 
   async refreshToken({ tokenValue, expiresIn }: RefreshTokenOptions): Promise<string> {
     const newTokenValue = v4();
 
-    const token = await this.tokenRepository.findByTokenValue(tokenValue);
+    const token = await this.userTokenRepository.findByTokenValue(tokenValue);
 
     if (!token) {
       throw new AppError({ code: AppErrorCodes.TOKEN_NOT_FOUND, message: 'Token not found' });
     }
 
-    await this.tokenRepository.update({
+    await this.userTokenRepository.update({
       oldTokenValue: tokenValue,
       newTokenValue,
       expirationDate: new Date(Date.now() + 1000 * expiresIn),

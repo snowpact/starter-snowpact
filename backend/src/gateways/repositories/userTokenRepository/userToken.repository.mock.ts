@@ -1,8 +1,8 @@
 import { vi, Mocked } from 'vitest';
 
-import { TokenRepositoryInterface } from '../../../domain/interfaces/repositories/token.repository.interface';
+import { UserTokenRepositoryInterface } from '../../../domain/interfaces/repositories/userToken.repository.interface';
 
-export const getTokenRepositoryMock = (): Mocked<TokenRepositoryInterface> => ({
+export const getUserTokenRepositoryMock = (): Mocked<UserTokenRepositoryInterface> => ({
   create: vi.fn().mockResolvedValue(undefined),
   findByTokenValue: vi.fn().mockResolvedValue(undefined),
   delete: vi.fn().mockResolvedValue(undefined),
