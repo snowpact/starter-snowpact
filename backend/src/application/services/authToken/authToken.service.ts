@@ -3,10 +3,10 @@ import { z } from 'zod';
 
 import { AppErrorCodes } from '@/application/errors/app.error.interface';
 import { UserTokenTypeEnum } from '@/domain/entities/userToken/userToken.entity.interface';
+import { EnvConfigInterface } from '@/domain/interfaces/envConfig.interface';
 
 import { AppError } from '@/application/errors/app.error';
 import { TYPES } from '@/configuration/di/types';
-import { envConfig } from '@/configuration/env/envConfig';
 
 import { AuthServiceInterface, UserPayloadOptions } from './authToken.service.interface';
 import { StatelessTokenServiceInterface } from '../../../gateways/helpers/statelessToken/statelessToken.service.interface';
@@ -23,27 +23,29 @@ export class AuthService implements AuthServiceInterface {
     private statelessTokenService: StatelessTokenServiceInterface,
     @inject(TYPES.UserTokenService)
     private userTokenService: UserTokenServiceInterface,
+    @inject(TYPES.EnvConfig)
+    private envConfig: EnvConfigInterface,
   ) {}
 
   generateAccessToken(userId: string): Promise<string> {
     return this.statelessTokenService.generateToken({
       payload: { userId },
-      expiresIn: envConfig.ACCESS_TOKEN_EXPIRATION,
-      secret: envConfig.ACCESS_TOKEN_SECRET,
+      expiresIn: this.envConfig.accessTokenExpiration,
+      secret: this.envConfig.accessTokenSecret,
     });
   }
   generateRefreshToken(userId: string): Promise<string> {
     return this.userTokenService.generateToken({
       userId,
       canBeRefreshed: true,
-      expiresIn: envConfig.REFRESH_TOKEN_EXPIRATION,
+      expiresIn: this.envConfig.refreshTokenExpiration,
       tokenType: UserTokenTypeEnum.refreshToken,
     });
   }
   async verifyAccessToken(token: string, ignoreExpiration = false): Promise<UserPayloadOptions> {
     const payload = await this.statelessTokenService.verifyToken({
       token,
-      secret: envConfig.ACCESS_TOKEN_SECRET,
+      secret: this.envConfig.accessTokenSecret,
       ignoreExpiration,
     });
 
@@ -66,7 +68,7 @@ export class AuthService implements AuthServiceInterface {
   refreshToken(token: string): Promise<string> {
     return this.userTokenService.refreshToken({
       tokenValue: token,
-      expiresIn: envConfig.REFRESH_TOKEN_EXPIRATION,
+      expiresIn: this.envConfig.refreshTokenExpiration,
     });
   }
 }

@@ -5,13 +5,12 @@ import { ZodError } from 'zod';
 import { AppErrorCodes } from '@/application/errors/app.error.interface';
 
 import { isAppError } from '@/application/errors/error.util';
-import { Logger } from '@/gateways/logger/logger';
+import { appLogger } from '@/configuration/logger/logger.singleton';
 
 import { HttpStatuses } from '../../config/httpStatuses';
 import { CustomEnvInterface } from '../../loader/getHonoApp';
 
 export const appErrorMiddleware: ErrorHandler<CustomEnvInterface> = (error, c) => {
-  const logger = new Logger();
   if (isAppError(error)) {
     const { code, context, message } = error;
     const statusCode = getStatusCodeFromErrorCode(code);
@@ -42,7 +41,7 @@ export const appErrorMiddleware: ErrorHandler<CustomEnvInterface> = (error, c) =
     );
   }
 
-  logger.error(error.message, error);
+  appLogger.error(error.message, error);
   return c.json(
     {
       message: 'Internal server error',

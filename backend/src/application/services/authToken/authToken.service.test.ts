@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 import { UserTokenTypeEnum } from '@/domain/entities/userToken/userToken.entity.interface';
 
-import { envConfig } from '@/configuration/env/envConfig';
+import { EnvConfig } from '@/gateways/envConfig/envConfig';
 
 import { AuthService } from './authToken.service';
 import { getStatelessTokenServiceMock } from '../../../gateways/helpers/statelessToken/statelessToken.service.mock';
@@ -11,7 +11,12 @@ import { getUserTokenServiceMock } from '../userToken/userToken.service.mock';
 describe('AuthService', () => {
   const statelessTokenServiceMock = getStatelessTokenServiceMock();
   const userTokenServiceMock = getUserTokenServiceMock();
-  const authService = new AuthService(statelessTokenServiceMock, userTokenServiceMock);
+  const envConfigMock = new EnvConfig();
+  const authService = new AuthService(
+    statelessTokenServiceMock,
+    userTokenServiceMock,
+    envConfigMock,
+  );
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -29,8 +34,8 @@ describe('AuthService', () => {
       expect(result).toBe(token);
       expect(statelessTokenServiceMock.generateToken).toHaveBeenCalledWith({
         payload: { userId },
-        expiresIn: envConfig.ACCESS_TOKEN_EXPIRATION,
-        secret: envConfig.ACCESS_TOKEN_SECRET,
+        expiresIn: envConfigMock.accessTokenExpiration,
+        secret: envConfigMock.accessTokenSecret,
       });
     });
   });
@@ -49,7 +54,7 @@ describe('AuthService', () => {
         userId,
         canBeRefreshed: true,
         tokenType: UserTokenTypeEnum.refreshToken,
-        expiresIn: envConfig.REFRESH_TOKEN_EXPIRATION,
+        expiresIn: envConfigMock.refreshTokenExpiration,
       });
     });
   });
@@ -66,7 +71,7 @@ describe('AuthService', () => {
       expect(result).toEqual(payload);
       expect(statelessTokenServiceMock.verifyToken).toHaveBeenCalledWith({
         token,
-        secret: envConfig.ACCESS_TOKEN_SECRET,
+        secret: envConfigMock.accessTokenSecret,
         ignoreExpiration: false,
       });
     });
@@ -84,7 +89,7 @@ describe('AuthService', () => {
       expect(result).toBe(newTokenValue);
       expect(userTokenServiceMock.refreshToken).toHaveBeenCalledWith({
         tokenValue,
-        expiresIn: envConfig.REFRESH_TOKEN_EXPIRATION,
+        expiresIn: envConfigMock.refreshTokenExpiration,
       });
     });
   });

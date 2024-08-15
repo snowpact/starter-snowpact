@@ -13,4 +13,4 @@ const storeRequestId = createMiddleware(async (c, next) => {
   });
 });
 
-export const requestId = every(honoRequestId(), storeRequestId);
+export const requestIdMiddleware = every(honoRequestId(), storeRequestId);

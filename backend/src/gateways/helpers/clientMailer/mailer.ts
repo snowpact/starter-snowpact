@@ -1,28 +1,31 @@
 import { inject, injectable } from 'inversify';
 import { createTransport } from 'nodemailer';
 
+import { EnvConfigInterface } from '@/domain/interfaces/envConfig.interface';
 import { LoggerInterface } from '@/domain/interfaces/logger.interface';
 
 import { TYPES } from '@/configuration/di/types';
-import { envConfig } from '@/configuration/env/envConfig';
 
 import { MailerInterface, SendEmailOptions } from './mailer.interface';
 
 @injectable()
 export class Mailer implements MailerInterface {
-  constructor(@inject(TYPES.Logger) private logger: LoggerInterface) {}
+  constructor(
+    @inject(TYPES.Logger) private logger: LoggerInterface,
+    @inject(TYPES.EnvConfig) private envConfig: EnvConfigInterface,
+  ) {}
 
   async sendMail(options: SendEmailOptions): Promise<void> {
-    if (!envConfig.EMAIL_SEND) {
+    if (!this.envConfig.emailSend) {
       return;
     }
 
     const transporter = createTransport({
-      url: envConfig.SMTP_URL,
+      url: this.envConfig.smtpUrl,
     });
 
     await transporter.sendMail({
-      from: envConfig.FROM_EMAIL,
+      from: this.envConfig.fromEmail,
       to: options.to,
       subject: options.subject,
       html: options.html,

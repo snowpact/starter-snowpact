@@ -1,12 +1,11 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import { Logger } from '@/gateways/logger/logger';
+import { appLogger } from '@/configuration/logger/logger.singleton';
 
 import { bootstrap } from '../loader/server';
 
 const generateOpenapiDocJson = async (): Promise<void> => {
-  const logger = new Logger();
   try {
     const { app, server } = bootstrap();
 
@@ -22,11 +21,11 @@ const generateOpenapiDocJson = async (): Promise<void> => {
     // Écrire le document dans un fichier
     const outputPath = path.join(__dirname, './openapi.json');
     await fs.writeFile(outputPath, JSON.stringify(openApiDoc, null, 2));
-    logger.info(`OpenAPI document generated at ${outputPath}`);
+    appLogger.info(`OpenAPI document generated at ${outputPath}`);
 
     server.close();
   } catch (error) {
-    logger.error('Error generating OpenAPI document', error as Error);
+    appLogger.error('Error generating OpenAPI document', error as Error);
   }
 };
 

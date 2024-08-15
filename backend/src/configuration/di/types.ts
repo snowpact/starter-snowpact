@@ -9,6 +9,7 @@ const TYPES = {
   StatelessTokenService: Symbol.for('StatelessTokenService'),
   PasswordService: Symbol.for('PasswordService'),
   ClientDatabase: Symbol.for('ClientDatabase'),
+  EnvConfig: Symbol.for('EnvConfig'),
   Logger: Symbol.for('Logger'),
   Mailer: Symbol.for('Mailer'),
   UserTokenService: Symbol.for('UserTokenService'),

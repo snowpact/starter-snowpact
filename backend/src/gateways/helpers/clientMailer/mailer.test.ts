@@ -1,8 +1,7 @@
 import { createTransport } from 'nodemailer';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-import { envConfig } from '@/configuration/env/envConfig';
-
+import { getEnvConfigMock } from '@/gateways/envConfig/envConfig.mock';
 import { getLoggerMock } from '@/gateways/logger/logger.mock';
 
 import { Mailer } from './mailer';
@@ -15,14 +14,15 @@ vi.mock('nodemailer', () => ({
 
 describe('Mailer', () => {
   const logger = getLoggerMock();
-  const mailer = new Mailer(logger);
+  const envConfig = getEnvConfigMock();
+  const mailer = new Mailer(logger, envConfig);
 
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
   it('should not send an email if EMAIL_SEND is false', async () => {
-    envConfig.EMAIL_SEND = false;
+    envConfig.emailSend = false;
 
     await mailer.sendMail({
       to: 'test@example.com',
@@ -34,9 +34,9 @@ describe('Mailer', () => {
   });
 
   it('should send an email if EMAIL_SEND is true', async () => {
-    envConfig.EMAIL_SEND = true;
-    envConfig.SMTP_URL = 'smtp://test';
-    envConfig.FROM_EMAIL = 'from@example.com';
+    envConfig.emailSend = true;
+    envConfig.smtpUrl = 'smtp://test';
+    envConfig.fromEmail = 'from@example.com';
 
     await mailer.sendMail({
       to: 'test@example.com',
@@ -45,10 +45,10 @@ describe('Mailer', () => {
     });
 
     expect(createTransport).toHaveBeenCalledWith({
-      url: envConfig.SMTP_URL,
+      url: envConfig.smtpUrl,
     });
     expect(createTransport().sendMail).toHaveBeenCalledWith({
-      from: envConfig.FROM_EMAIL,
+      from: envConfig.fromEmail,
       to: 'test@example.com',
       subject: 'Test Subject',
       html: '<p>Test Email</p>',

@@ -10,7 +10,7 @@ import { UserRepositoryInterface } from '@/domain/interfaces/repositories/user.r
 
 import { AppError } from '@/application/errors/app.error';
 import { TYPES } from '@/configuration/di/types';
-import { envConfig } from '@/configuration/env/envConfig';
+import { EnvConfig } from '@/gateways/envConfig/envConfig';
 
 import { ResetPasswordUseCaseInterface } from './resetPassword.useCase.interface';
 
@@ -23,6 +23,7 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
     @inject(TYPES.UserRepository) private userRepository: UserRepositoryInterface,
     @inject(TYPES.PasswordService) private passwordService: PasswordServiceInterface,
     @inject(TYPES.Logger) private loggerService: LoggerInterface,
+    @inject(TYPES.EnvConfig) private envConfig: EnvConfig,
   ) {}
 
   async executeAskResetPassword(email: string): Promise<void> {
@@ -39,7 +40,7 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
       userId: user.id,
       tokenType: UserTokenTypeEnum.resetPassword,
       canBeRefreshed: false,
-      expiresIn: envConfig.ACCOUNT_TOKEN_EXPIRATION,
+      expiresIn: this.envConfig.accountTokenExpiration,
     });
 
     try {

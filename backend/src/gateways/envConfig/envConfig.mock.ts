@@ -1,0 +1,24 @@
+import { faker } from '@faker-js/faker';
+import { Mocked } from 'vitest';
+
+import { EnvConfigInterface } from '@/domain/interfaces/envConfig.interface';
+
+export const getEnvConfigMock = (): Mocked<EnvConfigInterface> => ({
+  nodeEnv: faker.helpers.arrayElement(['development', 'production', 'test']),
+  port: faker.internet.port(),
+  logLevel: faker.helpers.arrayElement(['debug', 'info', 'warning', 'error']),
+  dbName: 'postgres',
+  dbHost: 'localhost',
+  dbPort: 5432,
+  dbUser: faker.internet.userName(),
+  dbPassword: faker.internet.password(),
+  accessTokenSecret: faker.string.alphanumeric(32),
+  accessTokenExpiration: faker.number.int({ min: 300, max: 3600 }),
+  refreshTokenSecret: faker.string.alphanumeric(32),
+  refreshTokenExpiration: faker.number.int({ min: 86400, max: 604800 }),
+  accountTokenSecret: faker.string.alphanumeric(32),
+  accountTokenExpiration: faker.number.int({ min: 300, max: 3600 }),
+  smtpUrl: `smtp://${faker.internet.ip()}:${faker.number.int({ min: 1, max: 65535 })}`,
+  fromEmail: faker.internet.email(),
+  emailSend: faker.datatype.boolean(),
+});

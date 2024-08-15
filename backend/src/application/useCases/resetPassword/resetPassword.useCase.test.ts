@@ -4,9 +4,9 @@ import { describe, beforeEach, it, vi, expect } from 'vitest';
 import { UserTokenTypeEnum } from '@/domain/entities/userToken/userToken.entity.interface';
 
 import { AppError } from '@/application/errors/app.error';
-import { envConfig } from '@/configuration/env/envConfig';
 import { userFactory } from '@/domain/entities/user/user.factory';
 import { userTokenFactory } from '@/domain/entities/userToken/userToken.entity.factory';
+import { EnvConfig } from '@/gateways/envConfig/envConfig';
 
 import { getPasswordServiceMock } from '@/application/services/password/password.service.mock';
 import { getUserTokenServiceMock } from '@/application/services/userToken/userToken.service.mock';
@@ -22,12 +22,14 @@ describe('ResetPasswordUseCase', () => {
   const userRepository = getUserRepositoryMock();
   const passwordService = getPasswordServiceMock();
   const loggerService = getLoggerMock();
+  const envConfig = new EnvConfig();
   const loginUseCase = new ResetPasswordUseCase(
     userTokenService,
     mailSender,
     userRepository,
     passwordService,
     loggerService,
+    envConfig,
   );
 
   beforeEach(() => {
@@ -48,7 +50,7 @@ describe('ResetPasswordUseCase', () => {
         userId: user.id,
         tokenType: UserTokenTypeEnum.resetPassword,
         canBeRefreshed: false,
-        expiresIn: envConfig.ACCOUNT_TOKEN_EXPIRATION,
+        expiresIn: envConfig.accountTokenExpiration,
       });
       expect(mailSender.sendResetPasswordEmail).toHaveBeenCalledWith({
         email: user.email,

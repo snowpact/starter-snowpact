@@ -5,8 +5,8 @@ import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatab
 
 import { mainContainer } from '@/configuration/di/mainContainer';
 import { TYPES } from '@/configuration/di/types';
-import { envConfig } from '@/configuration/env/envConfig';
-import { Logger } from '@/gateways/logger/logger';
+import { envConfig } from '@/configuration/env/envConfig.singleton';
+import { appLogger } from '@/configuration/logger/logger.singleton';
 
 import { bootstrap } from './loader/server';
 
@@ -16,16 +16,15 @@ let server: ServerType;
 const init = async () => {
   try {
     clientDatabase = mainContainer.get<ClientDatabaseInterface>(TYPES.ClientDatabase);
-    const dbUrl = `postgres://${envConfig.DB_USER}:${envConfig.DB_PASSWORD}@${envConfig.DB_HOST}:${envConfig.DB_PORT}/${envConfig.DB_NAME}`;
+    const dbUrl = `postgres://${envConfig.dbUser}:${envConfig.dbPassword}@${envConfig.dbHost}:${envConfig.dbPort}/${envConfig.dbName}`;
     await clientDatabase.connect(dbUrl);
     const bootstrapData = bootstrap();
     server = bootstrapData.server;
   } catch (error) {
-    const logger = new Logger();
     if (error instanceof Error) {
-      logger.error('Error starting server', error);
+      appLogger.error('Error starting server', error);
     } else {
-      logger.error('Error starting server', new Error('Unknown error'));
+      appLogger.error('Error starting server', new Error('Unknown error'));
     }
     await clientDatabase.getClient().end();
     server.close();
