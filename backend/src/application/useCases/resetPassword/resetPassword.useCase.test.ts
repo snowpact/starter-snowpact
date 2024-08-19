@@ -58,7 +58,7 @@ describe('ResetPasswordUseCase', () => {
       });
     });
     it('should throw an error if user not found', async () => {
-      userRepository.findByEmail.mockResolvedValue(undefined);
+      userRepository.findByEmail.mockResolvedValue(null);
 
       await expect(loginUseCase.executeAskResetPassword(faker.internet.email())).rejects.toThrow();
     });
@@ -101,7 +101,7 @@ describe('ResetPasswordUseCase', () => {
         userTokenFactory({ userId: faker.string.uuid() }),
       );
       passwordService.checkPasswordComplexity.mockReturnValue(true);
-      userRepository.findById.mockResolvedValue(undefined);
+      userRepository.findById.mockResolvedValue(null);
 
       await expect(
         loginUseCase.executeResetPassword(token, faker.internet.password()),

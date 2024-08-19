@@ -1,36 +1,62 @@
-import { boolean, index, pgEnum, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
+import { EntitySchema } from 'typeorm';
 
 import {
-  UserTokenTypeValues,
   UserTokenInterface,
+  UserTokenTypeEnum,
 } from '@/domain/entities/userToken/userToken.entity.interface';
 
-// Définir un enum PostgreSQL pour les types de token
-export const tokenTypeEnum = pgEnum('token_type', UserTokenTypeValues);
-
-export const tokens = pgTable(
-  'tokens',
-  {
-    id: uuid('id').primaryKey(),
-    userId: varchar('userId', { length: 255 }).notNull(),
-    value: varchar('value', { length: 255 }).notNull().unique(),
-    canBeRefreshed: boolean('canBeRefreshed').notNull(),
-    tokenType: tokenTypeEnum('tokenType').notNull(),
-    createdAt: timestamp('createdAt').defaultNow().notNull(),
-    updatedAt: timestamp('updatedAt')
-      .defaultNow()
-      .$onUpdate(() => new Date())
-      .notNull(),
-    expirationDate: timestamp('expirationDate').notNull(),
+export const UserTokenSchema = new EntitySchema<UserTokenInterface>({
+  name: 'user_token',
+  columns: {
+    id: {
+      type: 'uuid',
+      primary: true,
+    },
+    userId: {
+      type: 'uuid',
+      nullable: false,
+    },
+    value: {
+      type: 'varchar',
+      length: '255',
+      nullable: false,
+      unique: true,
+    },
+    canBeRefreshed: {
+      type: 'boolean',
+      nullable: false,
+    },
+    tokenType: {
+      type: 'varchar',
+      length: '255',
+      nullable: false,
+      enum: UserTokenTypeEnum,
+    },
+    createdAt: {
+      name: 'created_at',
+      type: 'timestamp with time zone',
+      createDate: true,
+    },
+    updatedAt: {
+      name: 'updated_at',
+      type: 'timestamp with time zone',
+      updateDate: true,
+    },
+    expirationDate: {
+      type: 'timestamp with time zone',
+      nullable: false,
+    },
   },
-  (table) => {
-    return {
-      valueIdx: index('value_idx').on(table.value),
-    };
+  relations: {
+    user: {
+      type: 'many-to-one',
+      target: 'user',
+      nullable: false,
+      onDelete: 'CASCADE',
+      joinColumn: {
+        name: 'user_id',
+        referencedColumnName: 'id',
+      },
+    },
   },
-);
-
-type TokenModel = typeof tokens.$inferSelect;
-
-export const assertTokenType: UserTokenInterface extends TokenModel ? true : false = true;
-export const assertTokenTypeReverse: TokenModel extends UserTokenInterface ? true : false = true;
+});

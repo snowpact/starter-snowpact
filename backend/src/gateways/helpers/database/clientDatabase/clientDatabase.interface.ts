@@ -1,6 +1,7 @@
-import { Client } from 'pg';
+import { DataSource } from 'typeorm';
 
 export interface ClientDatabaseInterface {
-  getClient(): Client;
+  getDataSource(): DataSource;
   connect(dbUrl: string): Promise<void>;
+  disconnect(): Promise<void>;
 }

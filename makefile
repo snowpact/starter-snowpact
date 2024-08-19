@@ -71,12 +71,14 @@ start-build-back: ## Start the backend containers and build the backend
 db-drop: ## drop the database
 	$(DOCKER_COMPOSE_RUN) --rm $(BACK_CONTAINER) pnpm typeorm:drop
 
-.PHONY: db-generate-migration
-db-generate-migration: ## generate migration, put YOUR_NAME in this command to custom the migration name
-	XXXX
+.PHONY: db-migration-generate
+db-migration-generate: ## generate migration, put YOUR_NAME in this command to custom the migration name
+	$(DOCKER_COMPOSE) up --remove-orphans $(MAIN_CONTAINERS) -d
+	pnpm migration:generate ./src/gateways/helpers/database/migrations/$(filter-out $@,$(MAKECMDGOALS))
+	pnpm lint:fix ./src/gateways/helpers/database/migrations/*.ts
 
-.PHONY: db-migrate-run
-db-migrate-run: ## run migrations for dev database
+.PHONY: db-migration-run
+db-migration-run: ## run migrations for dev database
 	XXXX
 
 .PHONY: db-revert-run

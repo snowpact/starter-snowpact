@@ -1,3 +1,5 @@
+import { UserTokenInterface } from '../userToken/userToken.entity.interface';
+
 export interface UserInterface {
   id: string;
   email: string;
@@ -5,4 +7,5 @@ export interface UserInterface {
   admin: boolean;
   createdAt: Date;
   updatedAt: Date;
+  userTokens: UserTokenInterface[];
 }

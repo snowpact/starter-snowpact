@@ -1,3 +1,5 @@
+import { UserInterface } from '../user/user.entity.interface';
+
 export enum UserTokenTypeEnum {
   accountValidation = 'accountValidation',
   resetPassword = 'resetPassword',
@@ -19,4 +21,5 @@ export interface UserTokenInterface {
   createdAt: Date;
   updatedAt: Date;
   expirationDate: Date;
+  user?: UserInterface;
 }

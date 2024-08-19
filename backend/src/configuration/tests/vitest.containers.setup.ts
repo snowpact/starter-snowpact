@@ -6,6 +6,7 @@ import { vi, beforeAll, afterAll, afterEach, inject } from 'vitest';
 
 import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatabase/clientDatabase.interface';
 
+import { CustomEnvInterface } from '@/entrypoints/api/loader/getHonoApp';
 import { bootstrap } from '@/entrypoints/api/loader/server';
 
 import { TestDbService } from './testDb.service';
@@ -19,14 +20,14 @@ vi.mock('@/gateways/helpers/clientMailer/mailer', () => {
 });
 
 export let testDbService: TestDbService;
-export let app: OpenAPIHono;
+export let app: OpenAPIHono<CustomEnvInterface>;
 let server: ServerType;
 
 beforeAll(async () => {
   const postgresUri = inject('postgresUri');
   const clientDatabase = mainContainer.get<ClientDatabaseInterface>(TYPES.ClientDatabase);
   await clientDatabase.connect(postgresUri);
-  testDbService = await TestDbService.setup();
+  testDbService = new TestDbService(clientDatabase.getDataSource());
   const bootstrapApp = bootstrap();
   server = bootstrapApp.server;
   app = bootstrapApp.app;

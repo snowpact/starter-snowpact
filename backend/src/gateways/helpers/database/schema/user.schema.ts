@@ -1,28 +1,50 @@
-import { pgTable, timestamp, uuid, varchar, boolean, index } from 'drizzle-orm/pg-core';
+import { EntitySchema } from 'typeorm';
 
 import { UserInterface } from '@/domain/entities/user/user.entity.interface';
 
-export const users = pgTable(
-  'users',
-  {
-    id: uuid('id').primaryKey(),
-    email: varchar('email', { length: 255 }).notNull().unique(),
-    password: varchar('password', { length: 255 }).notNull(),
-    admin: boolean('admin').notNull(),
-    createdAt: timestamp('createdAt').defaultNow().notNull(),
-    updatedAt: timestamp('updatedAt')
-      .defaultNow()
-      .$onUpdate(() => new Date())
-      .notNull(),
+export const UserSchema = new EntitySchema<UserInterface>({
+  name: 'user',
+  columns: {
+    id: {
+      type: 'uuid',
+      primary: true,
+    },
+    email: {
+      type: 'varchar',
+      length: '255',
+      unique: true,
+      nullable: false,
+    },
+    password: {
+      type: 'varchar',
+      length: '255',
+      nullable: false,
+    },
+    admin: {
+      type: 'boolean',
+      nullable: false,
+    },
+    createdAt: {
+      name: 'created_at',
+      type: 'timestamp with time zone',
+      createDate: true,
+    },
+    updatedAt: {
+      name: 'updated_at',
+      type: 'timestamp with time zone',
+      updateDate: true,
+    },
   },
-  (table) => {
-    return {
-      emailIdx: index('email_idx').on(table.email),
-    };
+  relations: {
+    userTokens: {
+      type: 'one-to-many',
+      target: 'user_token',
+      nullable: false,
+      onDelete: 'CASCADE',
+      joinColumn: {
+        name: 'userId',
+        referencedColumnName: 'id',
+      },
+    },
   },
-);
-
-type UserModel = typeof users.$inferSelect;
-
-export const assertUserType: UserInterface extends UserModel ? true : false = true;
-export const assertUserTypeReverse: UserModel extends UserInterface ? true : false = true;
+});

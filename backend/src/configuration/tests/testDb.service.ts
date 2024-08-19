@@ -1,76 +1,37 @@
-import { eq, sql } from 'drizzle-orm';
-import { NodePgDatabase, drizzle } from 'drizzle-orm/node-postgres';
-import { migrate } from 'drizzle-orm/node-postgres/migrator';
+import { DataSource } from 'typeorm';
 
 import { UserInterface } from '@/domain/entities/user/user.entity.interface';
 import { UserTokenInterface } from '@/domain/entities/userToken/userToken.entity.interface';
-import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatabase/clientDatabase.interface';
 
-import * as schema from '@/gateways/helpers/database/schema';
-
-import { mainContainer } from '../di/mainContainer';
-import { TYPES } from '../di/types';
+import { UserSchema, UserTokenSchema } from '@/gateways/helpers/database/schema';
 
 export class TestDbService {
-  private clientDatabase: ClientDatabaseInterface;
-  private db: NodePgDatabase<typeof schema>;
-
-  private constructor() {
-    this.clientDatabase = mainContainer.get<ClientDatabaseInterface>(TYPES.ClientDatabase);
-    this.db = drizzle(this.clientDatabase.getClient(), { schema });
-  }
-
-  public static setup = async (): Promise<TestDbService> => {
-    const testDbService = new TestDbService();
-    await migrate(testDbService.db, {
-      migrationsFolder: './src/gateways/helpers/database/migrations',
-    });
-
-    return testDbService;
-  };
+  constructor(private dataSource: DataSource) {}
 
   public close = async (): Promise<void> => {
-    await this.clientDatabase.getClient().end();
+    await this.dataSource.destroy();
   };
 
   public clear = async (): Promise<void> => {
-    const tableSchema = this.db._.schema;
-    if (!tableSchema) {
-      throw new Error('No table schema found');
-    }
+    const entities = this.dataSource.entityMetadatas;
+    const tableNames = entities.map((entity) => `"${entity.tableName}"`).join(', ');
 
-    const queries = Object.values(tableSchema).map((table) => {
-      return sql.raw(`TRUNCATE TABLE ${table.dbName} CASCADE;`);
-    });
-
-    await this.db.transaction(async (tx) => {
-      await Promise.all(queries.map((query) => tx.execute(query)));
-    });
+    await this.dataSource.query(`TRUNCATE ${tableNames} CASCADE;`);
   };
 
   public persistUser = async (user: UserInterface): Promise<void> => {
-    await this.db.insert(schema.users).values(user);
+    await this.dataSource.getRepository(UserSchema).save(user);
   };
 
-  public getUser = async (id: string): Promise<UserInterface | undefined> => {
-    const results = await this.db
-      .select()
-      .from(schema.users)
-      .where(eq(schema.users.id, id))
-      .limit(1);
-    return results[0];
+  public getUser = async (id: string): Promise<UserInterface | null> => {
+    return this.dataSource.getRepository(UserSchema).findOne({ where: { id } });
   };
 
   public persistToken = async (token: UserTokenInterface): Promise<void> => {
-    await this.db.insert(schema.tokens).values(token);
+    await this.dataSource.getRepository(UserTokenSchema).save(token);
   };
 
-  public getToken = async (tokenValue: string): Promise<UserTokenInterface | undefined> => {
-    const results = await this.db
-      .select()
-      .from(schema.tokens)
-      .where(eq(schema.tokens.value, tokenValue))
-      .limit(1);
-    return results[0];
+  public getToken = async (tokenValue: string): Promise<UserTokenInterface | null> => {
+    return this.dataSource.getRepository(UserTokenSchema).findOne({ where: { value: tokenValue } });
   };
 }

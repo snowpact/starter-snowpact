@@ -8,7 +8,7 @@ export interface UpdateOptions {
 
 export interface UserTokenRepositoryInterface {
   create: (token: UserTokenInterface) => Promise<void>;
-  findByTokenValue: (tokenValue: string) => Promise<UserTokenInterface | undefined>;
+  findByTokenValue: (tokenValue: string) => Promise<UserTokenInterface | null>;
   delete: (tokenValue: string) => Promise<void>;
   update: (options: UpdateOptions) => Promise<void>;
 }

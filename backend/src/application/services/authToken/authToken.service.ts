@@ -9,7 +9,7 @@ import { AppError } from '@/application/errors/app.error';
 import { TYPES } from '@/configuration/di/types';
 
 import { AuthServiceInterface, UserPayloadOptions } from './authToken.service.interface';
-import { StatelessTokenServiceInterface } from '../../../gateways/helpers/statelessToken/statelessToken.service.interface';
+import { StatelessTokenInterface } from '../../../domain/interfaces/statelessToken.interface';
 import { UserTokenServiceInterface } from '../userToken/userToken.service.interface';
 
 const UserPayloadOptionsSchema = z.object({
@@ -19,8 +19,8 @@ const UserPayloadOptionsSchema = z.object({
 @injectable()
 export class AuthService implements AuthServiceInterface {
   constructor(
-    @inject(TYPES.StatelessTokenService)
-    private statelessTokenService: StatelessTokenServiceInterface,
+    @inject(TYPES.StatelessToken)
+    private statelessTokenService: StatelessTokenInterface,
     @inject(TYPES.UserTokenService)
     private userTokenService: UserTokenServiceInterface,
     @inject(TYPES.EnvConfig)

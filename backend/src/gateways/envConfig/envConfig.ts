@@ -15,6 +15,7 @@ export class EnvConfig implements EnvConfigInterface {
   readonly dbPort: number;
   readonly dbUser: string;
   readonly dbPassword: string;
+  readonly dbUrl: string;
   readonly accessTokenSecret: string;
   readonly accessTokenExpiration: number;
   readonly refreshTokenSecret: string;
@@ -35,6 +36,7 @@ export class EnvConfig implements EnvConfigInterface {
     this.dbPort = config.DB_PORT;
     this.dbUser = config.DB_USER;
     this.dbPassword = config.DB_PASSWORD;
+    this.dbUrl = `postgres://${this.dbUser}:${this.dbPassword}@${this.dbHost}:${this.dbPort}/${this.dbName}`;
     this.accessTokenSecret = config.ACCESS_TOKEN_SECRET;
     this.accessTokenExpiration = config.ACCESS_TOKEN_EXPIRATION;
     this.refreshTokenSecret = config.REFRESH_TOKEN_SECRET;

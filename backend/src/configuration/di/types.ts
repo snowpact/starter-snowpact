@@ -6,7 +6,7 @@ const TYPES = {
   GetUserUseCase: Symbol.for('GetUserUseCase'),
 
   AuthService: Symbol.for('AuthService'),
-  StatelessTokenService: Symbol.for('StatelessTokenService'),
+  StatelessToken: Symbol.for('StatelessToken'),
   PasswordService: Symbol.for('PasswordService'),
   ClientDatabase: Symbol.for('ClientDatabase'),
   EnvConfig: Symbol.for('EnvConfig'),

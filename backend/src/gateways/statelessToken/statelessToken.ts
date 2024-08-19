@@ -7,12 +7,12 @@ import { AppError } from '@/application/errors/app.error';
 
 import {
   GenerateStatelessTokenOptions,
-  StatelessTokenServiceInterface,
+  StatelessTokenInterface,
   VerifyStatelessTokenOptions,
-} from './statelessToken.service.interface';
+} from '../../domain/interfaces/statelessToken.interface';
 
 @injectable()
-export class StatelessTokenService implements StatelessTokenServiceInterface {
+export class StatelessToken implements StatelessTokenInterface {
   async generateToken({
     payload,
     secret,

@@ -16,8 +16,8 @@ let server: ServerType;
 const init = async () => {
   try {
     clientDatabase = mainContainer.get<ClientDatabaseInterface>(TYPES.ClientDatabase);
-    const dbUrl = `postgres://${envConfig.dbUser}:${envConfig.dbPassword}@${envConfig.dbHost}:${envConfig.dbPort}/${envConfig.dbName}`;
-    await clientDatabase.connect(dbUrl);
+    await clientDatabase.connect(envConfig.dbUrl);
+    await clientDatabase.getDataSource().runMigrations({ transaction: 'all' });
     const bootstrapData = bootstrap();
     server = bootstrapData.server;
   } catch (error) {
@@ -26,7 +26,7 @@ const init = async () => {
     } else {
       appLogger.error('Error starting server', new Error('Unknown error'));
     }
-    await clientDatabase.getClient().end();
+    await clientDatabase.disconnect();
     server.close();
     process.exit(1);
   }

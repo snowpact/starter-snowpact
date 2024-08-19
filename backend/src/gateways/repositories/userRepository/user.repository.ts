@@ -1,38 +1,27 @@
-import { eq } from 'drizzle-orm';
-import { NodePgDatabase, drizzle } from 'drizzle-orm/node-postgres';
 import { inject, injectable } from 'inversify';
+import { Repository } from 'typeorm';
 
 import { UserInterface } from '@/domain/entities/user/user.entity.interface';
 import { UserRepositoryInterface } from '@/domain/interfaces/repositories/user.repository.interface';
 import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatabase/clientDatabase.interface';
 
 import { TYPES } from '@/configuration/di/types';
-import * as schema from '@/gateways/helpers/database/schema';
+import { UserSchema } from '@/gateways/helpers/database/schema/user.schema';
 
 @injectable()
 export class UserRepository implements UserRepositoryInterface {
-  private db: NodePgDatabase<typeof schema>;
+  private repository: Repository<UserInterface>;
   constructor(@inject(TYPES.ClientDatabase) clientDatabase: ClientDatabaseInterface) {
-    this.db = drizzle(clientDatabase.getClient(), { schema });
+    this.repository = clientDatabase.getDataSource().getRepository(UserSchema);
   }
-  async findById(id: string): Promise<UserInterface | undefined> {
-    const results = await this.db
-      .select()
-      .from(schema.users)
-      .where(eq(schema.users.id, id))
-      .limit(1);
-    return results[0];
+  async findById(id: string): Promise<UserInterface | null> {
+    return this.repository.findOne({ where: { id } });
   }
   async updateOne(id: string, data: Partial<UserInterface>): Promise<void> {
-    await this.db.update(schema.users).set(data).where(eq(schema.users.id, id));
+    await this.repository.update(id, data);
   }
 
-  async findByEmail(email: string): Promise<UserInterface | undefined> {
-    const results = await this.db
-      .select()
-      .from(schema.users)
-      .where(eq(schema.users.email, email))
-      .limit(1);
-    return results[0];
+  async findByEmail(email: string): Promise<UserInterface | null> {
+    return this.repository.findOne({ where: { email } });
   }
 }

@@ -7,6 +7,7 @@ export interface EnvConfigInterface {
   dbPort: number;
   dbUser: string;
   dbPassword: string;
+  dbUrl: string;
   accessTokenSecret: string;
   accessTokenExpiration: number;
   refreshTokenSecret: string;

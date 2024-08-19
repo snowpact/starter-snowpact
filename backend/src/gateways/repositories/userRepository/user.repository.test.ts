@@ -31,7 +31,7 @@ describe('User Repository', () => {
 
       const dbUser = await userRepository.findByEmail('not-found-email');
 
-      expect(dbUser).toBeUndefined();
+      expect(dbUser).toBeNull();
     });
   });
   describe('updateOne', () => {
@@ -61,7 +61,7 @@ describe('User Repository', () => {
       const user = userFactory();
       const dbUser = await userRepository.findById(user.id);
 
-      expect(dbUser).toBeUndefined();
+      expect(dbUser).toBeNull();
     });
   });
 });

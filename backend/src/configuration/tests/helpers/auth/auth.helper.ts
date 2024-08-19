@@ -1,7 +1,8 @@
+import { StatelessTokenInterface } from '@/domain/interfaces/statelessToken.interface';
+
 import { mainContainer } from '@/configuration/di/mainContainer';
 import { TYPES } from '@/configuration/di/types';
 import { envConfig } from '@/configuration/env/envConfig.singleton';
-import { StatelessTokenService } from '@/gateways/helpers/statelessToken/statelessToken.service';
 
 export interface GenerateAccessTokenOptions {
   userId: string;
@@ -14,8 +15,6 @@ export const generateAccessToken = async ({
   expiresIn = 3600,
   secret = envConfig.accessTokenSecret,
 }: GenerateAccessTokenOptions) => {
-  const statelessTokenService = mainContainer.get<StatelessTokenService>(
-    TYPES.StatelessTokenService,
-  );
-  return statelessTokenService.generateToken({ payload: { userId }, expiresIn, secret });
+  const statelessToken = mainContainer.get<StatelessTokenInterface>(TYPES.StatelessToken);
+  return statelessToken.generateToken({ payload: { userId }, expiresIn, secret });
 };

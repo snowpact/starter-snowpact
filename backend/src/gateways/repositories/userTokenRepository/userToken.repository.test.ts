@@ -5,6 +5,7 @@ import { describe, beforeAll, it, expect } from 'vitest';
 import { mainContainer } from '@/configuration/di/mainContainer';
 import { TYPES } from '@/configuration/di/types';
 import { testDbService } from '@/configuration/tests/vitest.containers.setup';
+import { userFactory } from '@/domain/entities/user/user.factory';
 import { userTokenFactory } from '@/domain/entities/userToken/userToken.entity.factory';
 
 import { UserTokenRepositoryInterface } from '../../../domain/interfaces/repositories/userToken.repository.interface';
@@ -18,7 +19,9 @@ describe('UserToken Repository', () => {
   });
   describe('create', () => {
     it('should create a token', async () => {
-      const token = userTokenFactory();
+      const user = userFactory();
+      await testDbService.persistUser(user);
+      const token = userTokenFactory({ userId: user.id });
 
       await userTokenRepository.create(token);
 
@@ -29,7 +32,9 @@ describe('UserToken Repository', () => {
 
   describe('findByTokenValue', () => {
     it('should return a token by tokenValue', async () => {
-      const token = userTokenFactory();
+      const user = userFactory();
+      await testDbService.persistUser(user);
+      const token = userTokenFactory({ userId: user.id });
       await testDbService.persistToken(token);
 
       const storedToken = await userTokenRepository.findByTokenValue(token.value);
@@ -37,25 +42,29 @@ describe('UserToken Repository', () => {
     });
     it('should return undefined if tokenValue does not exist', async () => {
       const storedToken = await userTokenRepository.findByTokenValue('not-existing-token');
-      expect(storedToken).toBeUndefined();
+      expect(storedToken).toBeNull();
     });
   });
 
   describe('delete', () => {
     it('should delete a token by token value', async () => {
-      const token = userTokenFactory();
+      const user = userFactory();
+      await testDbService.persistUser(user);
+      const token = userTokenFactory({ userId: user.id });
       await testDbService.persistToken(token);
 
       await userTokenRepository.delete(token.value);
 
       const storedToken = await testDbService.getToken(token.value);
-      expect(storedToken).toBeUndefined();
+      expect(storedToken).toBeNull();
     });
   });
 
   describe('update', () => {
     it('should update a token', async () => {
-      const token = userTokenFactory();
+      const user = userFactory();
+      await testDbService.persistUser(user);
+      const token = userTokenFactory({ userId: user.id });
       await testDbService.persistToken(token);
       const newTokenValue = 'new-token-value';
       const newExpirationDate = faker.date.future();
