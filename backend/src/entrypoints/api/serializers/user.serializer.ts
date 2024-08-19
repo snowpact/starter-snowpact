@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { User } from '@/core/entities/user/user.entity';
+import { UserInterface } from '@/domain/entities/user/user.entity.interface';
 
 export const PublicUserLiteSchemaPaser = z.object({
   email: z.string().email(),
@@ -19,7 +19,7 @@ export type PublicUserLite = z.infer<typeof PublicUserLiteSchemaPaser>;
 export type PublicUser = z.infer<typeof PublicUserSchemaParser>;
 
 export class UserSerializer {
-  static serializeLite(user: User): PublicUserLite {
+  static serializeLite(user: UserInterface): PublicUserLite {
     const serializedUser = {
       email: user.email,
       admin: user.admin,
@@ -28,7 +28,7 @@ export class UserSerializer {
     return PublicUserLiteSchemaPaser.parse(serializedUser);
   }
 
-  static serialize(user: User): PublicUser {
+  static serialize(user: UserInterface): PublicUser {
     const serializedUser = {
       id: user.id,
       email: user.email,

@@ -1,9 +1,8 @@
-import { orderGetListRoute } from './orderGetList';
-import { orderGetOneRoute } from './orderGetOne';
 import { getHonoApp } from '../../loader/getHonoApp';
+import { authorizationMiddleware } from '../../middlewares/authorization/authorization.middleware';
 
 const protectedRouter = getHonoApp();
 
-protectedRouter.get('/orders', orderGetListRoute).get('/orders/:id', orderGetOneRoute);
+protectedRouter.use(authorizationMiddleware({ shouldBeAdmin: false, optional: false })).use('*');
 
 export { protectedRouter };

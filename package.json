@@ -20,6 +20,8 @@
     "start:pg-admin": "pnpm docker:start pg-admin",
     "stop": "pnpm docker:stop database-signaleo adminer mailhog pg-admin e2e-test-database-signaleo",
 
+
+    "typeorm": "typeorm-ts-node-commonjs",
     "migration:run": " pnpm be-local run migration:run",
     "migration:drop": " pnpm be-local run migration:drop",
     "migration:revert": "pnpm be-local run migration:revert",
@@ -40,6 +42,7 @@
     "test:bo": "pnpm bo run test",
     
     "lint": "pnpm -r run lint",
+    "lint:fix": "pnpm -r run lint --fix",
     "test": "pnpm -r run test",
 
     "build:be": "pnpm be-local build",

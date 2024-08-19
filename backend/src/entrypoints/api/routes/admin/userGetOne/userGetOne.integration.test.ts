@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest';
 
-import { userFactory } from '@/core/entities/user/user.factory';
-import { generateAccessToken } from '@/infrastructure/tests/helpers/auth/auth.helper';
-import { testDbService, app } from '@/infrastructure/tests/vitest.containers.setup';
+import { generateAccessToken } from '@/configuration/tests/helpers/auth/auth.helper';
+import { testDbService, app } from '@/configuration/tests/vitest.containers.setup';
+import { userFactory } from '@/domain/entities/user/user.factory';
 
 describe('Get user', () => {
   it('should get a user', async () => {
-    const user = userFactory();
+    const user = userFactory({ admin: true });
     await testDbService.persistUser(user);
     const token = await generateAccessToken({ userId: user.id });
 

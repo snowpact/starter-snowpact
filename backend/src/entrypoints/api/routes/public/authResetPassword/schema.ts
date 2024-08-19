@@ -7,6 +7,7 @@ export const authResetPasswordBodySchema = z.object({
 
 export const authResetPasswordResponseSchema = z
   .object({
+    code: z.string(),
     message: z.string(),
   })
   .openapi('ResetPasswordResponse');

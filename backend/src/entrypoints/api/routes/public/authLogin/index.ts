@@ -1,15 +1,15 @@
 import { createRoute } from '@hono/zod-openapi';
 
-import { AppErrorCodes } from '@/core/errors/app.error.interface';
-import { LoginUseCaseInterface } from '@/core/useCases/login/login.useCase.interface';
+import { AppErrorCodes } from '@/application/errors/app.error.interface';
+import { LoginUseCaseInterface } from '@/application/useCases/login/login.useCase.interface';
 
-import { AppError } from '@/core/errors/app.error';
+import { AppError } from '@/application/errors/app.error';
+import { mainContainer } from '@/configuration/di/mainContainer';
+import { TYPES } from '@/configuration/di/types';
 import { HttpCodes } from '@/entrypoints/api/config/httpCode';
 import { HttpStatuses } from '@/entrypoints/api/config/httpStatuses';
 import { getHonoApp } from '@/entrypoints/api/loader/getHonoApp';
 import { defaultResponseSchema } from '@/entrypoints/api/schemas/common.schema';
-import { mainContainer } from '@/infrastructure/di/mainContainer';
-import { TYPES } from '@/infrastructure/di/types';
 
 import { authLoginSchema } from './schema';
 
@@ -17,7 +17,7 @@ const authLoginRoute = getHonoApp();
 
 const route = createRoute({
   method: 'post',
-  path: '/',
+  path: '/login',
   request: {
     body: {
       content: {

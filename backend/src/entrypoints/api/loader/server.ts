@@ -6,18 +6,25 @@ import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
 import { prettyJSON } from 'hono/pretty-json';
 
-import { LoggerService } from '@/gateways/logger/logger.service';
-import { envConfig } from '@/infrastructure/config/env';
+import { envConfig } from '@/configuration/env/envConfig.singleton';
+import { appLogger } from '@/configuration/logger/logger.singleton';
 
-import { getHonoApp } from './getHonoApp';
-import { apiDocMiddleware } from '../middlewares/apiDoc.middleware';
-import { appErrorMiddleware } from '../middlewares/appError.middleware';
-import { requestId } from '../middlewares/requestId.middleware';
+import { CustomEnvInterface, getHonoApp } from './getHonoApp';
+import { apiDocMiddleware } from '../middlewares/apiDoc/apiDoc.middleware';
+import { appErrorMiddleware } from '../middlewares/appError/appError.middleware';
+import { authenticationMiddleware } from '../middlewares/authentication/authentication.middleware';
+import { requestIdMiddleware } from '../middlewares/requestId/requestId.middleware';
 import { routes } from '../routes';
 
-export const bootstrap = (): { app: OpenAPIHono; server: ServerType } => {
+export const bootstrap = (): { app: OpenAPIHono<CustomEnvInterface>; server: ServerType } => {
   const app = getHonoApp();
-  app.use(cors()).use(logger()).use(prettyJSON()).use(requestId).route('/api', routes);
+  app
+    .use(cors())
+    .use(logger())
+    .use(prettyJSON())
+    .use(requestIdMiddleware)
+    .use(authenticationMiddleware)
+    .route('/api', routes);
 
   app.onError(appErrorMiddleware);
   app.doc('api/doc', apiDocMiddleware);
@@ -34,11 +41,10 @@ export const bootstrap = (): { app: OpenAPIHono; server: ServerType } => {
   const server = serve(
     {
       fetch: app.fetch,
-      port: envConfig.PORT,
+      port: envConfig.port,
     },
     () => {
-      const logger = new LoggerService();
-      logger.info(`Server is running on port ${envConfig.PORT}`);
+      appLogger.info(`Server is running on port ${envConfig.port}`);
     },
   );
 

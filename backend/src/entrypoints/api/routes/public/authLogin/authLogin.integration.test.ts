@@ -2,8 +2,8 @@
 import { faker } from '@faker-js/faker';
 import { describe, expect, it } from 'vitest';
 
-import { userFactory } from '@/core/entities/user/user.factory';
-import { testDbService, app } from '@/infrastructure/tests/vitest.containers.setup';
+import { testDbService, app } from '@/configuration/tests/vitest.containers.setup';
+import { userFactory } from '@/domain/entities/user/user.factory';
 
 describe('authLogin', () => {
   it('should login a user', async () => {
