@@ -25,6 +25,8 @@ export class EnvConfig implements EnvConfigInterface {
   readonly smtpUrl: string;
   readonly fromEmail: string;
   readonly emailSend: boolean;
+  readonly autoMigration: boolean;
+  readonly logSql: boolean;
 
   constructor() {
     const config = this.buildConfig();
@@ -46,6 +48,8 @@ export class EnvConfig implements EnvConfigInterface {
     this.smtpUrl = config.SMTP_URL;
     this.fromEmail = config.FROM_EMAIL;
     this.emailSend = config.EMAIL_SEND;
+    this.autoMigration = config.AUTO_MIGRATION;
+    this.logSql = config.LOG_SQL;
   }
 
   private ConfigParser = z.object({
@@ -66,6 +70,8 @@ export class EnvConfig implements EnvConfigInterface {
     SMTP_URL: z.string(),
     FROM_EMAIL: z.string(),
     EMAIL_SEND: parseBoolean(z.boolean()).default(false),
+    AUTO_MIGRATION: parseBoolean(z.boolean()).default(false),
+    LOG_SQL: parseBoolean(z.boolean()).default(false),
   });
 
   private buildConfig() {

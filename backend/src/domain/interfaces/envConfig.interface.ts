@@ -17,4 +17,6 @@ export interface EnvConfigInterface {
   smtpUrl: string;
   fromEmail: string;
   emailSend: boolean;
+  autoMigration: boolean;
+  logSql: boolean;
 }

@@ -29,5 +29,7 @@ export const getEnvConfigMock = (): Mocked<EnvConfigInterface> => {
     smtpUrl: `smtp://${faker.internet.ip()}:${faker.number.int({ min: 1, max: 65535 })}`,
     fromEmail: faker.internet.email(),
     emailSend: faker.datatype.boolean(),
+    autoMigration: faker.datatype.boolean(),
+    logSql: faker.datatype.boolean(),
   };
 };

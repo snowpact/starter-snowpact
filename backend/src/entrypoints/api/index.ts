@@ -17,7 +17,6 @@ const init = async () => {
   try {
     clientDatabase = mainContainer.get<ClientDatabaseInterface>(TYPES.ClientDatabase);
     await clientDatabase.connect(envConfig.dbUrl);
-    await clientDatabase.getDataSource().runMigrations({ transaction: 'all' });
     const bootstrapData = bootstrap();
     server = bootstrapData.server;
   } catch (error) {

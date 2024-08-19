@@ -21,11 +21,10 @@ export async function setup({ provide }: GlobalSetupContext) {
   provide('postgresUri', postgresUri);
   const clientDatabase = mainContainer.get<ClientDatabaseInterface>(TYPES.ClientDatabase);
   await clientDatabase.connect(postgresUri);
-  const dataSource = clientDatabase.getDataSource();
   try {
-    await dataSource.runMigrations({ transaction: 'all' });
+    await clientDatabase.runMigrations();
   } finally {
-    await dataSource.destroy();
+    await clientDatabase.disconnect();
   }
 
   return async (): Promise<void> => {
