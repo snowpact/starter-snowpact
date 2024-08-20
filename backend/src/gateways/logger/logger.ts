@@ -1,16 +1,17 @@
 import { injectable } from 'inversify';
 import pino from 'pino';
 
-import { envConfig } from '@/configuration/env/envConfig.singleton';
 import { asyncLocalStorage } from '@/entrypoints/api/middlewares/requestId/requestId.middleware';
 
 import { LoggerInterface } from '../../domain/interfaces/logger.interface';
+import { EnvConfig } from '../envConfig/envConfig';
 
 @injectable()
 export class Logger implements LoggerInterface {
   private logger: pino.Logger;
 
   constructor() {
+    const envConfig = new EnvConfig();
     this.logger = pino({
       level: envConfig.logLevel,
       transport:

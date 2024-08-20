@@ -1,11 +1,15 @@
 import fs from 'fs/promises';
 import path from 'path';
 
-import { appLogger } from '@/configuration/logger/logger.singleton';
+import { LoggerInterface } from '@/domain/interfaces/logger.interface';
+
+import { mainContainer } from '@/configuration/di/mainContainer';
+import { TYPES } from '@/configuration/di/types';
 
 import { bootstrap } from '../loader/server';
 
 const generateOpenapiDocJson = async (): Promise<void> => {
+  const appLogger = mainContainer.get<LoggerInterface>(TYPES.Logger);
   try {
     const { app, server } = bootstrap();
 

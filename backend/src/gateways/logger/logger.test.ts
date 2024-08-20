@@ -3,10 +3,10 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { Logger } from './logger';
 
 describe('Logger', () => {
-  let logger: Logger;
+  const logger = new Logger();
 
   beforeEach(() => {
-    logger = new Logger();
+    vi.clearAllMocks();
   });
 
   describe('debug', () => {
