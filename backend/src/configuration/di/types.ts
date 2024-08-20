@@ -1,5 +1,6 @@
 const TYPES = {
   UserEntity: Symbol.for('UserEntity'),
+  UserTokenEntity: Symbol.for('UserTokenEntity'),
 
   LoginUseCase: Symbol.for('LoginUseCase'),
   ResetPasswordUseCase: Symbol.for('ResetPasswordUseCase'),
