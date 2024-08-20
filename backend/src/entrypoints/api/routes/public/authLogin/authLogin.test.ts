@@ -8,7 +8,7 @@ import { mainContainer } from '@/configuration/di/mainContainer';
 
 import { getLoginUseCaseMock } from '@/application/useCases/login/login.useCase.mock';
 
-import { authLoginRoute } from './index';
+import { authLoginRoute } from './';
 
 vi.mock('@/configuration/di/mainContainer', () => ({
   mainContainer: {
@@ -50,35 +50,14 @@ describe('authLoginRoute', () => {
     expect(loginUseCaseMock.executeLogin).toHaveBeenCalledWith(email, password);
   });
 
-  it('should return 400 with invalid credentials message when user is not found', async () => {
+  it.each([
+    { message: 'User not found', code: AppErrorCodes.USER_NOT_FOUND },
+    { message: 'Invalid password', code: AppErrorCodes.BAD_PASSWORD },
+  ])('should return 400 with invalid credentials message when %s', async ({ message, code }) => {
     const email = 'nonexistent@example.com';
     const password = 'password123';
 
-    loginUseCaseMock.executeLogin.mockRejectedValue(
-      new AppError({ message: 'User not found', code: AppErrorCodes.USER_NOT_FOUND }),
-    );
-
-    const response = await authLoginRoute.request('/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    });
-
-    expect(response.status).toBe(400);
-    expect(await response.json()).toEqual({
-      message: 'Invalid credentials',
-      code: 'INVALID_CREDENTIALS',
-    });
-    expect(loginUseCaseMock.executeLogin).toHaveBeenCalledWith(email, password);
-  });
-
-  it('should return 400 with invalid credentials message when password is incorrect', async () => {
-    const email = 'test@example.com';
-    const password = 'wrong_password';
-
-    loginUseCaseMock.executeLogin.mockRejectedValue(
-      new AppError({ message: 'Invalid password', code: AppErrorCodes.BAD_PASSWORD }),
-    );
+    loginUseCaseMock.executeLogin.mockRejectedValue(new AppError({ message, code }));
 
     const response = await authLoginRoute.request('/login', {
       method: 'POST',

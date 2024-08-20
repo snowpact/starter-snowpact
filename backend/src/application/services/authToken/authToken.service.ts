@@ -65,7 +65,12 @@ export class AuthService implements AuthServiceInterface {
 
     return parseResult.data;
   }
-  refreshToken(token: string): Promise<string> {
+  async refreshToken(token: string, userId: string): Promise<string> {
+    await this.userTokenService.verifyToken({
+      tokenValue: token,
+      tokenType: UserTokenTypeEnum.refreshToken,
+      userId: userId,
+    });
     return this.userTokenService.refreshToken({
       tokenValue: token,
       expiresIn: this.envConfig.refreshTokenExpiration,
