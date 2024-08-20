@@ -5,6 +5,7 @@ const TYPES = {
   LoginUseCase: Symbol.for('LoginUseCase'),
   ResetPasswordUseCase: Symbol.for('ResetPasswordUseCase'),
   GetUserUseCase: Symbol.for('GetUserUseCase'),
+  RefreshUseCase: Symbol.for('RefreshUseCase'),
 
   AuthService: Symbol.for('AuthService'),
   StatelessToken: Symbol.for('StatelessToken'),

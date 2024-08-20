@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 import { UserTokenTypeEnum } from '@/domain/entities/userToken/userToken.entity.interface';
 
+import { userTokenFactory } from '@/domain/entities/userToken/userToken.entity.factory';
 import { EnvConfig } from '@/gateways/envConfig/envConfig';
 
 import { AuthService } from './authToken.service';
@@ -79,16 +80,31 @@ describe('AuthService', () => {
 
   describe('refreshToken', () => {
     it('should refresh a token', async () => {
-      const tokenValue = 'refresh-token';
-      const newTokenValue = 'new-token';
+      const userId = '123';
+      const currentToken = userTokenFactory({
+        userId,
+        tokenType: UserTokenTypeEnum.refreshToken,
+        canBeRefreshed: true,
+      });
+      const newToken = userTokenFactory({
+        userId,
+        tokenType: UserTokenTypeEnum.refreshToken,
+        canBeRefreshed: true,
+      });
 
-      userTokenServiceMock.refreshToken.mockResolvedValue(newTokenValue);
+      userTokenServiceMock.verifyToken.mockResolvedValue(currentToken);
+      userTokenServiceMock.refreshToken.mockResolvedValue(newToken.value);
 
-      const result = await authService.refreshToken(tokenValue);
+      const result = await authService.refreshToken(currentToken.value, userId);
 
-      expect(result).toBe(newTokenValue);
+      expect(result).toBe(newToken.value);
+      expect(userTokenServiceMock.verifyToken).toHaveBeenCalledWith({
+        tokenValue: currentToken.value,
+        tokenType: UserTokenTypeEnum.refreshToken,
+        userId,
+      });
       expect(userTokenServiceMock.refreshToken).toHaveBeenCalledWith({
-        tokenValue,
+        tokenValue: currentToken.value,
         expiresIn: envConfigMock.refreshTokenExpiration,
       });
     });
