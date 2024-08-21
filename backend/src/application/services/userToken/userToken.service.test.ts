@@ -45,14 +45,6 @@ describe('UserTokenService', () => {
     });
   });
 
-  describe('removeToken', () => {
-    it('should remove a token', async () => {
-      const token = 'token';
-      await userTokenService.removeToken(token);
-      expect(userTokenRepositoryMock.delete).toHaveBeenCalledWith(token);
-    });
-  });
-
   describe('verifyToken', () => {
     it('should verify a token', async () => {
       const token = userTokenFactory();
@@ -70,7 +62,7 @@ describe('UserTokenService', () => {
     });
     it('should throw an error if token is not found', async () => {
       const token = userTokenFactory();
-      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(undefined);
+      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(null);
 
       await expect(
         userTokenService.verifyToken({
@@ -161,7 +153,7 @@ describe('UserTokenService', () => {
     });
     it('should throw an error if token is not found', async () => {
       const token = 'token';
-      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(undefined);
+      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(null);
 
       await expect(
         userTokenService.refreshToken({ tokenValue: token, expiresIn: 1000 }),

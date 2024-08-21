@@ -13,6 +13,7 @@ import { getUserTokenServiceMock } from '@/application/services/userToken/userTo
 import { getLoggerMock } from '@/gateways/logger/logger.mock';
 import { getMailSenderMock } from '@/gateways/mailSender/mailSender.mock';
 import { getUserRepositoryMock } from '@/gateways/repositories/userRepository/user.repository.mock';
+import { getUserTokenRepositoryMock } from '@/gateways/repositories/userTokenRepository/userToken.repository.mock';
 
 import { ResetPasswordUseCase } from './resetPassword.useCase';
 
@@ -20,13 +21,16 @@ describe('ResetPasswordUseCase', () => {
   const userTokenService = getUserTokenServiceMock();
   const mailSender = getMailSenderMock();
   const userRepository = getUserRepositoryMock();
+  const userTokenRepository = getUserTokenRepositoryMock();
   const passwordService = getPasswordServiceMock();
   const loggerService = getLoggerMock();
   const envConfig = new EnvConfig();
+
   const loginUseCase = new ResetPasswordUseCase(
     userTokenService,
     mailSender,
     userRepository,
+    userTokenRepository,
     passwordService,
     loggerService,
     envConfig,
@@ -36,14 +40,14 @@ describe('ResetPasswordUseCase', () => {
     vi.clearAllMocks();
   });
 
-  describe('executeAskResetPassword', () => {
+  describe('executeResetPasswordRequest', () => {
     it('should send an email with a reset password link', async () => {
       const user = userFactory();
       const token = faker.string.alphanumeric(30);
       userRepository.findByEmail.mockResolvedValue(user);
       userTokenService.generateToken.mockResolvedValue(token);
 
-      await loginUseCase.executeAskResetPassword(user.email);
+      await loginUseCase.executeResetPasswordRequest(user.email);
 
       expect(userRepository.findByEmail).toHaveBeenCalledWith(user.email);
       expect(userTokenService.generateToken).toHaveBeenCalledWith({
@@ -51,6 +55,10 @@ describe('ResetPasswordUseCase', () => {
         tokenType: UserTokenTypeEnum.resetPassword,
         canBeRefreshed: false,
         expiresIn: envConfig.accountTokenExpiration,
+      });
+      expect(userTokenRepository.deleteByUser).toHaveBeenCalledWith(user.id, {
+        exceptTokenValue: token,
+        tokenType: UserTokenTypeEnum.resetPassword,
       });
       expect(mailSender.sendResetPasswordEmail).toHaveBeenCalledWith({
         email: user.email,
@@ -60,7 +68,9 @@ describe('ResetPasswordUseCase', () => {
     it('should throw an error if user not found', async () => {
       userRepository.findByEmail.mockResolvedValue(null);
 
-      await expect(loginUseCase.executeAskResetPassword(faker.internet.email())).rejects.toThrow();
+      await expect(
+        loginUseCase.executeResetPasswordRequest(faker.internet.email()),
+      ).rejects.toThrow();
     });
   });
 
@@ -70,6 +80,7 @@ describe('ResetPasswordUseCase', () => {
       const tokenValue = faker.string.alphanumeric(30);
       const newPassword = faker.internet.password();
       const hashedPassword = faker.string.alphanumeric(30);
+
       userTokenService.verifyToken.mockResolvedValue(userTokenFactory({ userId: user.id }));
       userRepository.findById.mockResolvedValue(user);
       passwordService.hashPassword.mockResolvedValue(hashedPassword);
@@ -84,7 +95,9 @@ describe('ResetPasswordUseCase', () => {
       expect(userRepository.findById).toHaveBeenCalledWith(user.id);
       expect(passwordService.hashPassword).toHaveBeenCalledWith(newPassword);
       expect(userRepository.updateOne).toHaveBeenCalledWith(user.id, { password: hashedPassword });
+      expect(userTokenRepository.deleteByUser).toHaveBeenCalledWith(user.id);
     });
+
     it('should throw an error if password is invalid', async () => {
       userTokenService.verifyToken.mockResolvedValue(
         userTokenFactory({ userId: faker.string.uuid() }),
@@ -95,6 +108,7 @@ describe('ResetPasswordUseCase', () => {
         loginUseCase.executeResetPassword(faker.string.alphanumeric(30), faker.internet.password()),
       ).rejects.toThrow(AppError);
     });
+
     it('should throw an error if user not found', async () => {
       const token = faker.string.alphanumeric(30);
       userTokenService.verifyToken.mockResolvedValue(

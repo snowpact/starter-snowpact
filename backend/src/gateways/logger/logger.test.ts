@@ -54,7 +54,7 @@ describe('Logger', () => {
 
       logger.error(message, error, context);
 
-      expect(spy).toHaveBeenCalledWith({ ...context, err: error }, message);
+      expect(spy).toHaveBeenCalledWith({ ...context, err: error, requestId: undefined }, message);
     });
   });
 });

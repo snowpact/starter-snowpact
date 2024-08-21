@@ -24,7 +24,6 @@ export interface RefreshTokenOptions {
 
 export interface UserTokenServiceInterface {
   generateToken(options: GenerateTokenOptions): Promise<string>;
-  removeToken(tokenValue: string): Promise<void>;
   verifyToken(options: VerifyTokenOptions): Promise<UserTokenInterface>;
   refreshToken(options: RefreshTokenOptions): Promise<string>;
 }

@@ -60,6 +60,40 @@ describe('UserToken Repository', () => {
     });
   });
 
+  describe('deleteByUser', () => {
+    it('should delete a token by user id', async () => {
+      const user = userFactory();
+      await testDbService.persistUser(user);
+      const token = userTokenFactory({ userId: user.id });
+      await testDbService.persistToken(token);
+      const token2 = userTokenFactory({ userId: user.id });
+      await testDbService.persistToken(token2);
+
+      await userTokenRepository.deleteByUser(user.id);
+
+      const storedToken = await testDbService.getToken(token.value);
+      const storedToken2 = await testDbService.getToken(token.value);
+      expect(storedToken).toBeNull();
+      expect(storedToken2).toBeNull();
+    });
+
+    it('should delete a token by user id (except a token value)', async () => {
+      const user = userFactory();
+      await testDbService.persistUser(user);
+      const token = userTokenFactory({ userId: user.id });
+      await testDbService.persistToken(token);
+      const token2 = userTokenFactory({ userId: user.id });
+      await testDbService.persistToken(token2);
+
+      await userTokenRepository.deleteByUser(user.id, { exceptTokenValue: token2.value });
+
+      const storedToken = await testDbService.getToken(token.value);
+      const storedToken2 = await testDbService.getToken(token2.value);
+      expect(storedToken).toBeNull();
+      expect(storedToken2).not.toBeNull();
+    });
+  });
+
   describe('update', () => {
     it('should update a token', async () => {
       const user = userFactory();

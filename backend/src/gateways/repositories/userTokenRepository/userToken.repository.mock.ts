@@ -6,5 +6,6 @@ export const getUserTokenRepositoryMock = (): Mocked<UserTokenRepositoryInterfac
   create: vi.fn().mockResolvedValue(undefined),
   findByTokenValue: vi.fn().mockResolvedValue(undefined),
   delete: vi.fn().mockResolvedValue(undefined),
+  deleteByUser: vi.fn().mockResolvedValue(undefined),
   update: vi.fn().mockResolvedValue(undefined),
 });

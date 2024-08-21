@@ -7,6 +7,7 @@ import { UserTokenTypeEnum } from '@/domain/entities/userToken/userToken.entity.
 import { LoggerInterface } from '@/domain/interfaces/logger.interface';
 import { MailSenderInterface } from '@/domain/interfaces/mailSender.interface';
 import { UserRepositoryInterface } from '@/domain/interfaces/repositories/user.repository.interface';
+import { UserTokenRepositoryInterface } from '@/domain/interfaces/repositories/userToken.repository.interface';
 
 import { AppError } from '@/application/errors/app.error';
 import { TYPES } from '@/configuration/di/types';
@@ -20,12 +21,13 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
     @inject(TYPES.UserTokenService) private userTokenService: UserTokenServiceInterface,
     @inject(TYPES.MailSender) private mailSender: MailSenderInterface,
     @inject(TYPES.UserRepository) private userRepository: UserRepositoryInterface,
+    @inject(TYPES.UserTokenRepository) private userTokenRepository: UserTokenRepositoryInterface,
     @inject(TYPES.PasswordService) private passwordService: PasswordServiceInterface,
     @inject(TYPES.Logger) private loggerService: LoggerInterface,
     @inject(TYPES.EnvConfig) private envConfig: EnvConfig,
   ) {}
 
-  async executeAskResetPassword(email: string): Promise<void> {
+  async executeResetPasswordRequest(email: string): Promise<void> {
     const user = await this.userRepository.findByEmail(email);
     if (!user) {
       throw new AppError({
@@ -40,6 +42,11 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
       tokenType: UserTokenTypeEnum.resetPassword,
       canBeRefreshed: false,
       expiresIn: this.envConfig.accountTokenExpiration,
+    });
+
+    await this.userTokenRepository.deleteByUser(user.id, {
+      tokenType: UserTokenTypeEnum.resetPassword,
+      exceptTokenValue: token,
     });
 
     try {
@@ -85,6 +92,9 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
 
     const hashedPassword = await this.passwordService.hashPassword(newPassword);
     await this.userRepository.updateOne(user.id, { password: hashedPassword });
+
+    await this.userTokenRepository.deleteByUser(user.id);
+
     this.loggerService.debug(`Reset password success: User found with id `, { userId });
   }
 }

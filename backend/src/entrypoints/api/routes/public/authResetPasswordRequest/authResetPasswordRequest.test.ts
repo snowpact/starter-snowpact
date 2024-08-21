@@ -42,13 +42,13 @@ describe('authResetPasswordRequestRoute', () => {
 
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual({ message: 'Email sent', code: 'EMAIL_SENT' });
-    expect(resetPasswordUseCaseMock.executeAskResetPassword).toHaveBeenCalledWith(email);
+    expect(resetPasswordUseCaseMock.executeResetPasswordRequest).toHaveBeenCalledWith(email);
   });
 
   it('should return 200 even if user is not found', async () => {
     const email = 'nonexistent@example.com';
 
-    resetPasswordUseCaseMock.executeAskResetPassword.mockRejectedValue(
+    resetPasswordUseCaseMock.executeResetPasswordRequest.mockRejectedValue(
       new AppError({ message: 'User not found', code: AppErrorCodes.USER_NOT_FOUND }),
     );
 
@@ -60,13 +60,13 @@ describe('authResetPasswordRequestRoute', () => {
 
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual({ message: 'Email sent', code: 'EMAIL_SENT' });
-    expect(resetPasswordUseCaseMock.executeAskResetPassword).toHaveBeenCalledWith(email);
+    expect(resetPasswordUseCaseMock.executeResetPasswordRequest).toHaveBeenCalledWith(email);
   });
 
   it('should return 200 even if email sending fails', async () => {
     const email = 'test@example.com';
 
-    resetPasswordUseCaseMock.executeAskResetPassword.mockRejectedValue(
+    resetPasswordUseCaseMock.executeResetPasswordRequest.mockRejectedValue(
       new AppError({ message: 'Failed to send email', code: AppErrorCodes.FAILED_TO_SEND_EMAIL }),
     );
 
@@ -78,6 +78,6 @@ describe('authResetPasswordRequestRoute', () => {
 
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual({ message: 'Email sent', code: 'EMAIL_SENT' });
-    expect(resetPasswordUseCaseMock.executeAskResetPassword).toHaveBeenCalledWith(email);
+    expect(resetPasswordUseCaseMock.executeResetPasswordRequest).toHaveBeenCalledWith(email);
   });
 });

@@ -88,10 +88,6 @@ export class UserTokenService implements UserTokenServiceInterface {
     return token;
   }
 
-  async removeToken(tokenValue: string): Promise<void> {
-    await this.userTokenRepository.delete(tokenValue);
-  }
-
   async refreshToken({ tokenValue, expiresIn }: RefreshTokenOptions): Promise<string> {
     const newTokenValue = v4();
 
