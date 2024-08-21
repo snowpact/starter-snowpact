@@ -1,11 +1,38 @@
-# Project starter
+## Prérequis
 
-## Installation local
+- `Docker`
+- `pnpm` version `8.10.2`
+  - `npm install -g pnpm`
+- `bruno`
+  - https://www.usebruno.com/
 
-...
+## Initialisation
 
-## Déploiement
+Assurez-vous d'avoir votre **docker** de lancé puis exécutez :
 
-### Prérequis
+```bash
+pnpm install # installer les dépendances
+pnpm start:database # lance les containers de base de données
+pnpm migration:run # migre la base de données
+# pnpm fixtures:load # TODO charge les fixtures, EN COURS
+```
 
-- Créer un depot sur GC Artifacts
+### Paramétrage de bruno
+
+1. Paramétrez d'abord Bruno
+   Téléchargez [bruno](https://www.usebruno.com/) puis charger la collection dans `backend/apiDoc`.
+
+EN COURS, Chargement depuis ORVAL
+
+## Lancer les applications
+
+- Lancer le backend dans un terminal `pnpm dev:be`
+- Lancer le front office dans un autre terminal `pnpm dev:fo`
+
+## Tests
+
+Pour lancer les tests :
+
+- Tests backend `pnpm test:be`
+- Tests back-office `pnpm test:bo`
+- Tests front-office `pnpm test:fo`

@@ -38,45 +38,7 @@ src/
 
 ## Règles de l'architecture
 
-Dans notre applications, nous avons 3 groupements principaux :
-
-- `couches internes` : qui sont composé du `domain` et de l'`application`
-- `couches externes` : qui sont composé du `entrypoints` et des `gateways`
-- `couche transverse` : qui est composé de la `configuration`, des `tests` et des `outils` utiles
-
-Le principe de l'architecture est de séparer les responsabilités, de faciliter les tests et de favoriser la réutilisation du code.
-
-### Le **domain**
-
-La couche domaine est la couche la plus interne de notre application. Elle doit être indépendante de toute autre couche.
-
-#### Composition :
-
-- **Entités** : qui sont les objets de notre application. Ces objets sont composé des paramètres qui les composent, mais aussi de méthodes qui permettent certaines actions métiers.
-- **Interfaces** : qui sont les interfaces que la couche `application` va se servir pour faire appel aux services externes. Elles vont servir de contrat entre la couche interne et la couche externe.
-
-#### Règles relatives au `domain` :
-
-- Le `domain` ne doit dépendre d'aucune dépendance externe.
-- Le `domain` peut être utilisé par toutes les couches
-
-### La couche `application`
-
-La couche `application` permet d'orchestrer les actions métiers de notre application.
-
-#### Composition :
-
-- **Use cases** : qui sont des méthodes qui permettent d'orchestrer les actions métiers de notre application.
-- **Services** : qui sont des partie de ces actions métiers, regroupées par thématique afin d'être rapidement trouvées et réutilisées.
-- **Errors** : qui sont les erreurs métiers de notre application.
-
-#### Règles relatives à la couche `application` :
-
-- La couche `application` peut utiliser les `entités` et les `interfaces` du `domain`.
-- La couche `application` ne doit pas être appelé par la couche `gateways`.
-- La couche `application` ne peut pas les couches externes sauf via les `interfaces` du `domain` et c'est uniquement valable pour la couche `gateway`. Le but de cette maneuvre est de conserver la maitrise ce ce dont à besoin le métier pour fonctionner en utilisant des acces externe comme la bdd, l'envoie de mail, etc...
-- La couche `application` ne peut pas être appelé par la couche `gateways`.
-
+Voire [ARCHITECTURE.md](./ARCHITECTURE.md).
 
 ## API Naming Convention
 
