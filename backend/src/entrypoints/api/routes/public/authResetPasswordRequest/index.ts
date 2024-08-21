@@ -45,7 +45,7 @@ authResetPasswordRequestRoute.openapi(route, async (c) => {
     TYPES.ResetPasswordUseCase,
   );
 
-  await resetPasswordUseCase.executeAskResetPassword(email);
+  await resetPasswordUseCase.executeResetPasswordRequest(email);
   return c.json({ message: 'Email sent', code: 'EMAIL_SENT' }, HttpStatuses.OK);
 });
 

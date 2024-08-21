@@ -1,4 +1,4 @@
 export interface ResetPasswordUseCaseInterface {
-  executeAskResetPassword: (email: string) => Promise<void>;
+  executeResetPasswordRequest: (email: string) => Promise<void>;
   executeResetPassword: (token: string, newPassword: string) => Promise<void>;
 }
