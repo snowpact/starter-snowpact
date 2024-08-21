@@ -6,11 +6,11 @@ import { userTokenFactory } from '@/domain/entities/userToken/userToken.entity.f
 import { EnvConfig } from '@/gateways/envConfig/envConfig';
 
 import { AuthService } from './authToken.service';
-import { getStatelessTokenMock } from '../../../gateways/statelessToken/statelessToken.mock';
+import { getStatelessTokenServiceMock } from '../statelessToken/statelessToken.service.mock';
 import { getUserTokenServiceMock } from '../userToken/userToken.service.mock';
 
 describe('AuthService', () => {
-  const statelessTokenServiceMock = getStatelessTokenMock();
+  const statelessTokenServiceMock = getStatelessTokenServiceMock();
   const userTokenServiceMock = getUserTokenServiceMock();
   const envConfigMock = new EnvConfig();
   const authService = new AuthService(

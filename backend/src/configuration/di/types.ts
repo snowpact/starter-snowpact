@@ -8,7 +8,7 @@ const TYPES = {
   RefreshUseCase: Symbol.for('RefreshUseCase'),
 
   AuthService: Symbol.for('AuthService'),
-  StatelessToken: Symbol.for('StatelessToken'),
+  StatelessTokenService: Symbol.for('StatelessTokenService'),
   PasswordService: Symbol.for('PasswordService'),
   ClientDatabase: Symbol.for('ClientDatabase'),
   EnvConfig: Symbol.for('EnvConfig'),

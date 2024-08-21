@@ -5,7 +5,6 @@ import { UserTokenRepositoryInterface } from '../../../domain/interfaces/reposit
 export const getUserTokenRepositoryMock = (): Mocked<UserTokenRepositoryInterface> => ({
   create: vi.fn().mockResolvedValue(undefined),
   findByTokenValue: vi.fn().mockResolvedValue(undefined),
-  deleteByUser: vi.fn().mockResolvedValue(undefined),
   deleteByValue: vi.fn().mockResolvedValue(undefined),
   deleteUserTokens: vi.fn().mockResolvedValue(undefined),
   update: vi.fn().mockResolvedValue(undefined),

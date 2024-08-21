@@ -16,7 +16,7 @@ import {
   UserPayloadOptions,
   VerifyRefreshTokenOptions,
 } from './authToken.service.interface';
-import { StatelessTokenInterface } from '../../../domain/interfaces/statelessToken.interface';
+import { StatelessTokenServiceInterface } from '../statelessToken/statelessToken.service.interface';
 import { UserTokenServiceInterface } from '../userToken/userToken.service.interface';
 
 const UserPayloadOptionsSchema = z.object({
@@ -26,8 +26,8 @@ const UserPayloadOptionsSchema = z.object({
 @injectable()
 export class AuthService implements AuthServiceInterface {
   constructor(
-    @inject(TYPES.StatelessToken)
-    private statelessTokenService: StatelessTokenInterface,
+    @inject(TYPES.StatelessTokenService)
+    private statelessTokenService: StatelessTokenServiceInterface,
     @inject(TYPES.UserTokenService)
     private userTokenService: UserTokenServiceInterface,
     @inject(TYPES.EnvConfig)

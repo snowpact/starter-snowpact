@@ -17,7 +17,6 @@ export interface DeleteByOptions {
 export interface UserTokenRepositoryInterface {
   create: (token: UserTokenInterface) => Promise<void>;
   findByTokenValue: (tokenValue: string) => Promise<UserTokenInterface | null>;
-  deleteByUser: (userId: string, options?: DeleteByOptions) => Promise<void>;
   deleteByValue: (tokenValue: string) => Promise<void>;
   deleteUserTokens: (userId: string, tokenTypes?: UserTokenType[]) => Promise<void>;
   update: (options: UpdateTokenOptions) => Promise<void>;

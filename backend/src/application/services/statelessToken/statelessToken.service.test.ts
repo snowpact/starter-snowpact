@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
 
-import { StatelessToken } from './statelessToken';
+import { StatelessTokenService } from './statelessToken.service';
 
-describe('StatelessToken', () => {
-  const statelessTokenService = new StatelessToken();
+describe('StatelessTokenService', () => {
+  const statelessTokenService = new StatelessTokenService();
 
   describe('generateStatelessToken', () => {
     it('should generate a stateless token token', async () => {
