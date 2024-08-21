@@ -26,14 +26,7 @@ const route = createRoute({
   },
 });
 
-healthcheckRoute.openapi(route, async (c) => {
-  const mailSender = mainContainer.get<MailSenderInterface>(TYPES.MailSender);
-
-  await mailSender.sendResetPasswordEmail({
-    email: 'test@test.com',
-    token: '1234567890',
-  });
-
+healthcheckRoute.openapi(route, (c) => {
   return c.json(
     {
       message: 'OK',
