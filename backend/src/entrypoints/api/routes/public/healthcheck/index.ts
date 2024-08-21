@@ -9,7 +9,7 @@ const healthcheckRoute = getHonoApp();
 
 const route = createRoute({
   method: 'get',
-  path: '/healthcheck',
+  path: '/',
   responses: {
     200: {
       content: {
