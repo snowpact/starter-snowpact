@@ -32,7 +32,12 @@ EN COURS, Chargement depuis ORVAL
 ### Mailhog
 
 Nous utilisons [Mailhog](https://github.com/axllent/mailhog) pour intercepter les mails envoyés par l'application.
-Aller sur docker desktop, cliquer sur `mailhog` et ouvrez `http://localhost:8025` dans votre navigateur.
+
+Lancer tout d'abord mailhog puis aller sur `http://localhost:8025` dans votre navigateur.
+
+```bash
+pnpm start:mailhog
+```
 
 ## Tests
 
