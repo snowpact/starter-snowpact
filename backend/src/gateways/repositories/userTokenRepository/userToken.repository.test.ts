@@ -2,6 +2,8 @@
 import { faker } from '@faker-js/faker';
 import { describe, beforeAll, it, expect } from 'vitest';
 
+import { UserTokenTypeEnum } from '@/domain/entities/userToken/userToken.entity.interface';
+
 import { mainContainer } from '@/configuration/di/mainContainer';
 import { TYPES } from '@/configuration/di/types';
 import { testDbService } from '@/configuration/tests/vitest.containers.setup';
@@ -86,6 +88,30 @@ describe('UserToken Repository', () => {
       await testDbService.persistToken(token2);
 
       await userTokenRepository.deleteByUser(user.id, { exceptTokenValue: token2.value });
+
+      const storedToken = await testDbService.getToken(token.value);
+      const storedToken2 = await testDbService.getToken(token2.value);
+      expect(storedToken).toBeNull();
+      expect(storedToken2).not.toBeNull();
+    });
+
+    it('should delete a token by user id (by token type)', async () => {
+      const user = userFactory();
+      await testDbService.persistUser(user);
+      const token = userTokenFactory({
+        userId: user.id,
+        tokenType: UserTokenTypeEnum.resetPassword,
+      });
+      await testDbService.persistToken(token);
+      const token2 = userTokenFactory({
+        userId: user.id,
+        tokenType: UserTokenTypeEnum.accountValidation,
+      });
+      await testDbService.persistToken(token2);
+
+      await userTokenRepository.deleteByUser(user.id, {
+        tokenType: UserTokenTypeEnum.resetPassword,
+      });
 
       const storedToken = await testDbService.getToken(token.value);
       const storedToken2 = await testDbService.getToken(token2.value);
