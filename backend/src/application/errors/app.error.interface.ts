@@ -22,6 +22,8 @@ export interface AppErrorOptions {
   code: AppErrorCodes;
   context?: unknown;
   privateContext?: unknown;
+  error?: unknown;
+  silent?: boolean;
 }
 
 export interface AppErrorInterface extends Error {
@@ -29,4 +31,6 @@ export interface AppErrorInterface extends Error {
   code: AppErrorCodes;
   context?: unknown;
   isAppError: boolean;
+  error?: unknown;
+  silent?: boolean;
 }

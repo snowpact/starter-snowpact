@@ -6,16 +6,25 @@ export class AppError extends Error implements AppErrorInterface {
   public message: string;
   public code: AppErrorCodes;
   public context?: unknown;
+  public cause?: unknown;
   public privateContext?: unknown;
   public isAppError = true;
+  public error = Error;
 
-  constructor({ code, message, context, privateContext }: AppErrorOptions) {
-    super(message);
+  constructor({ code, message, context, privateContext, error, silent = false }: AppErrorOptions) {
+    const cause = error instanceof Error ? error.cause : undefined;
+
+    super(message, { cause });
     this.message = message;
     this.context = context;
     this.code = code;
+    this.cause = cause;
+
     Object.setPrototypeOf(this, new.target.prototype);
-    appLogger.debug(message, { context, privateContext });
+
+    if (!silent) {
+      appLogger.debug(message, { context, privateContext });
+    }
     // Error.captureStackTrace(this);
   }
 }

@@ -78,10 +78,8 @@ export class EnvConfig implements EnvConfigInterface {
     try {
       return this.ConfigParser.parse(process.env);
     } catch (error) {
-      if (error instanceof Error) {
-        // eslint-disable-next-line no-console
-        console.error('Error while parsing env variables:', error);
-      }
+      // eslint-disable-next-line no-console
+      console.error('Error while parsing env variables:', error);
       throw error;
     }
   }

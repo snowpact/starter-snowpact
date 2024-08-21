@@ -20,11 +20,8 @@ const init = async () => {
     const bootstrapData = bootstrap();
     server = bootstrapData.server;
   } catch (error) {
-    if (error instanceof Error) {
-      appLogger.error('Error starting server', error);
-    } else {
-      appLogger.error('Error starting server', new Error('Unknown error'));
-    }
+    appLogger.error('Error starting server', error);
+
     await clientDatabase.disconnect();
     server.close();
     process.exit(1);
