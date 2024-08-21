@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 import bcrypt from 'bcrypt';
 
-import { buildFactory } from '@/utils/buildFactory';
+import { buildFactory } from '@/configuration/utils/buildFactory';
 
 import { UserInterface } from './user.entity.interface';
 
@@ -16,6 +16,7 @@ const buildSchema = (): UserInterface => {
     admin: faker.datatype.boolean(),
     createdAt: faker.date.recent(),
     updatedAt: faker.date.recent(),
+    userTokens: [],
   };
 };
 

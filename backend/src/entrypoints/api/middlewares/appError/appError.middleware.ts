@@ -5,7 +5,7 @@ import { ZodError } from 'zod';
 import { AppErrorCodes } from '@/application/errors/app.error.interface';
 
 import { isAppError } from '@/application/errors/error.util';
-import { appLogger } from '@/configuration/logger/logger.singleton';
+import { Logger } from '@/gateways/logger/logger';
 
 import { HttpStatuses } from '../../config/httpStatuses';
 import { CustomEnvInterface } from '../../loader/getHonoApp';
@@ -41,6 +41,7 @@ export const appErrorMiddleware: ErrorHandler<CustomEnvInterface> = (error, c) =
     );
   }
 
+  const appLogger = new Logger();
   appLogger.error(error.message, error);
   return c.json(
     {

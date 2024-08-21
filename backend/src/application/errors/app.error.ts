@@ -1,4 +1,4 @@
-import { appLogger } from '@/configuration/logger/logger.singleton';
+import { Logger } from '@/gateways/logger/logger';
 
 import { AppErrorCodes, AppErrorInterface, AppErrorOptions } from './app.error.interface';
 
@@ -23,6 +23,7 @@ export class AppError extends Error implements AppErrorInterface {
     Object.setPrototypeOf(this, new.target.prototype);
 
     if (!silent) {
+      const appLogger = new Logger();
       appLogger.debug(message, { context, privateContext });
     }
     // Error.captureStackTrace(this);

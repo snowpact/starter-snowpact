@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { buildFactory } from '@/utils/buildFactory';
+import { buildFactory } from '@/configuration/utils/buildFactory';
 
 import { UserTokenInterface, UserTokenTypeValues } from './userToken.entity.interface';
 

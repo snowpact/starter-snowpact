@@ -1,4 +1,5 @@
 import { UserInterface } from './user.entity.interface';
+import { UserToken } from '../userToken/userToken.entity';
 
 export class User implements UserInterface {
   constructor(
@@ -8,5 +9,6 @@ export class User implements UserInterface {
     public admin: boolean,
     public createdAt: Date,
     public updatedAt: Date,
+    public userTokens: UserToken[],
   ) {}
 }

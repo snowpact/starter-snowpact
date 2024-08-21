@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import { EnvConfigInterface } from '@/domain/interfaces/envConfig.interface';
 
-import { parseNumber, parseBoolean } from '@/utils/zodParser';
+import { parseNumber, parseBoolean } from '@/configuration/utils/zodParser';
 
 @injectable()
 export class EnvConfig implements EnvConfigInterface {
