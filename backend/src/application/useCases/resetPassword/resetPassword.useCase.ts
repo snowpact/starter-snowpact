@@ -37,22 +37,19 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
       });
     }
 
-    const token = await this.userTokenService.generateToken({
+    const token = this.userTokenService.generateToken({
       userId: user.id,
       tokenType: UserTokenTypeEnum.resetPassword,
       canBeRefreshed: false,
       expiresIn: this.envConfig.accountTokenExpiration,
     });
 
-    await this.userTokenRepository.deleteByUser(user.id, {
-      tokenType: UserTokenTypeEnum.resetPassword,
-      exceptTokenValue: token,
-    });
+    await this.userTokenRepository.create(token);
 
     try {
       await this.mailSender.sendResetPasswordEmail({
         email,
-        token,
+        tokenValue: token.value,
       });
     } catch (error) {
       throw new AppError({
@@ -66,9 +63,11 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
     this.loggerService.debug(`Ask reset password success: User found with email`, { email });
   }
 
-  async executeResetPassword(token: string, newPassword: string): Promise<void> {
-    const { userId } = await this.userTokenService.verifyToken({
-      tokenValue: token,
+  async executeResetPassword(tokenValue: string, newPassword: string): Promise<void> {
+    const token = await this.userTokenRepository.findByTokenValue(tokenValue);
+    const verifiedToken = this.userTokenService.verifyToken({
+      token,
+      tokenValue,
       tokenType: UserTokenTypeEnum.resetPassword,
     });
 
@@ -81,20 +80,21 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
       });
     }
 
-    const user = await this.userRepository.findById(userId);
+    const user = await this.userRepository.findById(verifiedToken.userId);
     if (!user) {
       throw new AppError({
         message: 'User not found',
         code: AppErrorCodes.USER_NOT_FOUND,
-        privateContext: { userId },
+        privateContext: { userId: verifiedToken.userId },
       });
     }
 
     const hashedPassword = await this.passwordService.hashPassword(newPassword);
     await this.userRepository.updateOne(user.id, { password: hashedPassword });
-
-    await this.userTokenRepository.deleteByUser(user.id);
-
-    this.loggerService.debug(`Reset password success: User found with id `, { userId });
+    await this.userTokenRepository.deleteUserTokens(user.id, [
+      UserTokenTypeEnum.resetPassword,
+      UserTokenTypeEnum.refreshToken,
+    ]);
+    this.loggerService.debug(`Reset password success: User found with id ${verifiedToken.userId}`);
   }
 }

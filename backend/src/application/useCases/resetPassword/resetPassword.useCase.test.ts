@@ -26,7 +26,7 @@ describe('ResetPasswordUseCase', () => {
   const loggerService = getLoggerMock();
   const envConfig = new EnvConfig();
 
-  const loginUseCase = new ResetPasswordUseCase(
+  const resetPasswordUseCase = new ResetPasswordUseCase(
     userTokenService,
     mailSender,
     userRepository,
@@ -43,11 +43,11 @@ describe('ResetPasswordUseCase', () => {
   describe('executeResetPasswordRequest', () => {
     it('should send an email with a reset password link', async () => {
       const user = userFactory();
-      const token = faker.string.alphanumeric(30);
+      const token = userTokenFactory({ userId: user.id });
       userRepository.findByEmail.mockResolvedValue(user);
-      userTokenService.generateToken.mockResolvedValue(token);
+      userTokenService.generateToken.mockReturnValue(token);
 
-      await loginUseCase.executeResetPasswordRequest(user.email);
+      await resetPasswordUseCase.executeResetPasswordRequest(user.email);
 
       expect(userRepository.findByEmail).toHaveBeenCalledWith(user.email);
       expect(userTokenService.generateToken).toHaveBeenCalledWith({
@@ -56,20 +56,16 @@ describe('ResetPasswordUseCase', () => {
         canBeRefreshed: false,
         expiresIn: envConfig.accountTokenExpiration,
       });
-      expect(userTokenRepository.deleteByUser).toHaveBeenCalledWith(user.id, {
-        exceptTokenValue: token,
-        tokenType: UserTokenTypeEnum.resetPassword,
-      });
       expect(mailSender.sendResetPasswordEmail).toHaveBeenCalledWith({
         email: user.email,
-        token,
+        tokenValue: token.value,
       });
     });
     it('should throw an error if user not found', async () => {
       userRepository.findByEmail.mockResolvedValue(null);
 
       await expect(
-        loginUseCase.executeResetPasswordRequest(faker.internet.email()),
+        resetPasswordUseCase.executeResetPasswordRequest(faker.internet.email()),
       ).rejects.toThrow();
     });
   });
@@ -77,48 +73,50 @@ describe('ResetPasswordUseCase', () => {
   describe('executeResetPassword', () => {
     it('should reset password', async () => {
       const user = userFactory();
-      const tokenValue = faker.string.alphanumeric(30);
+      const token = userTokenFactory({ userId: user.id });
       const newPassword = faker.internet.password();
       const hashedPassword = faker.string.alphanumeric(30);
 
-      userTokenService.verifyToken.mockResolvedValue(userTokenFactory({ userId: user.id }));
+      userTokenRepository.findByTokenValue.mockResolvedValue(token);
+      userTokenService.verifyToken.mockReturnValue(token);
       userRepository.findById.mockResolvedValue(user);
       passwordService.hashPassword.mockResolvedValue(hashedPassword);
       passwordService.checkPasswordComplexity.mockReturnValue(true);
 
-      await loginUseCase.executeResetPassword(tokenValue, newPassword);
+      await resetPasswordUseCase.executeResetPassword(token.value, newPassword);
 
       expect(userTokenService.verifyToken).toHaveBeenCalledWith({
-        tokenValue,
+        token,
+        tokenValue: token.value,
         tokenType: UserTokenTypeEnum.resetPassword,
       });
       expect(userRepository.findById).toHaveBeenCalledWith(user.id);
       expect(passwordService.hashPassword).toHaveBeenCalledWith(newPassword);
       expect(userRepository.updateOne).toHaveBeenCalledWith(user.id, { password: hashedPassword });
-      expect(userTokenRepository.deleteByUser).toHaveBeenCalledWith(user.id);
+      expect(userTokenRepository.deleteUserTokens).toHaveBeenCalledWith(user.id, [
+        UserTokenTypeEnum.resetPassword,
+        UserTokenTypeEnum.refreshToken,
+      ]);
     });
 
     it('should throw an error if password is invalid', async () => {
-      userTokenService.verifyToken.mockResolvedValue(
-        userTokenFactory({ userId: faker.string.uuid() }),
-      );
+      const token = userTokenFactory();
+      userTokenService.verifyToken.mockReturnValue(token);
       passwordService.checkPasswordComplexity.mockReturnValue(false);
 
       await expect(
-        loginUseCase.executeResetPassword(faker.string.alphanumeric(30), faker.internet.password()),
+        resetPasswordUseCase.executeResetPassword(token.value, faker.internet.password()),
       ).rejects.toThrow(AppError);
     });
 
     it('should throw an error if user not found', async () => {
-      const token = faker.string.alphanumeric(30);
-      userTokenService.verifyToken.mockResolvedValue(
-        userTokenFactory({ userId: faker.string.uuid() }),
-      );
+      const token = userTokenFactory();
+      userTokenService.verifyToken.mockReturnValue(token);
       passwordService.checkPasswordComplexity.mockReturnValue(true);
       userRepository.findById.mockResolvedValue(null);
 
       await expect(
-        loginUseCase.executeResetPassword(token, faker.internet.password()),
+        resetPasswordUseCase.executeResetPassword(token.value, faker.internet.password()),
       ).rejects.toThrow(AppError);
     });
   });

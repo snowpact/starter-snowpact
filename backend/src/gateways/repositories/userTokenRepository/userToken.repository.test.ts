@@ -48,14 +48,14 @@ describe('UserToken Repository', () => {
     });
   });
 
-  describe('delete', () => {
+  describe('deleteByValue', () => {
     it('should delete a token by token value', async () => {
       const user = userFactory();
       await testDbService.persistUser(user);
       const token = userTokenFactory({ userId: user.id });
       await testDbService.persistToken(token);
 
-      await userTokenRepository.delete(token.value);
+      await userTokenRepository.deleteByValue(token.value);
 
       const storedToken = await testDbService.getToken(token.value);
       expect(storedToken).toBeNull();
@@ -117,6 +117,59 @@ describe('UserToken Repository', () => {
       const storedToken2 = await testDbService.getToken(token2.value);
       expect(storedToken).toBeNull();
       expect(storedToken2).not.toBeNull();
+    });
+  });
+  describe('deleteUserTokens', () => {
+    it('should delete all tokens for a user with the given types', async () => {
+      const user = userFactory();
+      await testDbService.persistUser(user);
+      const token1 = userTokenFactory({
+        userId: user.id,
+        tokenType: UserTokenTypeEnum.refreshToken,
+      });
+      const token2 = userTokenFactory({
+        userId: user.id,
+        tokenType: UserTokenTypeEnum.accountValidation,
+      });
+      const token3 = userTokenFactory({
+        userId: user.id,
+        tokenType: UserTokenTypeEnum.resetPassword,
+      });
+      await testDbService.persistToken(token1);
+      await testDbService.persistToken(token2);
+      await testDbService.persistToken(token3);
+
+      await userTokenRepository.deleteUserTokens(user.id, [
+        UserTokenTypeEnum.refreshToken,
+        UserTokenTypeEnum.resetPassword,
+      ]);
+
+      const storedToken1 = await testDbService.getTokensByUserId(user.id);
+      expect(storedToken1).toEqual([token2]);
+    });
+    it('should delete all tokens for a user - no types provided', async () => {
+      const user = userFactory();
+      await testDbService.persistUser(user);
+      const token1 = userTokenFactory({
+        userId: user.id,
+        tokenType: UserTokenTypeEnum.refreshToken,
+      });
+      const token2 = userTokenFactory({
+        userId: user.id,
+        tokenType: UserTokenTypeEnum.accountValidation,
+      });
+      const token3 = userTokenFactory({
+        userId: user.id,
+        tokenType: UserTokenTypeEnum.resetPassword,
+      });
+      await testDbService.persistToken(token1);
+      await testDbService.persistToken(token2);
+      await testDbService.persistToken(token3);
+
+      await userTokenRepository.deleteUserTokens(user.id, undefined);
+
+      const storedTokens = await testDbService.getTokensByUserId(user.id);
+      expect(storedTokens).toEqual([]);
     });
   });
 

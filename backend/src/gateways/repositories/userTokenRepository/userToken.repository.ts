@@ -1,11 +1,14 @@
 import { inject, injectable } from 'inversify';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 
-import { UserTokenInterface } from '@/domain/entities/userToken/userToken.entity.interface';
+import {
+  UserTokenInterface,
+  UserTokenType,
+} from '@/domain/entities/userToken/userToken.entity.interface';
 import {
   UserTokenRepositoryInterface,
-  UpdateOptions,
   DeleteByOptions,
+  UpdateTokenOptions,
 } from '@/domain/interfaces/repositories/userToken.repository.interface';
 import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatabase/clientDatabase.interface';
 
@@ -40,14 +43,21 @@ export class UserTokenRepository implements UserTokenRepositoryInterface {
 
     await query.execute();
   };
-  delete = async (tokenValue: string): Promise<void> => {
+  deleteByValue = async (tokenValue: string): Promise<void> => {
     await this.repository.delete({ value: tokenValue });
+  };
+  deleteUserTokens = async (userId: string, tokenTypes?: UserTokenType[]): Promise<void> => {
+    if (tokenTypes) {
+      await this.repository.delete({ userId, tokenType: In(tokenTypes) });
+    } else {
+      await this.repository.delete({ userId });
+    }
   };
   update = async ({
     oldTokenValue,
     newTokenValue,
     expirationDate,
-  }: UpdateOptions): Promise<void> => {
+  }: UpdateTokenOptions): Promise<void> => {
     await this.repository.update(
       { value: oldTokenValue },
       { value: newTokenValue, expirationDate },
