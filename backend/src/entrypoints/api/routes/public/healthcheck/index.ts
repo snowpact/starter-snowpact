@@ -1,5 +1,9 @@
 import { createRoute } from '@hono/zod-openapi';
 
+import { MailSenderInterface } from '@/domain/interfaces/mailSender.interface';
+
+import { mainContainer } from '@/configuration/di/mainContainer';
+import { TYPES } from '@/configuration/di/types';
 import { HttpStatuses } from '@/entrypoints/api/config/httpStatuses';
 import { getHonoApp } from '@/entrypoints/api/loader/getHonoApp';
 
@@ -22,7 +26,14 @@ const route = createRoute({
   },
 });
 
-healthcheckRoute.openapi(route, (c) => {
+healthcheckRoute.openapi(route, async (c) => {
+  const mailSender = mainContainer.get<MailSenderInterface>(TYPES.MailSender);
+
+  await mailSender.sendResetPasswordEmail({
+    email: 'test@test.com',
+    token: '1234567890',
+  });
+
   return c.json(
     {
       message: 'OK',
