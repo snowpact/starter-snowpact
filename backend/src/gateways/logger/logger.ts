@@ -44,6 +44,7 @@ export class Logger implements LoggerInterface {
         requestId: this.getRequestId(),
       },
       message,
+      error,
     );
   }
 }
