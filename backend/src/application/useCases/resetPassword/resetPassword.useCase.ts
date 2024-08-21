@@ -17,8 +17,7 @@ import { ResetPasswordUseCaseInterface } from './resetPassword.useCase.interface
 @injectable()
 export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
   constructor(
-    @inject(TYPES.UserTokenService)
-    private userTokenService: UserTokenServiceInterface,
+    @inject(TYPES.UserTokenService) private userTokenService: UserTokenServiceInterface,
     @inject(TYPES.MailSender) private mailSender: MailSenderInterface,
     @inject(TYPES.UserRepository) private userRepository: UserRepositoryInterface,
     @inject(TYPES.PasswordService) private passwordService: PasswordServiceInterface,
@@ -49,19 +48,15 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
         token,
       });
     } catch (error) {
-      if (error instanceof Error) {
-        this.loggerService.error('Ask reset password failed', error);
-      } else {
-        this.loggerService.error(`Ask reset password failed`, new Error('Unknown error'));
-      }
       throw new AppError({
-        message: 'Failed to send reset password email',
+        message: 'Ask reset password failed',
         code: AppErrorCodes.FAILED_TO_SEND_EMAIL,
         privateContext: { email },
+        error,
       });
     }
 
-    this.loggerService.debug(`Ask reset password success: User found with email ${email}`);
+    this.loggerService.debug(`Ask reset password success: User found with email`, { email });
   }
 
   async executeResetPassword(token: string, newPassword: string): Promise<void> {
@@ -90,6 +85,6 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
 
     const hashedPassword = await this.passwordService.hashPassword(newPassword);
     await this.userRepository.updateOne(user.id, { password: hashedPassword });
-    this.loggerService.debug(`Reset password success: User found with id ${userId}`);
+    this.loggerService.debug(`Reset password success: User found with id `, { userId });
   }
 }

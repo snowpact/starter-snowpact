@@ -37,7 +37,15 @@ export class Logger implements LoggerInterface {
     this.logger.warn({ ...context, requestId: this.getRequestId() }, message);
   }
 
-  error(message: string, error?: Error, context?: Record<string, unknown>): void {
-    this.logger.error({ ...context, err: error, requestId: this.getRequestId() }, message);
+  error(message: string, error?: unknown, context?: Record<string, unknown>): void {
+    this.logger.error(
+      {
+        ...context,
+        err: error instanceof Error ? error : new Error('Unknown error'),
+        requestId: this.getRequestId(),
+      },
+      message,
+      error,
+    );
   }
 }
