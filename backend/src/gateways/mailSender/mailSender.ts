@@ -44,11 +44,11 @@ export class MailSender implements MailSenderInterface {
   }
 
   async sendResetPasswordEmail(options: SendResetPasswordEmailOptions): Promise<void> {
-    const { email, token } = options;
+    const { email, tokenValue } = options;
 
     const subTemplatePath = resolve(__dirname, './templates/partial/resetPassword.template.hbs');
     const html = await this.renderHTMLFromTemplate('public', subTemplatePath, {
-      resetPasswordUrl: `https://YOUR_APP.com/reset-password?token=${token}`,
+      resetPasswordUrl: `https://YOUR_APP.com/reset-password?token=${tokenValue}`,
     });
 
     await this.mailerService.sendMail({

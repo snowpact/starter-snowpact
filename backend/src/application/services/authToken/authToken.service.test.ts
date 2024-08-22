@@ -6,11 +6,11 @@ import { userTokenFactory } from '@/domain/entities/userToken/userToken.entity.f
 import { EnvConfig } from '@/gateways/envConfig/envConfig';
 
 import { AuthService } from './authToken.service';
-import { getStatelessTokenMock } from '../../../gateways/statelessToken/statelessToken.mock';
+import { getStatelessTokenServiceMock } from '../statelessToken/statelessToken.service.mock';
 import { getUserTokenServiceMock } from '../userToken/userToken.service.mock';
 
 describe('AuthService', () => {
-  const statelessTokenServiceMock = getStatelessTokenMock();
+  const statelessTokenServiceMock = getStatelessTokenServiceMock();
   const userTokenServiceMock = getUserTokenServiceMock();
   const envConfigMock = new EnvConfig();
   const authService = new AuthService(
@@ -42,13 +42,13 @@ describe('AuthService', () => {
   });
 
   describe('generateRefreshToken', () => {
-    it('should generate a refresh token', async () => {
+    it('should generate a refresh token', () => {
       const userId = '123';
-      const token = 'refresh-token';
+      const token = userTokenFactory();
 
-      userTokenServiceMock.generateToken.mockResolvedValue(token);
+      userTokenServiceMock.generateToken.mockReturnValue(token);
 
-      const result = await authService.generateRefreshToken(userId);
+      const result = authService.generateRefreshToken(userId);
 
       expect(result).toBe(token);
       expect(userTokenServiceMock.generateToken).toHaveBeenCalledWith({
@@ -78,34 +78,24 @@ describe('AuthService', () => {
     });
   });
 
-  describe('refreshToken', () => {
-    it('should refresh a token', async () => {
-      const userId = '123';
-      const currentToken = userTokenFactory({
-        userId,
-        tokenType: UserTokenTypeEnum.refreshToken,
-        canBeRefreshed: true,
-      });
-      const newToken = userTokenFactory({
-        userId,
-        tokenType: UserTokenTypeEnum.refreshToken,
-        canBeRefreshed: true,
+  describe('verifyRefreshToken', () => {
+    it('should verify a refresh token', () => {
+      const token = userTokenFactory();
+
+      userTokenServiceMock.verifyToken.mockReturnValue(token);
+
+      const result = authService.verifyRefreshToken({
+        token,
+        tokenValue: token.value,
+        userId: token.userId,
       });
 
-      userTokenServiceMock.verifyToken.mockResolvedValue(currentToken);
-      userTokenServiceMock.refreshToken.mockResolvedValue(newToken.value);
-
-      const result = await authService.refreshToken(currentToken.value, userId);
-
-      expect(result).toBe(newToken.value);
+      expect(result).toEqual(token);
       expect(userTokenServiceMock.verifyToken).toHaveBeenCalledWith({
-        tokenValue: currentToken.value,
+        token,
+        tokenValue: token.value,
         tokenType: UserTokenTypeEnum.refreshToken,
-        userId,
-      });
-      expect(userTokenServiceMock.refreshToken).toHaveBeenCalledWith({
-        tokenValue: currentToken.value,
-        expiresIn: envConfigMock.refreshTokenExpiration,
+        userId: token.userId,
       });
     });
   });

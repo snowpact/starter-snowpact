@@ -1,6 +1,9 @@
-import { UserTokenInterface } from '@/domain/entities/userToken/userToken.entity.interface';
+import {
+  UserTokenInterface,
+  UserTokenType,
+} from '@/domain/entities/userToken/userToken.entity.interface';
 
-export interface UpdateOptions {
+export interface UpdateTokenOptions {
   oldTokenValue: string;
   newTokenValue: string;
   expirationDate: Date;
@@ -14,7 +17,7 @@ export interface DeleteByOptions {
 export interface UserTokenRepositoryInterface {
   create: (token: UserTokenInterface) => Promise<void>;
   findByTokenValue: (tokenValue: string) => Promise<UserTokenInterface | null>;
-  deleteByUser: (userId: string, options?: DeleteByOptions) => Promise<void>;
-  delete: (tokenValue: string) => Promise<void>;
-  update: (options: UpdateOptions) => Promise<void>;
+  deleteByValue: (tokenValue: string) => Promise<void>;
+  deleteUserTokens: (userId: string, tokenTypes?: UserTokenType[]) => Promise<void>;
+  update: (options: UpdateTokenOptions) => Promise<void>;
 }

@@ -43,9 +43,9 @@ export class LoginUseCase implements LoginUseCaseInterface {
     }
 
     const accessToken = await this.authService.generateAccessToken(user.id);
-    const refreshToken = await this.authService.generateRefreshToken(user.id);
+    const refreshToken = this.authService.generateRefreshToken(user.id);
 
     this.loggerService.debug(`Login successful: User logged in`, { email });
-    return { accessToken, refreshToken };
+    return { accessToken, refreshToken: refreshToken.value };
   }
 }

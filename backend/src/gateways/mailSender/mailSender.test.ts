@@ -15,7 +15,7 @@ describe('MailSender', () => {
     const email = 'test@example.com';
     const token = 'test-token';
 
-    await mailSenderService.sendResetPasswordEmail({ email, token });
+    await mailSenderService.sendResetPasswordEmail({ email, tokenValue: token });
 
     expect(mailerServiceMock.sendMail).toHaveBeenCalledWith({
       to: email,

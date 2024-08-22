@@ -2,17 +2,16 @@ import { injectable } from 'inversify';
 import jwt from 'jsonwebtoken';
 
 import { AppErrorCodes } from '@/application/errors/app.error.interface';
+import {
+  StatelessTokenServiceInterface,
+  GenerateStatelessTokenOptions,
+  VerifyStatelessTokenOptions,
+} from '@/application/services/statelessToken/statelessToken.service.interface';
 
 import { AppError } from '@/application/errors/app.error';
 
-import {
-  GenerateStatelessTokenOptions,
-  StatelessTokenInterface,
-  VerifyStatelessTokenOptions,
-} from '../../domain/interfaces/statelessToken.interface';
-
 @injectable()
-export class StatelessToken implements StatelessTokenInterface {
+export class StatelessTokenService implements StatelessTokenServiceInterface {
   async generateToken({
     payload,
     secret,

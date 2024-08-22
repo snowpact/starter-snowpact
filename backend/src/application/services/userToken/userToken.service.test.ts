@@ -7,32 +7,27 @@ import { UserTokenTypeValues } from '@/domain/entities/userToken/userToken.entit
 import { AppError } from '@/application/errors/app.error';
 import { userTokenFactory } from '@/domain/entities/userToken/userToken.entity.factory';
 
-import { getUserTokenRepositoryMock } from '@/gateways/repositories/userTokenRepository/userToken.repository.mock';
-
 import { UserTokenService } from './userToken.service';
 
 describe('UserTokenService', () => {
-  const userTokenRepositoryMock = getUserTokenRepositoryMock();
-  const userTokenService = new UserTokenService(userTokenRepositoryMock);
+  const userTokenService = new UserTokenService();
 
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
   describe('generateToken', () => {
-    it('should generate a token', async () => {
+    it('should generate a token', () => {
       const token = userTokenFactory();
-      userTokenRepositoryMock.create.mockResolvedValue(undefined);
 
-      const generatedToken = await userTokenService.generateToken({
+      const generatedToken = userTokenService.generateToken({
         userId: token.userId,
         expiresIn: 1000,
         canBeRefreshed: token.canBeRefreshed,
         tokenType: token.tokenType,
       });
 
-      expect(generatedToken).toBeDefined();
-      expect(userTokenRepositoryMock.create).toHaveBeenCalledWith({
+      expect(generatedToken).toMatchObject({
         id: expect.any(String),
         userId: token.userId,
         value: expect.any(String),
@@ -46,119 +41,95 @@ describe('UserTokenService', () => {
   });
 
   describe('verifyToken', () => {
-    it('should verify a token', async () => {
+    it('should verify a token', () => {
       const token = userTokenFactory();
-      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
 
-      const verifiedToken = await userTokenService.verifyToken({
+      const verifiedToken = userTokenService.verifyToken({
+        token,
         tokenValue: token.value,
         tokenType: token.tokenType,
         userId: token.userId,
       });
 
-      expect(verifiedToken).toBeDefined();
-      expect(verifiedToken.value).toBe(token.value);
-      expect(userTokenRepositoryMock.findByTokenValue).toHaveBeenCalledWith(token.value);
+      expect(verifiedToken).toMatchObject(token);
     });
-    it('should throw an error if token is not found', async () => {
+    it('should throw an error if token is not found', () => {
       const token = userTokenFactory();
-      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(null);
 
-      await expect(
+      expect(() =>
         userTokenService.verifyToken({
+          token: null,
           tokenValue: token.value,
           tokenType: token.tokenType,
           userId: token.userId,
         }),
-      ).rejects.toThrow(AppError);
+      ).toThrow(AppError);
     });
-    it('should throw an error if token expired - ignoreExpiration = false', async () => {
-      const token = userTokenFactory();
-      token.expirationDate = new Date(Date.now() - 1000);
-      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
+    it('should throw an error if token expired - ignoreExpiration = false', () => {
+      const token = userTokenFactory({ expirationDate: new Date(Date.now() - 1000) });
 
-      await expect(
+      expect(() =>
         userTokenService.verifyToken({
+          token,
           tokenValue: token.value,
           tokenType: token.tokenType,
           userId: token.userId,
         }),
-      ).rejects.toThrow(AppError);
+      ).toThrow(AppError);
     });
-    it('should throw an error if token type is different', async () => {
+    it('should throw an error if token type is different', () => {
       const originalTokenType = faker.helpers.arrayElement(UserTokenTypeValues);
       const token = userTokenFactory({ tokenType: originalTokenType });
-      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
 
       const differentTokenType = faker.helpers.arrayElement(
         UserTokenTypeValues.filter((type) => type !== originalTokenType),
       );
 
-      await expect(
+      expect(() =>
         userTokenService.verifyToken({
+          token,
           tokenValue: token.value,
           tokenType: differentTokenType,
           userId: token.userId,
         }),
-      ).rejects.toThrow(AppError);
-
-      expect(userTokenRepositoryMock.findByTokenValue).toHaveBeenCalledWith(token.value);
+      ).toThrow(AppError);
     });
-    it('should not throw an error if token expired - ignoreExpiration = true', async () => {
-      const token = userTokenFactory();
-      token.expirationDate = new Date(Date.now() - 1000);
-      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
+    it('should not throw an error if token expired - ignoreExpiration = true', () => {
+      const token = userTokenFactory({ expirationDate: new Date(Date.now() - 1000) });
 
-      await expect(
+      expect(() =>
         userTokenService.verifyToken({
+          token,
           tokenValue: token.value,
           tokenType: token.tokenType,
           userId: token.userId,
           ignoreExpiration: true,
         }),
-      ).resolves.not.toThrow(AppError);
+      ).not.toThrow(AppError);
     });
-    it('should throw an error if userId is not the same', async () => {
+    it('should throw an error if userId is not the same', () => {
       const token = userTokenFactory();
-      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
 
-      await expect(
+      expect(() =>
         userTokenService.verifyToken({
+          token,
           tokenValue: token.value,
           tokenType: token.tokenType,
           userId: 'differentUserId',
           ignoreExpiration: false,
         }),
-      ).rejects.toThrow(AppError);
+      ).toThrow(AppError);
     });
-    it('should not throw an error if userId not provided', async () => {
+    it('should not throw an error if userId not provided', () => {
       const token = userTokenFactory();
-      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
 
-      await expect(
+      expect(() =>
         userTokenService.verifyToken({
+          token,
           tokenValue: token.value,
           tokenType: token.tokenType,
         }),
-      ).resolves.not.toThrow(AppError);
-    });
-  });
-
-  describe('refreshToken', () => {
-    it('should refresh a token', async () => {
-      const token = userTokenFactory();
-      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(token);
-      await userTokenService.refreshToken({ tokenValue: token.value, expiresIn: 1000 });
-      expect(userTokenRepositoryMock.update).toHaveBeenCalled();
-    });
-    it('should throw an error if token is not found', async () => {
-      const token = 'token';
-      userTokenRepositoryMock.findByTokenValue.mockResolvedValue(null);
-
-      await expect(
-        userTokenService.refreshToken({ tokenValue: token, expiresIn: 1000 }),
-      ).rejects.toThrow(AppError);
-      expect(userTokenRepositoryMock.update).not.toHaveBeenCalled();
+      ).not.toThrow(AppError);
     });
   });
 });

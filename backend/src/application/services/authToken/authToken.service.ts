@@ -2,14 +2,21 @@ import { inject, injectable } from 'inversify';
 import { z } from 'zod';
 
 import { AppErrorCodes } from '@/application/errors/app.error.interface';
-import { UserTokenTypeEnum } from '@/domain/entities/userToken/userToken.entity.interface';
+import {
+  UserTokenInterface,
+  UserTokenTypeEnum,
+} from '@/domain/entities/userToken/userToken.entity.interface';
 import { EnvConfigInterface } from '@/domain/interfaces/envConfig.interface';
 
 import { AppError } from '@/application/errors/app.error';
 import { TYPES } from '@/configuration/di/types';
 
-import { AuthServiceInterface, UserPayloadOptions } from './authToken.service.interface';
-import { StatelessTokenInterface } from '../../../domain/interfaces/statelessToken.interface';
+import {
+  AuthServiceInterface,
+  UserPayloadOptions,
+  VerifyRefreshTokenOptions,
+} from './authToken.service.interface';
+import { StatelessTokenServiceInterface } from '../statelessToken/statelessToken.service.interface';
 import { UserTokenServiceInterface } from '../userToken/userToken.service.interface';
 
 const UserPayloadOptionsSchema = z.object({
@@ -19,8 +26,8 @@ const UserPayloadOptionsSchema = z.object({
 @injectable()
 export class AuthService implements AuthServiceInterface {
   constructor(
-    @inject(TYPES.StatelessToken)
-    private statelessTokenService: StatelessTokenInterface,
+    @inject(TYPES.StatelessTokenService)
+    private statelessTokenService: StatelessTokenServiceInterface,
     @inject(TYPES.UserTokenService)
     private userTokenService: UserTokenServiceInterface,
     @inject(TYPES.EnvConfig)
@@ -34,7 +41,7 @@ export class AuthService implements AuthServiceInterface {
       secret: this.envConfig.accessTokenSecret,
     });
   }
-  generateRefreshToken(userId: string): Promise<string> {
+  generateRefreshToken(userId: string): UserTokenInterface {
     return this.userTokenService.generateToken({
       userId,
       canBeRefreshed: true,
@@ -65,15 +72,12 @@ export class AuthService implements AuthServiceInterface {
 
     return parseResult.data;
   }
-  async refreshToken(token: string, userId: string): Promise<string> {
-    await this.userTokenService.verifyToken({
-      tokenValue: token,
+  verifyRefreshToken({ token, tokenValue, userId }: VerifyRefreshTokenOptions): UserTokenInterface {
+    return this.userTokenService.verifyToken({
+      token,
+      tokenValue,
       tokenType: UserTokenTypeEnum.refreshToken,
-      userId: userId,
-    });
-    return this.userTokenService.refreshToken({
-      tokenValue: token,
-      expiresIn: this.envConfig.refreshTokenExpiration,
+      userId,
     });
   }
 }

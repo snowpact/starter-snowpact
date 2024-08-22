@@ -34,4 +34,8 @@ export class TestDbService {
   public getToken = async (tokenValue: string): Promise<UserTokenInterface | null> => {
     return this.dataSource.getRepository(UserTokenSchema).findOne({ where: { value: tokenValue } });
   };
+
+  public getTokensByUserId = async (userId: string): Promise<UserTokenInterface[]> => {
+    return this.dataSource.getRepository(UserTokenSchema).find({ where: { userId } });
+  };
 }

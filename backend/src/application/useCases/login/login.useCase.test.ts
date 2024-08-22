@@ -1,8 +1,11 @@
 import { faker } from '@faker-js/faker';
 import { describe, beforeEach, expect, it, vi } from 'vitest';
 
+import { UserTokenTypeEnum } from '@/domain/entities/userToken/userToken.entity.interface';
+
 import { AppError } from '@/application/errors/app.error';
 import { userFactory } from '@/domain/entities/user/user.factory';
+import { userTokenFactory } from '@/domain/entities/userToken/userToken.entity.factory';
 
 import { getAuthServiceMock } from '@/application/services/authToken/authToken.service.mock';
 import { getPasswordServiceMock } from '@/application/services/password/password.service.mock';
@@ -33,7 +36,9 @@ describe('LoginUseCase', () => {
     userRepository.findByEmail.mockResolvedValue(user);
     passwordService.comparePassword.mockResolvedValue(true);
     authService.generateAccessToken.mockResolvedValue('access-token');
-    authService.generateRefreshToken.mockResolvedValue('refresh-token');
+    authService.generateRefreshToken.mockReturnValue(
+      userTokenFactory({ tokenType: UserTokenTypeEnum.refreshToken }),
+    );
 
     const { accessToken, refreshToken } = await loginUseCase.executeLogin(
       user.email,
@@ -50,7 +55,7 @@ describe('LoginUseCase', () => {
   });
 
   it('should throw an error if user not found', async () => {
-    userRepository.findByEmail.mockResolvedValue(undefined);
+    userRepository.findByEmail.mockResolvedValue(null);
 
     await expect(
       loginUseCase.executeLogin(faker.internet.email(), faker.internet.password()),
