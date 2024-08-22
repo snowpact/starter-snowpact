@@ -15,7 +15,9 @@ import { TYPES } from '../di/types';
 
 vi.mock('@/gateways/helpers/clientMailer/mailer', () => {
   return {
-    sendMail: vi.fn().mockResolvedValue(true),
+    Mailer: vi.fn().mockImplementation(() => ({
+      sendMail: vi.fn().mockResolvedValue(true),
+    })),
   };
 });
 
