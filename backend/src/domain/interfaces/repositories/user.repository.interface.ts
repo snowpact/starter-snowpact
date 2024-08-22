@@ -4,4 +4,5 @@ export interface UserRepositoryInterface {
   findByEmail: (email: string) => Promise<UserInterface | null>;
   findById: (id: string) => Promise<UserInterface | null>;
   updateOne: (id: string, data: Partial<UserInterface>) => Promise<void>;
+  create: (user: UserInterface) => Promise<void>;
 }

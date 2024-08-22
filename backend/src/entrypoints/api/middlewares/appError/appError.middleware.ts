@@ -59,6 +59,7 @@ export const getStatusCodeFromErrorCode = (errorCode?: string): HttpStatuses => 
     case AppErrorCodes.INVALID_DATA_PROVIDED:
     case AppErrorCodes.BAD_PASSWORD:
     case AppErrorCodes.INVALID_PASSWORD_COMPLEXITY:
+    case AppErrorCodes.EMAIL_ALREADY_TAKEN:
       return HttpStatuses.BAD_REQUEST;
     case AppErrorCodes.FAILED_TO_SEND_EMAIL:
       return HttpStatuses.INTERNAL_SERVER_ERROR;

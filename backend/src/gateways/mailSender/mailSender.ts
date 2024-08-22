@@ -57,4 +57,15 @@ export class MailSender implements MailSenderInterface {
       html,
     });
   }
+
+  async sendRegisterEmail(email: string): Promise<void> {
+    const subTemplatePath = resolve(__dirname, './templates/partial/register.template.hbs');
+    const html = await this.renderHTMLFromTemplate('public', subTemplatePath, {});
+
+    await this.mailerService.sendMail({
+      to: email,
+      subject: 'Welcome to our app!',
+      html,
+    });
+  }
 }

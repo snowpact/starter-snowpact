@@ -27,6 +27,10 @@ export class TestDbService {
     return this.dataSource.getRepository(UserSchema).findOne({ where: { id } });
   };
 
+  public getUserByEmail = async (email: string): Promise<UserInterface | null> => {
+    return this.dataSource.getRepository(UserSchema).findOne({ where: { email } });
+  };
+
   public persistToken = async (token: UserTokenInterface): Promise<void> => {
     await this.dataSource.getRepository(UserTokenSchema).save(token);
   };

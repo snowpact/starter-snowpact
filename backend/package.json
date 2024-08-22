@@ -33,7 +33,7 @@
     "@hono/zod-validator": "0.2.2",
     "@scalar/hono-api-reference": "0.5.107",
     "bcrypt": "5.1.1",
-    "handlebars": "^4.7.8",
+    "handlebars": "4.7.8",
     "hono": "4.5.0",
     "inversify": "6.0.2",
     "jsonwebtoken": "9.0.2",

@@ -5,5 +5,6 @@ import { MailSenderInterface } from '../../domain/interfaces/mailSender.interfac
 export const getMailSenderMock = (): Mocked<MailSenderInterface> => {
   return {
     sendResetPasswordEmail: vi.fn(),
+    sendRegisterEmail: vi.fn(),
   };
 };

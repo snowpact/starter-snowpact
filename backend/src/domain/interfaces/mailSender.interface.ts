@@ -5,4 +5,5 @@ export interface SendResetPasswordEmailOptions {
 
 export interface MailSenderInterface {
   sendResetPasswordEmail: (options: SendResetPasswordEmailOptions) => Promise<void>;
+  sendRegisterEmail: (email: string) => Promise<void>;
 }

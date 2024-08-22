@@ -23,7 +23,7 @@ describe('User Repository', () => {
 
       const dbUser = await userRepository.findByEmail(mainUser.email);
 
-      expect(dbUser?.id).toMatchObject(mainUser.id);
+      expect(dbUser?.id).toEqual(mainUser.id);
     });
     it('should return undefined if user not found', async () => {
       const user = userFactory();
@@ -55,13 +55,24 @@ describe('User Repository', () => {
       const dbUser = await userRepository.findById(user.id);
 
       expect(dbUser).toBeDefined();
-      expect(dbUser?.id).toMatchObject(user.id);
+      expect(dbUser?.id).toEqual(user.id);
     });
     it('should return undefined if user not found', async () => {
       const user = userFactory();
       const dbUser = await userRepository.findById(user.id);
 
       expect(dbUser).toBeNull();
+    });
+  });
+  describe('create', () => {
+    it('should create a user', async () => {
+      const user = userFactory();
+
+      await userRepository.create(user);
+
+      const dbUser = await testDbService.getUser(user.id);
+      expect(dbUser).toBeDefined();
+      expect(dbUser?.id).toEqual(user.id);
     });
   });
 });
