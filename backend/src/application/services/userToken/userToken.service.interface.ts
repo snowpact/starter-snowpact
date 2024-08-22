@@ -11,19 +11,14 @@ export interface GenerateTokenOptions {
 }
 
 export interface VerifyTokenOptions {
+  token: UserTokenInterface | null;
   tokenValue: string;
   ignoreExpiration?: boolean;
   tokenType: UserTokenType;
   userId?: string;
 }
 
-export interface RefreshTokenOptions {
-  tokenValue: string;
-  expiresIn: number;
-}
-
 export interface UserTokenServiceInterface {
-  generateToken(options: GenerateTokenOptions): Promise<string>;
-  verifyToken(options: VerifyTokenOptions): Promise<UserTokenInterface>;
-  refreshToken(options: RefreshTokenOptions): Promise<string>;
+  generateToken(options: GenerateTokenOptions): UserTokenInterface;
+  verifyToken(options: VerifyTokenOptions): UserTokenInterface;
 }

@@ -10,7 +10,7 @@ export interface VerifyStatelessTokenOptions {
   secret: string;
 }
 
-export interface StatelessTokenInterface {
+export interface StatelessTokenServiceInterface {
   generateToken(options: GenerateStatelessTokenOptions): Promise<string>;
   verifyToken(options: VerifyStatelessTokenOptions): Promise<unknown>;
 }

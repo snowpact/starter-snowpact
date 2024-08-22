@@ -32,7 +32,7 @@ describe('authResetPasswordRequest', () => {
     });
     expect(mailSenderMock.sendResetPasswordEmail).toHaveBeenCalledWith({
       email,
-      token: expect.any(String) as string,
+      tokenValue: expect.any(String) as string,
     });
   });
 });

@@ -1,6 +1,6 @@
 export interface SendResetPasswordEmailOptions {
   email: string;
-  token: string;
+  tokenValue: string;
 }
 
 export interface MailSenderInterface {
