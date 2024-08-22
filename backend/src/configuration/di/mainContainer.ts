@@ -4,8 +4,10 @@ import { Container } from 'inversify';
 
 import { UserRepositoryInterface } from '@/domain/interfaces/repositories/user.repository.interface';
 import { UserTokenRepositoryInterface } from '@/domain/interfaces/repositories/userToken.repository.interface';
+import { MailerInterface } from '@/gateways/helpers/clientMailer/mailer.interface';
 import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatabase/clientDatabase.interface';
 
+import { Mailer } from '@/gateways/helpers/clientMailer/mailer';
 import { ClientDatabase } from '@/gateways/helpers/database/clientDatabase/clientDatabase';
 import { UserRepository } from '@/gateways/repositories/userRepository/user.repository';
 import { UserTokenRepository } from '@/gateways/repositories/userTokenRepository/userToken.repository';
@@ -25,6 +27,8 @@ mainContainer
   .bind<ClientDatabaseInterface>(TYPES.ClientDatabase)
   .to(ClientDatabase)
   .inSingletonScope();
+
+mainContainer.bind<MailerInterface>(TYPES.Mailer).to(Mailer);
 
 mainContainer.bind<UserRepositoryInterface>(TYPES.UserRepository).to(UserRepository);
 mainContainer.bind<UserTokenRepositoryInterface>(TYPES.UserTokenRepository).to(UserTokenRepository);

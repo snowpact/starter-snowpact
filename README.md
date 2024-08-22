@@ -24,10 +24,20 @@ pnpm migration:run # migre la base de données
 
 EN COURS, Chargement depuis ORVAL
 
-## Lancer les applications
+## Développement
 
 - Lancer le backend dans un terminal `pnpm dev:be`
 - Lancer le front office dans un autre terminal `pnpm dev:fo`
+
+### Mailhog
+
+Nous utilisons [Mailhog](https://github.com/axllent/mailhog) pour intercepter les mails envoyés par l'application.
+
+Lancer tout d'abord mailhog puis aller sur `http://localhost:8025` dans votre navigateur.
+
+```bash
+pnpm start:mailhog
+```
 
 ## Tests
 

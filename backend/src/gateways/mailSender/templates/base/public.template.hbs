@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Email Template</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            background-color: #efefef;
+            color: #121212;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            padding: 30px 0;
+            display: flex;
+            justify-content: center;
+            background-color: #efefef;
+        }
+
+        .content {
+            width: 100%;
+            max-width: 600px;
+            background-color: #dfdfdf;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: left;
+            color: #121212;
+        }
+
+        .content h1 {
+            margin-bottom: 20px;
+            font-size: 28px;
+            color: #121212;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .content p {
+            margin: 0 0 20px;
+            font-size: 16px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 12px 25px;
+            font-size: 16px;
+            color: #121212;
+            background-color: #007BFF;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 20px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .content {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .content h1 {
+                font-size: 24px;
+            }
+
+            .content p {
+                font-size: 14px;
+            }
+
+            .button {
+                font-size: 14px;
+                padding: 10px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            <h1>Titre de l'email</h1>
+            <p>{{>layout}}</p>
+            <a href="#" class="button">BOUTON</a>
+        </div>
+    </div>
+</body>
+
+</html>
