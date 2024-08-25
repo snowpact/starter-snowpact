@@ -29,7 +29,7 @@ describe('RegisterUseCase', () => {
   });
 
   it('should register a user', async () => {
-    const email = faker.internet.email();
+    const email = faker.internet.email().toUpperCase();
     const password = faker.internet.password();
     const hashedPassword = faker.string.alphanumeric();
     userRepositoryMock.findByEmail.mockResolvedValue(null);
@@ -40,24 +40,24 @@ describe('RegisterUseCase', () => {
 
     expect(userRepositoryMock.create).toHaveBeenCalledWith({
       id: expect.any(String),
-      email,
+      email: email.toLowerCase(),
       password: hashedPassword,
       admin: false,
       createdAt: expect.any(Date),
       updatedAt: expect.any(Date),
       userTokens: [],
     });
-    expect(mailSenderMock.sendRegisterEmail).toHaveBeenCalledWith(email);
+    expect(mailSenderMock.sendRegisterEmail).toHaveBeenCalledWith(email.toLocaleLowerCase());
   });
   it('should throw an error - email already exists', async () => {
-    const email = faker.internet.email();
+    const email = faker.internet.email().toLocaleLowerCase();
     const password = faker.internet.password();
     userRepositoryMock.findByEmail.mockResolvedValue(userFactory());
 
     await expect(registerUseCase.executeRegister(email, password)).rejects.toThrow(AppError);
   });
   it('should throw an error - invalid password', async () => {
-    const email = faker.internet.email();
+    const email = faker.internet.email().toLocaleLowerCase();
     const password = faker.internet.password();
     userRepositoryMock.findByEmail.mockResolvedValue(null);
     passwordServiceMock.checkPasswordComplexity.mockReturnValue(false);

@@ -25,6 +25,20 @@ describe('User Repository', () => {
 
       expect(dbUser?.id).toEqual(mainUser.id);
     });
+    it('should return user even if email has not the same case', async () => {
+      const email = 'user@example.com';
+      const emailWithDifferentCase = 'User@ExamplE.Com';
+      const user = userFactory({ email });
+      await Promise.all([
+        testDbService.persistUser(user),
+        testDbService.persistUser(userFactory()),
+        testDbService.persistUser(userFactory()),
+      ]);
+
+      const dbUser = await userRepository.findByEmail(emailWithDifferentCase);
+
+      expect(dbUser?.id).toEqual(user.id);
+    });
     it('should return undefined if user not found', async () => {
       const user = userFactory();
       await testDbService.persistUser(user);

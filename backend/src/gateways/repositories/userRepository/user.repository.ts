@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify';
-import { Repository } from 'typeorm';
+import { Repository, ILike } from 'typeorm';
 
 import { UserInterface } from '@/domain/entities/user/user.entity.interface';
 import { UserRepositoryInterface } from '@/domain/interfaces/repositories/user.repository.interface';
@@ -22,7 +22,7 @@ export class UserRepository implements UserRepositoryInterface {
   }
 
   async findByEmail(email: string): Promise<UserInterface | null> {
-    return this.repository.findOne({ where: { email } });
+    return this.repository.findOne({ where: { email: ILike(email) } });
   }
   async create(user: UserInterface): Promise<void> {
     await this.repository.save(user);

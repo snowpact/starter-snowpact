@@ -15,7 +15,7 @@ describe('authRegister', () => {
   mainContainer.rebind<MailSenderInterface>(TYPES.MailSender).toConstantValue(mailSenderMock);
 
   it('should register a user', async () => {
-    const email = faker.internet.email();
+    const email = faker.internet.email().toLocaleLowerCase();
     const password = 'Password78*';
 
     const response = await app.request('/api/public/auth/register', {

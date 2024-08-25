@@ -22,7 +22,8 @@ export class RegisterUseCase implements RegisterUseCaseInterface {
     @inject(TYPES.Logger) private logger: LoggerInterface,
   ) {}
   async executeRegister(email: string, password: string): Promise<void> {
-    const alreadyExistUser = await this.userRepository.findByEmail(email);
+    const lowerCaseEmail = email.toLowerCase();
+    const alreadyExistUser = await this.userRepository.findByEmail(lowerCaseEmail);
     if (alreadyExistUser) {
       throw new AppError({
         code: AppErrorCodes.EMAIL_ALREADY_TAKEN,
@@ -43,7 +44,7 @@ export class RegisterUseCase implements RegisterUseCaseInterface {
 
     const user: UserInterface = {
       id: v4(),
-      email,
+      email: lowerCaseEmail,
       password: hashedPassword,
       admin: false,
       createdAt: new Date(),
@@ -52,7 +53,7 @@ export class RegisterUseCase implements RegisterUseCaseInterface {
     };
     await this.userRepository.create(user);
 
-    await this.mailSender.sendRegisterEmail(email);
-    this.logger.debug('User created', { email });
+    await this.mailSender.sendRegisterEmail(lowerCaseEmail);
+    this.logger.debug('User created', { email: lowerCaseEmail });
   }
 }
