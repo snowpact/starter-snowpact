@@ -16,6 +16,7 @@ export class EnvConfig implements EnvConfigInterface {
   readonly dbUser: string;
   readonly dbPassword: string;
   readonly dbUrl: string;
+  readonly dbSocketConnection: boolean;
   readonly accessTokenSecret: string;
   readonly accessTokenExpiration: number;
   readonly refreshTokenSecret: string;
@@ -38,7 +39,12 @@ export class EnvConfig implements EnvConfigInterface {
     this.dbPort = config.DB_PORT;
     this.dbUser = config.DB_USER;
     this.dbPassword = config.DB_PASSWORD;
-    this.dbUrl = `postgres://${this.dbUser}:${this.dbPassword}@${this.dbHost}:${this.dbPort}/${this.dbName}`;
+    this.dbSocketConnection = config.DB_SOCKET_CONNECTION ?? false;
+    if (this.dbSocketConnection) {
+      this.dbUrl = `postgresql://${this.dbUser}:${this.dbPassword}@/${this.dbName}?host=/cloudsql/${this.dbHost}`;
+    } else {
+      this.dbUrl = `postgresql://${this.dbUser}:${this.dbPassword}@${this.dbHost}:${this.dbPort}/${this.dbName}`;
+    }
     this.accessTokenSecret = config.ACCESS_TOKEN_SECRET;
     this.accessTokenExpiration = config.ACCESS_TOKEN_EXPIRATION;
     this.refreshTokenSecret = config.REFRESH_TOKEN_SECRET;
@@ -61,6 +67,7 @@ export class EnvConfig implements EnvConfigInterface {
     DB_PORT: parseNumber(z.number()),
     DB_USER: z.string(),
     DB_PASSWORD: z.string(),
+    DB_SOCKET_CONNECTION: parseBoolean(z.boolean()).default(false),
     ACCESS_TOKEN_SECRET: z.string(),
     ACCESS_TOKEN_EXPIRATION: parseNumber(z.number()).default(1800),
     REFRESH_TOKEN_SECRET: z.string(),

@@ -1,11 +1,12 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
+import { getQueueSenderMock } from '@/infrastructure/queue/queueSender/queueSender.mock';
+
 import { MailSender } from './mailSender';
-import { getMailerMock } from '../../infrastructure/clientMailer/mailer.mock';
 
 describe('MailSender', () => {
-  const mailerServiceMock = getMailerMock();
-  const mailSenderService = new MailSender(mailerServiceMock);
+  const queueSenderMock = getQueueSenderMock();
+  const mailSenderService = new MailSender(queueSenderMock);
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -18,7 +19,7 @@ describe('MailSender', () => {
 
       await mailSenderService.sendResetPasswordEmail({ email, tokenValue: token });
 
-      expect(mailerServiceMock.sendMail).toHaveBeenCalledWith({
+      expect(queueSenderMock.sendEmail).toHaveBeenCalledWith({
         to: email,
         subject: 'Reset Password',
         html: expect.stringContaining('test-token') as string,
@@ -32,7 +33,7 @@ describe('MailSender', () => {
 
       await mailSenderService.sendRegisterEmail(email);
 
-      expect(mailerServiceMock.sendMail).toHaveBeenCalled();
+      expect(queueSenderMock.sendEmail).toHaveBeenCalled();
     });
   });
 });
