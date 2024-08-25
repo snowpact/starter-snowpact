@@ -3,7 +3,7 @@ import { DataSource } from 'typeorm';
 import { UserInterface } from '@/domain/entities/user/user.entity.interface';
 import { UserTokenInterface } from '@/domain/entities/userToken/userToken.entity.interface';
 
-import { UserSchema, UserTokenSchema } from '@/gateways/helpers/database/schema';
+import { UserSchema, UserTokenSchema } from '@/infrastructure/database/schema';
 
 export class TestDbService {
   constructor(private dataSource: DataSource) {}

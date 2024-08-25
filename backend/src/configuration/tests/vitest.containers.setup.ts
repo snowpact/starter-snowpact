@@ -4,7 +4,7 @@ import { ServerType } from '@hono/node-server';
 import { OpenAPIHono } from '@hono/zod-openapi';
 import { vi, beforeAll, afterAll, afterEach, inject } from 'vitest';
 
-import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatabase/clientDatabase.interface';
+import { ClientDatabaseInterface } from '@/infrastructure/database/clientDatabase/clientDatabase.interface';
 
 import { CustomEnvInterface } from '@/entrypoints/api/loader/getHonoApp';
 import { bootstrap } from '@/entrypoints/api/loader/server';

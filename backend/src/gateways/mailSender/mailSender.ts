@@ -10,7 +10,7 @@ import {
   MailSenderInterface,
   SendResetPasswordEmailOptions,
 } from '../../domain/interfaces/mailSender.interface';
-import { MailerInterface } from '../helpers/clientMailer/mailer.interface';
+import { MailerInterface } from '../../infrastructure/clientMailer/mailer.interface';
 
 const ENCODING = 'utf8';
 const PARTIAL_NAME = 'layout';

@@ -1,4 +1,4 @@
-import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatabase/clientDatabase.interface';
+import { ClientDatabaseInterface } from '@/infrastructure/database/clientDatabase/clientDatabase.interface';
 
 import TestContainers from './testContainers';
 import { mainContainer } from '../di/mainContainer';

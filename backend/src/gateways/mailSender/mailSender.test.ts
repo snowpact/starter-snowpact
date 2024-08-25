@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 import { MailSender } from './mailSender';
-import { getMailerMock } from '../helpers/clientMailer/mailer.mock';
+import { getMailerMock } from '../../infrastructure/clientMailer/mailer.mock';
 
 describe('MailSender', () => {
   const mailerServiceMock = getMailerMock();

@@ -4,13 +4,13 @@ import { Container } from 'inversify';
 
 import { UserRepositoryInterface } from '@/domain/interfaces/repositories/user.repository.interface';
 import { UserTokenRepositoryInterface } from '@/domain/interfaces/repositories/userToken.repository.interface';
-import { MailerInterface } from '@/gateways/helpers/clientMailer/mailer.interface';
-import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatabase/clientDatabase.interface';
+import { MailerInterface } from '@/infrastructure/clientMailer/mailer.interface';
+import { ClientDatabaseInterface } from '@/infrastructure/database/clientDatabase/clientDatabase.interface';
 
-import { Mailer } from '@/gateways/helpers/clientMailer/mailer';
-import { ClientDatabase } from '@/gateways/helpers/database/clientDatabase/clientDatabase';
 import { UserRepository } from '@/gateways/repositories/userRepository/user.repository';
 import { UserTokenRepository } from '@/gateways/repositories/userTokenRepository/userToken.repository';
+import { Mailer } from '@/infrastructure/clientMailer/mailer';
+import { ClientDatabase } from '@/infrastructure/database/clientDatabase/clientDatabase';
 
 import { entityContainer } from './entityContainer';
 import { serviceContainer } from './serviceContainer';

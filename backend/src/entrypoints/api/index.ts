@@ -3,7 +3,7 @@ import { ServerType } from '@hono/node-server';
 
 import { EnvConfigInterface } from '@/domain/interfaces/envConfig.interface';
 import { LoggerInterface } from '@/domain/interfaces/logger.interface';
-import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatabase/clientDatabase.interface';
+import { ClientDatabaseInterface } from '@/infrastructure/database/clientDatabase/clientDatabase.interface';
 
 import { mainContainer } from '@/configuration/di/mainContainer';
 import { TYPES } from '@/configuration/di/types';

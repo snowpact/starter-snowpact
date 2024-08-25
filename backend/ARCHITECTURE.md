@@ -3,12 +3,15 @@
 Notre application est structurée en trois groupements principaux :
 
 1. **Couches Internes**
+
    - Domaine
    - Application
 
 2. **Couches Externes**
+
    - Entrypoint
    - Gateways
+   - Infrastructure
 
 3. **Couche Transversale**
    - Configuration
@@ -21,9 +24,10 @@ L'architecture vise à séparer les responsabilités, faciliter les tests et fav
 ## Description des Couches et Règles
 
 ### 1. Couche Domaine
+
 La couche domaine est la couche la plus interne de notre application et doit être indépendante de toutes les autres couches.
 
-**Composants :**
+**Composition :**
 
 - **Entités** : Objets principaux de notre application, contenant à la fois des données et des méthodes de logique métier.
 - **Interfaces** : Contrats entre les couches internes et externes, utilisés par la couche application pour interagir avec les services externes.
@@ -34,9 +38,10 @@ La couche domaine est la couche la plus interne de notre application et doit êt
 - Peut être utilisée par n'importe quelle autre couche.
 
 ### 2. Couche Application
+
 La couche `application` orchestre les actions métier de notre application.
 
-**Composants :**
+**Composition :**
 
 - **UseCases** : Méthodes qui orchestrent les actions métier.
 - **Services** : Logique métier réutilisable regroupée par thème.
@@ -50,11 +55,11 @@ La couche `application` orchestre les actions métier de notre application.
 - Peut être appelée par la couche `entrypoint`.
 
 ### 3. Couche Gateway
+
 La couche `gateway` interagit avec les services externes tels que les bases de données, les services d'e-mail, les variables d'environnement, etc.
 
-**Composants :**
+**Composition :**
 
-- **Helpers** : Fonctions utilitaires utilisées par les gateways ou d'autres éléments de la couche externe. Ces éléments ne peuvent pas être appelé par la couche application car elles sont maitres de leurs interfaces.
 - Implémentations des **interfaces** du domaine.
 
 **Règles :**
@@ -64,6 +69,7 @@ La couche `gateway` interagit avec les services externes tels que les bases de d
 - Doit adhérer aux contrats définis par les interfaces du domaine.
 
 ### 4. Couche Entrypoint
+
 La couche `entrypoint` sert de point d'entrée pour notre application, gérant les appels externes tels que les requêtes API, les jobs, les websockets, etc.
 
 **Règles :**
@@ -71,7 +77,17 @@ La couche `entrypoint` sert de point d'entrée pour notre application, gérant l
 - Peut dépendre de toutes les autres couches.
 - Ne peut être appelée par aucune autre couche.
 
-### 5. Couche Configuration
+### 5. Couche Infrastructure
+
+La couche `infrastructure` gère les dépendances externes telles que les bases de données, les services d'e-mail, les variables d'environnement, etc. Ces éléments ne sont pas directement interfacés avec les couches internes à notre application.
+
+**Règles :**
+
+- Ne doit dépendre que de la couche domaine.
+- Peut être appelée par les couches `entrypoint` et `gateway`.
+
+### 6. Couche Configuration
+
 La couche `configuration` gère les paramètres à l'échelle de l'application.
 
 **Règle :**

@@ -3,10 +3,10 @@ import { Repository, ILike } from 'typeorm';
 
 import { UserInterface } from '@/domain/entities/user/user.entity.interface';
 import { UserRepositoryInterface } from '@/domain/interfaces/repositories/user.repository.interface';
-import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatabase/clientDatabase.interface';
+import { ClientDatabaseInterface } from '@/infrastructure/database/clientDatabase/clientDatabase.interface';
 
 import { TYPES } from '@/configuration/di/types';
-import { UserSchema } from '@/gateways/helpers/database/schema/user.schema';
+import { UserSchema } from '@/infrastructure/database/schema/user.schema';
 
 @injectable()
 export class UserRepository implements UserRepositoryInterface {

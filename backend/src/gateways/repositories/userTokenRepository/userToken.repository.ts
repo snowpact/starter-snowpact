@@ -9,10 +9,10 @@ import {
   UserTokenRepositoryInterface,
   UpdateTokenOptions,
 } from '@/domain/interfaces/repositories/userToken.repository.interface';
-import { ClientDatabaseInterface } from '@/gateways/helpers/database/clientDatabase/clientDatabase.interface';
+import { ClientDatabaseInterface } from '@/infrastructure/database/clientDatabase/clientDatabase.interface';
 
 import { TYPES } from '@/configuration/di/types';
-import { UserTokenSchema } from '@/gateways/helpers/database/schema/token.schema';
+import { UserTokenSchema } from '@/infrastructure/database/schema/token.schema';
 
 @injectable()
 export class UserTokenRepository implements UserTokenRepositoryInterface {
