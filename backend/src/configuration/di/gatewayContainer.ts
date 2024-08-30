@@ -3,16 +3,16 @@ import { ContainerModule, interfaces } from 'inversify';
 import { EnvConfigInterface } from '@/domain/interfaces/envConfig.interface';
 import { LoggerInterface } from '@/domain/interfaces/logger.interface';
 import { MailSenderInterface } from '@/domain/interfaces/mailSender.interface';
-import { QueueSenderInterface } from '@/domain/interfaces/queueSender.interface';
 import { UserRepositoryInterface } from '@/domain/interfaces/repositories/user.repository.interface';
 import { UserTokenRepositoryInterface } from '@/domain/interfaces/repositories/userToken.repository.interface';
+import { QueueSenderInterface } from '@/infrastructure/queue/queueSender/queueSender.interface';
 
 import { EnvConfig } from '@/gateways/envConfig/envConfig';
 import { Logger } from '@/gateways/logger/logger';
 import { MailSender } from '@/gateways/mailSender/mailSender';
-import { QueueSender } from '@/infrastructure/queue/queueSender/queueSender';
 import { UserRepository } from '@/gateways/repositories/userRepository/user.repository';
 import { UserTokenRepository } from '@/gateways/repositories/userTokenRepository/userToken.repository';
+import { QueueSender } from '@/infrastructure/queue/queueSender/queueSender';
 
 import { TYPES } from './types';
 

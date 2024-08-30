@@ -143,4 +143,37 @@ describe('UserToken Repository', () => {
       expect(storedToken?.updatedAt).not.toEqual(token.updatedAt);
     });
   });
+
+  describe('clearExpiredTokens', () => {
+    it('should delete all expired tokens', async () => {
+      const user = userFactory();
+      await testDbService.persistUser(user);
+      const token1 = userTokenFactory({
+        userId: user.id,
+        tokenType: UserTokenTypeEnum.refreshToken,
+        expirationDate: faker.date.past(),
+      });
+      const token2 = userTokenFactory({
+        userId: user.id,
+        tokenType: UserTokenTypeEnum.accountValidation,
+        expirationDate: faker.date.past(),
+      });
+      const token3 = userTokenFactory({
+        userId: user.id,
+        tokenType: UserTokenTypeEnum.resetPassword,
+        expirationDate: faker.date.future(),
+      });
+
+      await Promise.all([
+        testDbService.persistToken(token1),
+        testDbService.persistToken(token2),
+        testDbService.persistToken(token3),
+      ]);
+
+      await userTokenRepository.clearExpiredTokens();
+
+      const storedTokens = await testDbService.getTokensByUserId(user.id);
+      expect(storedTokens).toEqual([token3]);
+    });
+  });
 });

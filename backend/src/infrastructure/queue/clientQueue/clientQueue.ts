@@ -85,6 +85,6 @@ export class ClientQueue implements ClientQueueInterface {
 
   async setupWorker(queue: string, handler: (data?: unknown) => Promise<void>): Promise<void> {
     await this.boss.work(queue, ([job]) => handler(job.data));
-    this.logger.debug(`Worker setup for queue ${queue}`);
+    this.logger.debug(`[Worker] setup for queue ${queue}`);
   }
 }

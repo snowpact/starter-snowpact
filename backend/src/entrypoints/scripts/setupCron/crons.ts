@@ -6,4 +6,10 @@ interface CronInterface {
   data: object;
 }
 
-export const crons: CronInterface[] = [];
+export const crons: CronInterface[] = [
+  {
+    queue: QueueName.CLEAR_EXPIRED_TOKENS,
+    cronTime: '0 4 * * *',
+    data: {},
+  },
+];

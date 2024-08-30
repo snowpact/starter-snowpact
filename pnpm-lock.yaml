@@ -51,8 +51,8 @@ importers:
         specifier: 8.12.0
         version: 8.12.0
       pg-boss:
-        specifier: 10.0.6
-        version: 10.0.6
+        specifier: 10.1.1
+        version: 10.1.1
       pino:
         specifier: 9.3.1
         version: 9.3.1
@@ -4444,8 +4444,8 @@ packages:
     resolution: {integrity: sha512-vE7JKRyES09KiunauX7nd2Q9/L7lhok4smP9RZTDeD4MVs72Dp2qNFVz39Nz5a0FVEW0BJR6C0DYrq6unoziZA==}
     engines: {node: '>= 14.16'}
 
-  pg-boss@10.0.6:
-    resolution: {integrity: sha512-Y3YZc+/VUkL2XOo2mkr5eJyBwMk+m5DTrqQcbuZBgJq2Y5QmGC/xDtXXFDzembOhxWe5e/GZ6ArjMdqBbOBHqA==}
+  pg-boss@10.1.1:
+    resolution: {integrity: sha512-2t7gz5nEUYFabj8czWWFRUSyPDQ5t+K/EF5l9Q5lHn2iwyPPKgIfwK+8LKgRfyHRUePTDQhogsGcwOlNczfZ5Q==}
     engines: {node: '>=20'}
 
   pg-cloudflare@1.1.1:
@@ -11156,7 +11156,7 @@ snapshots:
 
   pathval@2.0.0: {}
 
-  pg-boss@10.0.6:
+  pg-boss@10.1.1:
     dependencies:
       cron-parser: 4.9.0
       pg: 8.12.0

@@ -1,5 +1,5 @@
 import { inject, injectable } from 'inversify';
-import { In, Repository } from 'typeorm';
+import { In, LessThan, Repository } from 'typeorm';
 
 import {
   UserTokenInterface,
@@ -45,5 +45,9 @@ export class UserTokenRepository implements UserTokenRepositoryInterface {
       { value: oldTokenValue },
       { value: newTokenValue, expirationDate },
     );
+  };
+
+  clearExpiredTokens = async (): Promise<void> => {
+    await this.repository.delete({ expirationDate: LessThan(new Date()) });
   };
 }
