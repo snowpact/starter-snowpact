@@ -31,6 +31,7 @@
     "drop:database": "pnpm be-local typeorm:drop && pnpm migration:run && pnpm migration:run-test",
 
     "dev:be": "pnpm be-local run dev",
+    "dev:be:queue": "pnpm be-local run dev:queue",
     "dev:fo": "pnpm fo run dev",
     "dev:bo": "pnpm bo run dev",
 
@@ -47,7 +48,9 @@
 
     "generate-openapi-doc": "pnpm be-local run generate-openapi-doc",
     "generate-sdk": "pnpm run generate-openapi-doc && pnpm run generate-orval-sdk",
-    "generate-orval-sdk": "pnpm be-local run generate-orval-sdk"
+    "generate-orval-sdk": "pnpm be-local run generate-orval-sdk",
+
+    "script:setup-cron": "pnpm be-local run script:setup-cron"
   },
   "engines": {
     "node": ">=20"
