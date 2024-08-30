@@ -1,7 +1,7 @@
 import { QueueName } from '@/domain/enums/queues.enum';
 
-import { getClearExpiredTokenWorker } from './clearExpiredTokenWorker';
-import { getSendEmailWorker } from './sendEmailWorker';
+import { getClearExpiredTokenWorker } from './clearExpiredTokenWorker/clearExpireToken.worker';
+import { getSendEmailWorker } from './sendEmailWorker/sendEmail.worker';
 
 export interface WorkerInterface {
   queue: QueueName;

@@ -1,9 +1,5 @@
-export interface SendEmailOptions {
-  to: string;
-  subject: string;
-  html: string;
-}
+import { SendEmailWorkerOptions } from '@/entrypoints/queueConsumer/workers/sendEmailWorker/sendEmail.worker.schema';
 
 export interface QueueSenderInterface {
-  sendEmail(options: SendEmailOptions): Promise<void>;
+  sendEmail(options: SendEmailWorkerOptions): Promise<void>;
 }

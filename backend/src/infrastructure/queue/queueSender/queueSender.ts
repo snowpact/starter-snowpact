@@ -4,14 +4,15 @@ import { ClientQueueInterface } from '@/infrastructure/queue/clientQueue/clientQ
 
 import { TYPES } from '@/configuration/di/types';
 import { QueueName } from '@/domain/enums/queues.enum';
+import { SendEmailWorkerOptions } from '@/entrypoints/queueConsumer/workers/sendEmailWorker/sendEmail.worker.schema';
 
-import { QueueSenderInterface, SendEmailOptions } from './queueSender.interface';
+import { QueueSenderInterface } from './queueSender.interface';
 
 @injectable()
 export class QueueSender implements QueueSenderInterface {
   constructor(@inject(TYPES.ClientQueue) private clientQueue: ClientQueueInterface) {}
 
-  async sendEmail(options: SendEmailOptions): Promise<void> {
+  async sendEmail(options: SendEmailWorkerOptions): Promise<void> {
     await this.clientQueue.sendJob(QueueName.SEND_EMAIL, options);
   }
 }
