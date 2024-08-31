@@ -24,6 +24,11 @@ export const UserSchema = new EntitySchema<UserInterface>({
       type: 'boolean',
       nullable: false,
     },
+    emailVerified: {
+      type: 'boolean',
+      nullable: false,
+      default: false,
+    },
     createdAt: {
       name: 'created_at',
       type: 'timestamp with time zone',

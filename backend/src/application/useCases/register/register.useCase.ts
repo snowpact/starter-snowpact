@@ -54,6 +54,7 @@ export class RegisterUseCase implements RegisterUseCaseInterface {
       email: lowerCaseEmail,
       password: hashedPassword,
       admin: false,
+      emailVerified: false,
       createdAt: new Date(),
       updatedAt: new Date(),
       userTokens: [],

@@ -19,7 +19,7 @@
     "test:integration": "vitest run --config=vitest.config.container.mts",
     "test:unit": "vitest run --config=vitest.config.unit.ts",
     "test:unit:coverage": "vitest run --config=vitest.config.unit.ts --coverage",
-    "typeorm": "ts-node -P tsconfig.json -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d src/gateways/helpers/database/typeorm.config.ts",
+    "typeorm": "ts-node -P tsconfig.json -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d src/infrastructure/database/typeorm.config.ts",
     "copy-templates": "pnpm copyfiles -u 1 './src/**/*.hbs' ./dist",
     "migration:generate": "pnpm typeorm migration:generate --pretty",
     "migration:run": "pnpm typeorm migration:run",

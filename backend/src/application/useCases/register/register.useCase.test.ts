@@ -56,6 +56,7 @@ describe('RegisterUseCase', () => {
       email: email.toLowerCase(),
       password: hashedPassword,
       admin: false,
+      emailVerified: false,
       createdAt: expect.any(Date),
       updatedAt: expect.any(Date),
       userTokens: [],

@@ -14,6 +14,7 @@ const buildSchema = (): UserInterface => {
     email: faker.internet.email(),
     password: hashedPassword,
     admin: faker.datatype.boolean(),
+    emailVerified: faker.datatype.boolean(),
     createdAt: faker.date.recent(),
     updatedAt: faker.date.recent(),
     userTokens: [],

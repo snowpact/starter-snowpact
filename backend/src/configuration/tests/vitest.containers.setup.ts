@@ -15,7 +15,7 @@ import { TestQueueService } from './testQueue.service';
 import { mainContainer } from '../di/mainContainer';
 import { TYPES } from '../di/types';
 
-vi.mock('@/gateways/helpers/clientMailer/mailer', () => {
+vi.mock('@/infrastructure/clientMailer/mailer', () => {
   return {
     Mailer: vi.fn().mockImplementation(() => ({
       sendMail: vi.fn().mockResolvedValue(true),

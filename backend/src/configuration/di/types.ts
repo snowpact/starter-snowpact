@@ -9,6 +9,7 @@ const TYPES = {
   GetUserUseCase: Symbol.for('GetUserUseCase'),
   RefreshUseCase: Symbol.for('RefreshUseCase'),
   RegisterUseCase: Symbol.for('RegisterUseCase'),
+  ValidateAccountUseCase: Symbol.for('ValidateAccountUseCase'),
 
   // Services
   AuthService: Symbol.for('AuthService'),
