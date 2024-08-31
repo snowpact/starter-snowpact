@@ -10,6 +10,7 @@ import { TYPES } from '@/configuration/di/types';
 
 import {
   MailSenderInterface,
+  SendRegisterEmailOptions,
   SendResetPasswordEmailOptions,
 } from '../../domain/interfaces/mailSender.interface';
 
@@ -59,13 +60,15 @@ export class MailSender implements MailSenderInterface {
     });
   }
 
-  async sendRegisterEmail(email: string): Promise<void> {
+  async sendRegisterEmail({ email, tokenValue }: SendRegisterEmailOptions): Promise<void> {
     const subTemplatePath = resolve(__dirname, './templates/partial/register.template.hbs');
-    const html = await this.renderHTMLFromTemplate('public', subTemplatePath, {});
+    const html = await this.renderHTMLFromTemplate('public', subTemplatePath, {
+      validateAccountUrl: `https://YOUR_APP.com/validate-account?token=${tokenValue}`,
+    });
 
     await this.queueSender.sendEmail({
       to: email,
-      subject: 'Reset Password',
+      subject: 'Validate Account',
       html,
     });
   }

@@ -25,7 +25,10 @@ describe('authRegister', () => {
     });
 
     expect(response.status).toBe(200);
-    expect(mailSenderMock.sendRegisterEmail).toHaveBeenCalledWith(email);
+    expect(mailSenderMock.sendRegisterEmail).toHaveBeenCalledWith({
+      email,
+      tokenValue: expect.any(String),
+    });
 
     const dbUser = await testDbService.getUserByEmail(email);
     expect(dbUser).toBeDefined();

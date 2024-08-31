@@ -102,10 +102,12 @@ describe('ClientQueue Integration', () => {
     it('should remove old schedules except the active one', async () => {
       const activeCron = ['active-cron'];
       const allSchedules = ['old-cron-1', 'active-cron', 'old-cron-2'];
-      await Promise.all(activeCron.map((schedule) => testQueueService.boss.createQueue(schedule)));
-      await Promise.all(
-        allSchedules.map((schedule) => testQueueService.boss.createQueue(schedule)),
-      );
+      for (const schedule of activeCron) {
+        await testQueueService.boss.createQueue(schedule);
+      }
+      for (const schedule of allSchedules) {
+        await testQueueService.boss.createQueue(schedule);
+      }
       await Promise.all(
         allSchedules.map((schedule) =>
           testQueueService.boss.schedule(schedule, '*/5 * * * *', { test: 'schedule-data' }),
