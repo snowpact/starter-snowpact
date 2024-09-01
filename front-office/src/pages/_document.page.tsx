@@ -11,8 +11,3 @@ export default function Document() {
     </Html>
   );
 }
-export const getStaticProps = async ({ params }: any) => {
-  return {
-    props: {}
-  };
-};

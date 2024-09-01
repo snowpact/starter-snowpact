@@ -1,4 +1,4 @@
-import clsxm from '../../../../utils/clsxm';
+import clsxm from '@/utils/clsxm';
 
 interface MainContainerProps {
   children: React.ReactNode;

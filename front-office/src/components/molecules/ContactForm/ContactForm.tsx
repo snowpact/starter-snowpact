@@ -4,6 +4,7 @@ export const ContactForm: React.FC = () => {
   const { t } = useTranslation();
   const inputClass =
     'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold';
+
   return (
     <div className="flex flex-col gap-12 mx-auto w-full mt-10 md:mt-0">
       <form action="https://formsubmit.co/bilalay@veloxservi.com" method="POST" className="text-center">

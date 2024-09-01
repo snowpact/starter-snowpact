@@ -1,16 +1,16 @@
+import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
+import { MainContainer } from '@/components/atoms/MainContainer';
+import { Section } from '@/components/atoms/Section';
 import { SEO } from '@/components/atoms/SEO';
 import { Typography } from '@/components/atoms/Typography';
 import { FeatureCard } from '@/components/molecules/FeatureCard';
+import { ImageCarousel } from '@/components/molecules/ImageCarousel';
+import { TextCards } from '@/components/molecules/TextCards';
 import { PublicLayout } from '@/components/templates/PublicLayout';
 import { defaultSeoValues } from '@/configs/siteSettings';
-import { MainContainer } from '@/components/atoms/MainContainer';
-import { TextCards } from '@/components/molecules/TextCards';
-import { GetServerSideProps } from 'next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import { ImageCarousel } from '@/components/molecules/ImageCarousel';
-import { Section } from '@/components/atoms/Section';
 
 import header1 from '../../public/images/header1.webp';
 import header2 from '../../public/images/header2.webp';

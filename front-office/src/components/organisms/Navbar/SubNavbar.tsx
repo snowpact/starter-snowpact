@@ -1,5 +1,5 @@
-import React, { forwardRef } from 'react';
 import Image from 'next/image';
+import React, { forwardRef } from 'react';
 
 export interface SubNavbarItem {
   title: string;

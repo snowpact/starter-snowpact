@@ -1,5 +1,6 @@
-import { Typography } from '@/components/atoms/Typography';
 import React from 'react';
+
+import { Typography } from '@/components/atoms/Typography';
 
 export interface Props {
   title: string;

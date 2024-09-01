@@ -1,7 +1,7 @@
+import Link from 'next/link';
 import React from 'react';
 
-import { Typography } from '../../atoms/Typography';
-import Link from 'next/link';
+import { Typography } from '@/components/atoms/Typography';
 
 export interface TextCardItem {
   title: string;

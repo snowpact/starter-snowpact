@@ -1,6 +1,7 @@
-import { Typography } from '@/components/atoms/Typography';
-import clsxm from '../../../../utils/clsxm';
 import Image, { StaticImageData } from 'next/image';
+
+import { Typography } from '@/components/atoms/Typography';
+import clsxm from '@/utils/clsxm';
 
 export interface Feature {
   name: string;

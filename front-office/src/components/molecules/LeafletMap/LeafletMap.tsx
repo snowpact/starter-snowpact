@@ -1,8 +1,8 @@
+import { DivIcon } from 'leaflet';
 import React from 'react';
 import { MapContainer, Marker, TileLayer } from 'react-leaflet';
 
 import 'leaflet/dist/leaflet.css';
-import { DivIcon } from 'leaflet';
 
 export type Coordinates = {
   latitude: any;

@@ -1,5 +1,6 @@
-import clsxm from '../../../../utils/clsxm';
 import React from 'react';
+
+import clsxm from '@/utils/clsxm';
 
 import { BreakWords, FontIndent, FontWeight, HTMLTag, TextAlign, TextColor, TextDecoration, TextTransform, VariantType } from './interface';
 

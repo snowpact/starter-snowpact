@@ -1,14 +1,14 @@
-import { SEO } from '@/components/atoms/SEO';
-
-import { defaultSeoValues } from '@/configs/siteSettings';
-import Image from 'next/image';
-import { Typography } from '@/components/atoms/Typography';
-import Link from 'next/link';
-import { TbArrowBack } from 'react-icons/tb';
-import { PublicLayout } from '@/components/templates/PublicLayout';
-import { useTranslation } from 'next-i18next';
 import { GetServerSideProps } from 'next';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { TbArrowBack } from 'react-icons/tb';
+
+import { SEO } from '@/components/atoms/SEO';
+import { Typography } from '@/components/atoms/Typography';
+import { PublicLayout } from '@/components/templates/PublicLayout';
+import { defaultSeoValues } from '@/configs/siteSettings';
 
 const NotFound = () => {
   const { t } = useTranslation();

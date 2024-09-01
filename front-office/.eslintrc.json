@@ -1,8 +1,18 @@
 {
-  "root": true,
-  "plugins": ["eslint-plugin-prettier"],
-  "extends": ["next/core-web-vitals", "eslint-config-prettier"],
+  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"],
+  "plugins": ["import"],
   "rules": {
+    "import/order": [
+      "error",
+      {
+        "groups": [["builtin", "external"], "internal", ["parent", "sibling", "index"]],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
     "prettier/prettier": "error"
   }
 }

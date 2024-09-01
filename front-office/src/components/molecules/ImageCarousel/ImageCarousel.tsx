@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
 import Image, { StaticImageData } from 'next/image';
-import clsxm from '../../../../utils/clsxm';
+import React, { useState } from 'react';
+
+import clsxm from '@/utils/clsxm';
+
 interface ImageCarouselProps {
   images: string[] | StaticImageData[];
 }

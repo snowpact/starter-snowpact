@@ -1,14 +1,16 @@
-import { Typography } from '@/components/atoms/Typography';
 import { Navbar as FlowbiteNavbar } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, useEffect, useRef } from 'react';
-import { useTranslation } from 'next-i18next';
-import { TbAlignCenter, TbAlignRight, TbChevronUp } from 'react-icons/tb';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
+import { useState, useEffect, useRef } from 'react';
+import { TbAlignCenter, TbAlignRight, TbChevronUp } from 'react-icons/tb';
+
+import { Typography } from '@/components/atoms/Typography';
 import { LanguageSwitcher } from '@/components/molecules/LanguageSwitcher';
+import clsxm from '@/utils/clsxm';
+
 import { SubNavbar } from './SubNavbar';
-import clsxm from '../../../../utils/clsxm';
 
 export const Navbar = () => {
   const { t } = useTranslation();

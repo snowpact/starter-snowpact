@@ -9,6 +9,7 @@ const nextConfig = {
   swcMinify: true,
   distDir: 'build',
   // output: 'export',
+  pageExtensions: ['page.tsx', 'page.ts'],
   images: {
     unoptimized: true
   },

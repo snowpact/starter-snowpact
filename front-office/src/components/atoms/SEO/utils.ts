@@ -1,4 +1,4 @@
-import { urlJoin } from '../../../../utils/url';
+import { urlJoin } from '@/utils/url';
 
 export function getPathWithoutTrailingSlash(baseUrl: string, appendPath?: string): string {
   let pathToFormat = baseUrl;
