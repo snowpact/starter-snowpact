@@ -1,0 +1,155 @@
+{
+  "website": {
+    "name": "Velox Servi"
+  },
+  "seo": {
+    "homePage": {
+      "title": "Home",
+      "description": "Velox Servi is a company that sells industrial products and tools. We have a wide range of products that can be used in various industries."
+    },
+    "contactPage":{
+      "title": "Contact",
+      "description": "You can contact us. Quick response",
+      "returnButtonLabel": "Back to home"
+    },
+    "shopPage": {
+      "title": "Products",
+      "description": "Our products"
+    },
+    "aboutPage": {
+      "title": "About",
+      "description": "Velox Servi is a company that sells industrial products and tools. We have a wide range of products that can be used in various industries."
+    }
+  },
+  "aboutPage": {
+    "title": "About us",
+    "text1": "We meticulously design our products down to the finest details. We want our designs to be able to tell the story of their source of inspiration. In our product designs, priority is given to compliance with user expectations. Elegance and quality material selection are always at the forefront when designing the product.",
+    "text2": "In our products, we use raw materials such as wood, stainless steel, marble, granite, and acrylic surfaces to produce open buffet presentation equipment and objects found in hotels and restaurants.",
+    "text3": "As Velox Servi, we are at your service with an experienced team in design and production.",
+    "text4": "Our display units have the features of flexibility and functionality that meet various requirements in hotel restaurants, events, and catering presentations. They are mobile and can be moved on their wheels to be used in the desired area under the same roof. Our display units are designed to be practical and versatile, with an elegant and high-quality appearance, in accordance with current lines and our design philosophy. In our mobile units, we use minimal details for maximum utility in the usage area."    
+  },
+  "navbar":{
+    "home": "Home",
+    "about": "About",
+    "shop": "Products",
+    "contact": "Contact",
+    "veloxShop": "Restaurant Service Equipment",
+    "veloxIndustrial": "Desktop Service Equipment",
+    "veloxShopSubtitle": "Discover all our products in the Velox Shop",
+    "veloxIndustrialSubtitle": "Discover all our industrial products in Velox Industrial"
+  },
+  "footer": {
+    "links": "Links",
+    "legal": "Legal",
+    "products": "Products",
+    "about": "About",
+    "contact": "Contact",
+    "privacyPolicy": "Privacy Policy",
+    "termsConditions": "Terms & Conditions",
+    "allRights": "All Rights Reserved"
+  },
+  "soon": "We will present our catalog to you as soon as possible",
+  "contactPage":{
+    "title": "Contact",
+    "description": "You can contact us. Quick response",
+    "phone": "Phone",
+    "hotline": "Hotline",
+    "mobile": "Mobile",
+    "workTime": "Work Time",
+    "workDays": "Monday-Friday : ",
+    "address": "Our Address",
+    "captcha": "Redirect to Captcha validation - You will be redirected here once validated.",
+    "form": {
+      "name": "Your Name",
+      "namePlaceholder": "Enter your name",
+      "email": "Email Address",
+      "emailPlaceholder": "Enter your email address",
+      "subject": "Subject",
+      "subjectPlaceholder": "Subject of your message",
+      "message": "Message",
+      "messagePlaceholder": "Your message",
+      "sendButtonLabel": "Send a message"
+    }
+  },
+  "notFoundPage":{
+    "title": "Page not found",
+    "description": "We are sorry, this page doesn't exist.",
+    "returnButtonLabel": "Back to home"
+  },
+  "productDetailPage":{
+    "buttonLabel": "Add to bag",
+    "highlight": "Highlights",
+    "onRequest": "On request",
+    "requestPrice": "Request a quote",
+    "seeMore": "See more about"
+  },
+  "homePage":{
+    "our": "Our",
+    "new": "new",
+    "collection": "collection",
+    "headerTitle": "Velox Servi, industrial products and tools.",
+    "headerDescription": "We have a wide range of products that can be used in various industries.",
+    "headerButtonLabel": "About us",
+    "firstBlock": "DIAGNOSTIC",
+    "secondBlock" : "UNITS",
+    "whoWeAreTitle": {
+      "title": "Who we are ?",
+      "subtitle": "About Velox Company"
+    },
+    "blockText": {
+    "1": {
+      "title": "OUR DESIGN APPROACH",
+      "description": "We meticulously design our products down to the finest details. We want our designs to be able to tell the story of their source of inspiration. In our product designs, priority is given to compliance with user expectations. Elegance and quality material selection are always at the forefront when designing the product."
+    },
+    "2": {
+      "title": "OUR PRODUCTION",
+      "description": "In our products, we use raw materials such as wood, stainless steel, marble, granite, and acrylic surfaces to produce open buffet presentation equipment and objects found in hotels and restaurants. As Velox Servi, we are at your service with an experienced team in design and production."
+    },
+    "3": {
+      "description": "Our display units have the features of flexibility and functionality that meet various requirements in hotel restaurants, events, and catering presentations. They are mobile and can be moved on their wheels to be used in the desired area under the same roof. Our display units are designed to be practical and versatile, with an elegant and high-quality appearance, in accordance with current lines and our design philosophy. In our mobile units, we use minimal details for maximum utility in the usage area."
+    }
+  },
+    "categoriesTitle": {
+      "title": "Our different categories",
+      "subtitle": "Choose from a wide range of products and services to suit your needs"
+    },
+    "kpiBlock": {
+      "years": "10 years",
+      "experience": "of experience",
+      "plus": "+ 50",
+      "products": "products in a large catalog",
+      "sectors": "For all sectors",
+      "privatePro": "private & profesionnal"
+    },
+    "textBlock": {
+      "1": {
+        "title": "Our Understanding of Design and Excellence",
+        "description": "He has developed himself in the field of industrial kitchen equipment and works on product designs suitable for the needs. It realizes its designs in computer-aided programs. For Velox, design is the commitment we make to each product to achieve the most beautiful expression. We strive for excellence, we want our products to be appreciated and valued."
+      },
+      "2": {
+        "title": "Features of Buffet Tables",
+        "description": "Our Velox buffet tables are meticulously designed down to the finest detail. By prioritizing elegance and high quality, it also has the features of flexibility and functionality that meet various requirements in hotel event and catering presentations. It has the feature of mobile use when necessary and is designed to be used in the desired area by walking on wheels."
+      },
+      "3": {
+        "title": "Modern and Functional Designs",
+        "description": "We have ensured that our special sideboards are versatile and practical by prioritizing a stylish and quality appearance with a modern design application. In our product designs, compliance with user expectations is a priority. For maximum benefit in our mobile units, minimum details are used in the usage area. Velox manufactures buffet presentation equipment and objects in hotels and restaurants using stainless steel raw materials. We want our designs to tell the story of connection with the source of inspiration. Velox serves with experienced human resources in design and production."
+      }
+    },
+    "featureBlock": {
+      "1": {
+        "title": "Display Units",
+        "description": "VeloxServi display units are designed to meet all your needs in food and beverage service areas. Our products can be easily moved to different areas under the same roof thanks to the swivel silent casters with brakes."
+      },
+      "2": {
+        "title": "Stylish table chair",
+        "description": "Amet anim mollit ipsum est aliqua sit veniam duis deserunt incididunt sit. Eiusmod nostrud et consectetur aliquip qui veniam tempor labore duis laborum quis. Elit consequat ad labore consequat enim irure ad"
+      }
+    }
+  },
+  "products": {
+    "teshir-uniteleri":{
+      "title": "Display Units",
+      "description" : "VeloxServi display units are designed to meet all your needs in food and beverage service areas. Our products can be easily moved to different areas under the same roof thanks to the swivel silent casters with brakes. The 5-meter power cable ensures that the units can be used comfortably in any area. We can make special designs according to your concept and offer a wide range of color options to ensure that it is fully compatible with the presentation in your restaurant. Equipped with Corian display floor, our units can be produced according to the desired dimensions and offer an aesthetic and functional solution in any presentation area."
+    }
+  }
+}

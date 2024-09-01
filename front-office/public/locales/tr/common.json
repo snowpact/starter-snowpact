@@ -1,0 +1,155 @@
+{
+  "website": {
+    "name": "Velox Servi"
+  },
+  "seo": {
+    "homePage": {
+      "title": "Ana Sayfa",
+      "description": "Velox Servi, endüstriyel ürünler ve araçlar satan bir şirkettir. Çeşitli endüstrilerde kullanılabilecek geniş bir ürün yelpazemiz var."
+    },
+    "contactPage": {
+      "title": "İletişim",
+      "description": "Bizimle iletişime geçebilirsiniz. Hızlı yanıt",
+      "returnButtonLabel": "Ana sayfaya dön"
+    },
+    "shopPage": {
+      "title": "Ürünler",
+      "description": "Ürünlerimiz"
+    },
+    "aboutPage": {
+      "title": "Hakkimizda",
+      "description": "Velox Servi, endüstriyel ürünler ve araçlar satan bir şirkettir. Çeşitli endüstrilerde kullanılabilecek geniş bir ürün yelpazemiz var."
+    }
+  },
+  "aboutPage": {
+    "title": "Hakkimizda",
+    "text1": "Yaptığımız ürünleri en ince ayrıntısına kadar titizlikle tasarlıyoruz. Tasarımlarımızın esin kaynağı ile bağlantı hikayesini anlatabilmesini istiyoruz. Ürün tasarımlarımızda, kullanıcı beklentilerine uygunluk önceliğimizdir. Ürünü tasarlarken zarafet ve kaliteli malzeme seçimi her zaman ön plandadır.",
+    "text2": "Ürünlerimizde; ahşap, paslanmaz çelik, mermer, granit, akrilik yüzey hammaddelerini kullanarak, otel ve restaurantlarda yer alan açık büfe sunum ekipmanları ve objeleri üretiyoruz.",
+    "text3": "Velox Servi olarak tasarım ve üretimde, tecrübeli insan kaynağı ile hizmetinizdeyiz.",
+    "text4": "Teşhir ünitelerimiz otel restaurantları, etkinlikler ve catering sunumlarında çeşitli gereksinimleri karşılayan esneklik veişlevsellik özelliklerini taşımaktadır. Mobil kullanım özelliğine sahip olup, tekerlekleri üzerinde yürütülerek aynı çatı altında istenilen alanda kullanım özelliğine sahiptir. Teşhir ünitelerimiz, güncel çizgilere ve tasarım anlayışına uygun olarak, şık ve kaliteli görünümü ön planda tutularak pratik ve çok yönlü tasarlanmıştır. Mobil ünitelerimizde maksimum fayda içinkullanım alanında minimum detay kullanılmaktadır."
+  },
+  "navbar": {
+    "home": "Ana Sayfa",
+    "about": "Hakkında",
+    "shop": "Ürünler",
+    "contact": "İletişim",
+    "veloxShop": "Restaurant Servis Ekipmanları",
+    "veloxIndustrial": "Masaüstü Servis Ekipmanları",
+    "veloxShopSubtitle": "Velox Shop'taki tüm ürünlerimizi keşfedin",
+    "veloxIndustrialSubtitle": "Velox Industrial'daki tüm endüstriyel ürünlerimizi keşfedin"
+  },
+  "footer": {
+    "links": "Bağlantılar",
+    "legal": "Yasal",
+    "products": "Ürünler",
+    "about": "Hakkında",
+    "contact": "İletişim",
+    "privacyPolicy": "Gizlilik Politikası",
+    "termsConditions": "Şartlar ve Koşullar",
+    "allRights": "Tüm Hakları Saklıdır"
+  },
+  "soon": "Kataloğumuzu en kısa zamanda bilginize sunacağız",
+  "contactPage": {
+    "title": "İletişim",
+    "description": "Bizimle iletişime geçebilirsiniz. Hızlı yanıt",
+    "phone": "Telefon",
+    "hotline": "Acil Hat",
+    "mobile": "Mobil",
+    "workTime": "Çalışma Saatleri",
+    "workDays": "Pazartesi-Cuma : ",
+    "address": "Adresimiz",
+    "captcha": "Captcha doğrulamasına yönlendirme - Doğrulama yapıldıktan sonra buraya yönlendirileceksiniz.",
+    "form": {
+      "name": "Adınız",
+      "namePlaceholder": "Adınızı girin",
+      "email": "E-posta Adresi",
+      "emailPlaceholder": "E-posta adresinizi girin",
+      "subject": "Konu",
+      "subjectPlaceholder": "Mesajınızın konusu",
+      "message": "Mesaj",
+      "messagePlaceholder": "Mesajınız",
+      "sendButtonLabel": "Mesaj gönder"
+    }
+  },
+  "notFoundPage": {
+    "title": "Sayfa bulunamadı",
+    "description": "Üzgünüz, bu sayfa mevcut değil.",
+    "returnButtonLabel": "Ana sayfaya dön"
+  },
+  "productDetailPage": {
+    "buttonLabel": "Sepete ekle",
+    "highlight": "Öne Çıkanlar",
+    "onRequest": "Teklif üzerine",
+    "requestPrice": "Fiyat teklifi istemek",
+    "seeMore": "Daha fazla bilgi"
+  },
+  "homePage": {
+    "our": "Bizim",
+    "new": "yeni",
+    "collection": "koleksiyonumuz",
+    "headerTitle": "Velox Servi, endüstriyel ürünler ve araçlar.",
+    "headerDescription": "Çeşitli endüstrilerde kullanılabilecek geniş bir ürün yelpazemiz var.",
+    "headerButtonLabel": "Daha Fazla Bilgi Edinin",
+    "firstBlock": "TEŞHİR",
+    "secondBlock" : "ÜNİTELERİ",
+    "whoWeAreTitle": {
+      "title": "Biz Kimiz ?",
+      "subtitle": "Velox Şirketi Hakkında"
+    },
+    "blockText": {
+      "1": {
+        "title": "TASARIM ANLAYIŞIMIZ",
+        "description" : "Yaptığımız ürünleri en ince ayrıntısına kadar titizlikle tasarlıyoruz. Tasarımlarımızın esin kaynağı ile bağlantı hikayesini anlatabilmesini istiyoruz. Ürün tasarımlarımızda, kullanıcı beklentilerine uygunluk önceliğimizdir. Ürünü tasarlarken zarafet ve kaliteli malzeme seçimi her zaman ön plandadır."
+      },
+      "2": {
+        "title": "ÜRETİMDE BİZ",
+        "description" : "Ürünlerimizde; ahşap, paslanmaz çelik, mermer, granit, akrilik yüzey hammaddelerini kullanarak, otel ve restaurantlarda yer alan açık büfe sunum ekipmanları ve objeleri üretiyoruz. Velox Servi olarak tasarım ve üretimde, tecrübeli insan kaynağı ile hizmetinizdeyiz."
+      },
+      "3": {
+        "description" : "Teşhir ünitelerimiz otel restaurantları, etkinlikler ve catering sunumlarında çeşitli gereksinimleri karşılayan esneklik ve işlevsellik özelliklerini taşımaktadır. Mobil kullanım özelliğine sahip olup, tekerlekleri üzerinde yürütülerek aynı çatı altında istenilen alanda kullanım özelliğine sahiptir. Teşhir ünitelerimiz, güncel çizgilere ve tasarım anlayışına uygun olarak, şık ve kaliteli görünümü ön planda tutularak pratik ve çok yönlü tasarlanmıştır. Mobil ünitelerimizde maksimum fayda için kullanım alanında minimum detay kullanılmaktadır."
+      }
+    },
+    "categoriesTitle": {
+      "title": "Farklı Kategorilerimiz",
+      "subtitle": "İhtiyaçlarınıza uygun geniş bir ürün ve hizmet yelpazesinden seçim yapın"
+    },
+    "kpiBlock": {
+      "years": "10 yıl",
+      "experience": "deneyim",
+      "plus": "+ 50",
+      "products": "geniş katalogda ürünleri",
+      "sectors": "Tüm sektörler için",
+      "privatePro": "özel & profesyonel"
+    },
+    "textBlock": {
+      "1": {
+        "title": "Tasarım ve Mükemmellik Anlayışımız",
+        "description": "Endüstriyel mutfak ekipmanları alanında kendini geliştirmiş ve ihtiyaçlara uygun ürün tasarımları üzerinde çalışmaktadır. Tasarımlarını bilgisayar destekli programlarda gerçekleştirmektedir. Velox için tasarım, her üründe en güzel ifadeye ulaşmak için verdiğimiz sözdür. Mükemmellik için çabalıyoruz, ürünlerimizin beğenilmesini ve değer verilmesini istiyoruz."
+      },
+      "2": {
+        "title": "Açık Büfe Masalarının Özellikleri",
+        "description": "Velox açık büfe masalarımız en ince ayrıntısına kadar titizlikle tasarlanmıştır. Zarafet ve yüksek kaliteyi ön planda tutarak, otel etkinliklerinde ve catering sunumlarında çeşitli gereksinimleri karşılayan esneklik ve işlevsellik özelliklerine de sahiptir. Gerektiğinde mobil kullanım özelliğine sahiptir ve tekerlekler üzerinde yürüyerek istenen alanda kullanılmak üzere tasarlanmıştır."
+      },
+      "3": {
+        "title": "Modern ve İşlevsel Tasarımlar",
+        "description": "Özel büfelerimizin şık ve kaliteli bir görünüme öncelik vererek modern bir tasarım uygulaması ile çok yönlü ve pratik olmasını sağladık. Ürün tasarımlarımızda kullanıcı beklentilerine uygunluk önceliklidir. Mobil ünitelerimizde maksimum fayda için kullanım alanında minimum detaylar kullanılmaktadır. Velox, otellerde ve restoranlarda paslanmaz çelik hammaddeler kullanarak açık büfe sunum ekipmanları ve nesneleri üretmektedir. Tasarımlarımızın ilham kaynağı ile bağlantıyı anlatmasını istiyoruz. Velox, tasarım ve üretimde deneyimli insan kaynakları ile hizmet vermektedir."
+      }
+    },
+    "featureBlock": {
+      "1": {
+        "title": "Teşhir Üniteleri",
+        "description": "VeloxServi teşhir üniteleri, yiyecek ve içecek servis alanlarındaki tüm ihtiyaçlarınızı karşılamak üzere tasarlanmıştır. Ürünlerimiz, frenli döner sessiz tekerlekler sayesinde aynı çatı altındaki farklı alanlara kolayca taşınabilir."
+      },
+      "2": {
+        "title": "Şık masa sandalyesi",
+        "description": "Amet anim mollit ipsum est aliqua sit veniam duis deserunt incididunt sit. Eiusmod nostrud et consectetur aliquip qui veniam tempor labore duis laborum quis. Elit consequat ad labore consequat enim irure ad"
+      }
+    }
+  },
+  "products": {
+    "teshir-uniteleri":{
+      "title": "Teşhir Üniteleri",
+      "description" : "VeloxServi teşhir üniteleri, yiyecek ve içecek servis alanlarındaki tüm ihtiyaçlarınızı karşılamak üzere tasarlanmıştır. Ürünlerimiz, frenli döner sessiz tekerlekler sayesinde aynı çatı altındaki farklı alanlara kolayca taşınabilir. 5 metrelik elektrik kablosu, ünitelerin her alanda rahatça kullanılabilmesini sağlar. Konseptinize uygun özel tasarımlar yapabilir, geniş renk seçenekleri sunarak restoranınızdaki sunumla tam uyumlu olmasını sağlayabiliriz. Corian teşhir zemini ile donatılan ünitelerimiz, istenilen ölçülere göre üretilebilir ve her türlü sunum alanında estetik ve fonksiyonel bir çözüm sunar."
+    }
+  }
+}
