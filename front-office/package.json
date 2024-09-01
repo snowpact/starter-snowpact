@@ -1,15 +1,50 @@
 {
   "name": "front-office",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "generate-orval-sdk": "orval"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint --quiet",
+    "lint:fix": "next lint --fix --quiet",
+    "test": "vitest"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "dependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "clsx": "^2.1.1",
+    "dayjs": "^1.11.11",
+    "file-loader": "^6.2.0",
+    "flowbite": "^2.3.0",
+    "flowbite-react": "^0.8.0",
+    "i18next": "^23.11.5",
+    "i18next-browser-languagedetector": "^7.1.0",
+    "leaflet": "^1.9.3",
+    "next": "14.1.4",
+    "next-i18next": "^15.3.0",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-i18next": "^14.1.2",
+    "react-icons": "^4.11.0",
+    "react-leaflet": "^4.2.1",
+    "tailwind-merge": "^2.5.2",
+    "tailwindcss-animated": "^1.0.1"
+  },
   "devDependencies": {
-    "orval": "6.31.0"
+    "@types/leaflet": "^1.9.3",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.19",
+    "eslint": "8.30.0",
+    "eslint-config-next": "14.1.4",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-prettier": "^5.2.1",
+    "postcss": "^8.4.39",
+    "prettier": "^3.3.2",
+    "tailwindcss": "^3.4.6",
+    "typescript": "^5.4.4",
+    "vitest": "2.0.5"
   }
 }

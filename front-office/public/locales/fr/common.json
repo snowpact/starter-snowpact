@@ -1,0 +1,156 @@
+{
+  "website": {
+    "name": "Velox Servi"
+  },
+  "seo": {
+    "homePage": {
+      "title": "Accueil",
+      "description": "Velox Servi est une entreprise qui vend des produits industriels et des outils. Nous avons une large gamme de produits utilisables dans diverses industries."
+    },
+    "contactPage": {
+      "title": "Contact",
+      "description": "Vous pouvez nous contacter. Réponse rapide",
+      "returnButtonLabel": "Retour à l'accueil"
+    },
+    "shopPage": {
+      "title": "Produits",
+      "description": "Nos produits"
+    },
+    "aboutPage": {
+      "title": "À Propos",
+      "description": "Velox Servi est une entreprise qui vend des produits industriels et des outils. Nous avons une large gamme de produits utilisables dans diverses industries."
+    }
+  },
+  "aboutPage": {
+    "title": "À Propos",
+    "text1": "Nous concevons nos produits avec le plus grand soin dans les moindres détails. Nous voulons que nos designs puissent raconter l'histoire de leur source d'inspiration. Dans la conception de nos produits, la priorité est donnée à la conformité avec les attentes des utilisateurs. Lors de la conception du produit, l'élégance et le choix de matériaux de qualité sont toujours au premier plan.",
+    "text2": "Dans nos produits, nous utilisons des matières premières telles que le bois, l'acier inoxydable, le marbre, le granit et les surfaces en acrylique pour fabriquer des équipements et des objets de présentation pour les buffets ouverts dans les hôtels et les restaurants.",
+    "text3": "En tant que Velox Servi, nous sommes à votre service avec une équipe expérimentée dans la conception et la production.",
+    "text4": "Nos unités de présentation possèdent des caractéristiques de flexibilité et de fonctionnalité qui répondent aux divers besoins des restaurants d'hôtel, des événements et des services de restauration. Elles sont mobiles et peuvent être déplacées sur leurs roues pour être utilisées dans l'espace souhaité sous le même toit. Nos unités de présentation sont conçues de manière pratique et polyvalente, avec une apparence élégante et de qualité, conformément aux lignes actuelles et à notre philosophie de design. Dans nos unités mobiles, nous utilisons un minimum de détails pour un maximum d'utilité dans l'espace d'utilisation."
+  },
+  
+  "navbar": {
+    "home": "Accueil",
+    "about": "À propos",
+    "shop": "Produits",
+    "contact": "Contact",
+    "veloxShop": "Boutique Velox",
+    "veloxIndustrial": "Velox Industriel",
+    "veloxShopSubtitle": "Découvrez tous nos produits dans le Velox Shop",
+    "veloxIndustrialSubtitle": "Découvrez tous nos produits industriels dans le Velox Industrial"
+  },
+  "footer": {
+    "links": "Liens",
+    "legal": "Légal",
+    "products": "Produits",
+    "about": "À propos",
+    "contact": "Contact",
+    "privacyPolicy": "Politique de confidentialité",
+    "termsConditions": "Termes et conditions",
+    "allRights": "Tous droits réservés"
+  },
+  "soon": "Nous vous présenterons notre catalogue dans les plus brefs délais",
+  "contactPage": {
+    "title": "Contact",
+    "description": "Vous pouvez nous contacter. Réponse rapide",
+    "phone": "Téléphone",
+    "hotline": "Hotline",
+    "mobile": "Mobile",
+    "workTime": "Heures de travail",
+    "workDays": "Lundi-Vendredi : ",
+    "address": "Notre adresse",
+    "captcha": "Redirection vers une validation Captcha - Vous serez redirigé(e) ici une fois validée",
+    "form": {
+      "name": "Votre nom",
+      "namePlaceholder": "Entrez votre nom",
+      "email": "Adresse e-mail",
+      "emailPlaceholder": "Entrez votre adresse e-mail",
+      "subject": "Sujet",
+      "subjectPlaceholder": "Sujet de votre message",
+      "message": "Message",
+      "messagePlaceholder": "Votre message",
+      "sendButtonLabel": "Envoyer un message"
+    }
+  },
+  "notFoundPage": {
+    "title": "Page non trouvée",
+    "description": "Nous sommes désolés, cette page n'existe pas.",
+    "returnButtonLabel": "Retour à l'accueil"
+  },
+  "productDetailPage": {
+    "buttonLabel": "Ajouter au panier",
+    "highlight": "Points forts",
+    "onRequest": "Sur devis",
+    "requestPrice": "Demander un devis",
+    "seeMore": "En savoir plus sur"
+  },
+  "homePage": {
+    "our": "Notre",
+    "new": "nouvelle",
+    "collection": "collection",
+    "headerTitle": "Velox Servi, produits industriels et outils.",
+    "headerDescription": "Nous avons une large gamme de produits utilisables dans diverses industries.",
+    "headerButtonLabel": "À propos de nous",
+    "firstBlock": "UNITÉS DE",
+    "secondBlock" : "DIAGNOSTIC",
+    "whoWeAreTitle": {
+      "title": "Qui sommes-nous ?",
+      "subtitle": "À propos de la société Velox"
+    },
+    "blockText": {
+      "1": {
+        "title": "NOTRE CONCEPTION",
+        "description": "Nous concevons nos produits avec le plus grand soin dans les moindres détails. Nous voulons que nos designs puissent raconter l'histoire de leur source d'inspiration. Dans la conception de nos produits, la priorité est donnée à la conformité avec les attentes des utilisateurs. Lors de la conception du produit, l'élégance et le choix de matériaux de qualité sont toujours au premier plan."
+      },
+      "2": {
+        "title": "NOTRE PRODUCTION",
+        "description": "Dans nos produits, nous utilisons des matières premières telles que le bois, l'acier inoxydable, le marbre, le granit et les surfaces en acrylique pour fabriquer des équipements et des objets de présentation pour les buffets ouverts dans les hôtels et les restaurants. En tant que Velox Servi, nous sommes à votre service avec une équipe expérimentée dans la conception et la production."
+      },
+      "3": {
+        "description": "Nos unités de présentation possèdent des caractéristiques de flexibilité et de fonctionnalité qui répondent aux divers besoins des restaurants d'hôtel, des événements et des services de restauration. Elles sont mobiles et peuvent être déplacées sur leurs roues pour être utilisées dans l'espace souhaité sous le même toit. Nos unités de présentation sont conçues de manière pratique et polyvalente, avec une apparence élégante et de qualité, conformément aux lignes actuelles et à notre philosophie de design. Dans nos unités mobiles, nous utilisons un minimum de détails pour un maximum d'utilité dans l'espace d'utilisation."
+      }
+    },
+    "categoriesTitle": {
+      "title": "Nos différentes catégories",
+      "subtitle": "Choisissez parmi une large gamme de produits et services adaptés à vos besoins"
+    },
+    "kpiBlock": {
+      "years": "10 ans",
+      "experience": "d'expérience",
+      "plus": "+ 50",
+      "products": "produits dans un large catalogue",
+      "sectors": "Pour tous les secteurs",
+      "privatePro": "privé & professionnel"
+    },
+    "textBlock": {
+      "1": {
+        "title": "Notre compréhension du design et de l'excellence",
+        "description": "Il s'est développé dans le domaine des équipements de cuisine industrielle et travaille sur des conceptions de produits adaptées aux besoins. Il réalise ses conceptions dans des programmes assistés par ordinateur. Pour Velox, le design est l'engagement que nous prenons envers chaque produit pour atteindre l'expression la plus belle. Nous recherchons l'excellence, nous voulons que nos produits soient appréciés et valorisés."
+      },
+      "2": {
+        "title": "Caractéristiques des tables de buffet",
+        "description": "Nos tables de buffet Velox sont méticuleusement conçues dans les moindres détails. En priorisant l'élégance et la haute qualité, elles possèdent également des caractéristiques de flexibilité et de fonctionnalité répondant à diverses exigences lors des événements hôteliers et des présentations de restauration. Elles ont la caractéristique d'une utilisation mobile lorsque nécessaire et sont conçues pour être utilisées dans la zone souhaitée grâce à leurs roues."
+      },
+      "3": {
+        "title": "Designs modernes et fonctionnels",
+        "description": "Nous avons veillé à ce que nos buffets spéciaux soient polyvalents et pratiques en priorisant une apparence élégante et de qualité avec une application de design moderne. Dans nos conceptions de produits, la conformité aux attentes des utilisateurs est une priorité. Pour un bénéfice maximal dans nos unités mobiles, des détails minimums sont utilisés dans la zone d'utilisation. Velox fabrique des équipements et objets de présentation de buffet dans les hôtels et restaurants en utilisant des matières premières en acier inoxydable. Nous voulons que nos designs racontent l'histoire de la connexion avec la source d'inspiration. Velox sert avec des ressources humaines expérimentées dans la conception et la production."
+      }
+    },
+    "featureBlock": {
+      "1": {
+        "title": "Unités présentoirs",
+        "description": "Les présentoirs VeloxServi sont conçus pour répondre à tous vos besoins dans les zones de restauration. Nos produits peuvent être facilement transportés dans différentes zones sous le même toit grâce aux roulettes silencieuses pivotantes avec freins."
+      },
+      "2": {
+        "title": "Chaise de table élégante",
+        "description": "Amet anim mollit ipsum est aliqua sit veniam duis deserunt incididunt sit. Eiusmod nostrud et consectetur aliquip qui veniam tempor labore duis laborum quis. Elit consequat ad labore consequat enim irure ad"
+      }
+    }
+  },
+  "products": {
+    "teshir-uniteleri":{
+      "title": "Unités présentoirs",
+      "description" : "Les présentoirs VeloxServi sont conçus pour répondre à tous vos besoins dans les zones de restauration. Nos produits peuvent être facilement transportés dans différentes zones sous le même toit grâce aux roulettes silencieuses pivotantes avec freins. Le câble d'alimentation de 5 mètres garantit que les unités peuvent être utilisées confortablement dans n'importe quelle zone. Nous pouvons réaliser des designs spéciaux en fonction de votre concept et offrir une large gamme d'options de couleurs afin de garantir une parfaite compatibilité avec la présentation de votre restaurant. Équipés d'un plancher de présentation en Corian, nos appareils peuvent être produits selon les dimensions souhaitées et offrent une solution esthétique et fonctionnelle dans tous les types d'espaces de présentation."
+    }
+  }
+}
