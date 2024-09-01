@@ -1,4 +1,4 @@
-import clsx from 'clsx';
+import clsxm from '../../../../utils/clsxm';
 import React from 'react';
 
 import { BreakWords, FontIndent, FontWeight, HTMLTag, TextAlign, TextColor, TextDecoration, TextTransform, VariantType } from './interface';
@@ -69,7 +69,7 @@ export const Typography = ({
     <CustomTag
       data-testid="typography"
       style={{ color: appliedColor }}
-      className={clsx(
+      className={clsxm(
         'align-left relative',
         marginClassName,
         [

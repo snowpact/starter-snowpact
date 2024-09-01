@@ -1,5 +1,5 @@
 import React from 'react';
-import PublicLayout from '@/components/templates/PublicLayout/PublicLayout';
+import { PublicLayout } from '@/components/templates/PublicLayout';
 import { ContactInfo } from '@/components/molecules/ContactInfo';
 import { TbMapPinFilled } from 'react-icons/tb';
 import { DynamicLeafletMap } from '@/components/molecules/LeafletMap/DynamicLeafletMap';
@@ -7,7 +7,7 @@ import { HeroBanner } from '@/components/molecules/HeroBanner';
 import { SEO } from '@/components/atoms/SEO';
 import { useTranslation } from 'next-i18next';
 import { defaultSeoValues } from '@/configs/siteSettings';
-import { MainContainer } from '@/components/organisms/MainContainer';
+import { MainContainer } from '@/components/atoms/MainContainer';
 import { GetServerSideProps } from 'next';
 import { CONTACT_DATA } from '@/configs/contactData';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';

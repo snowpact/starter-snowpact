@@ -1,5 +1,5 @@
 import { Typography } from '@/components/atoms/Typography';
-import clsx from 'clsx';
+import clsxm from '../../../../utils/clsxm';
 import Image, { StaticImageData } from 'next/image';
 
 export interface Feature {
@@ -19,7 +19,7 @@ export const FeatureCard: React.FC<Props> = ({ features }) => {
         {features.map((feature, featureIdx) => (
           <div key={feature.name} className="flex flex-col-reverse lg:grid lg:grid-cols-12 lg:items-center lg:gap-x-8">
             <div
-              className={clsx(
+              className={clsxm(
                 featureIdx % 2 === 0 ? 'lg:col-start-1' : 'lg:col-start-8 xl:col-start-9',
                 'mt-6 lg:col-span-5 lg:row-start-1 lg:mt-0 xl:col-span-4'
               )}
@@ -30,7 +30,7 @@ export const FeatureCard: React.FC<Props> = ({ features }) => {
               </Typography>
             </div>
             <div
-              className={clsx(
+              className={clsxm(
                 featureIdx % 2 === 0 ? 'lg:col-start-6 xl:col-start-5' : 'lg:col-start-1',
                 'flex-auto lg:col-span-7 lg:row-start-1 xl:col-span-8'
               )}

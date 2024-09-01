@@ -1,20 +1,21 @@
 import { Typography } from '@/components/atoms/Typography';
-import clsx from 'clsx';
 import { Navbar as FlowbiteNavbar } from 'flowbite-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'next-i18next';
 import { TbAlignCenter, TbAlignRight, TbChevronUp } from 'react-icons/tb';
 import { useRouter } from 'next/router';
 import { LanguageSwitcher } from '@/components/molecules/LanguageSwitcher';
 import { SubNavbar } from './SubNavbar';
+import clsxm from '../../../../utils/clsxm';
 
 export const Navbar = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const [isMainDropdownOpen, setIsMainDropdownOpen] = useState<boolean>(false);
   const [isShopDropdownOpen, setIsShopDropdownOpen] = useState<boolean>(false);
+  const subNavbarRef = useRef<HTMLDivElement>(null);
 
   const handleMainDropdown = () => {
     setIsMainDropdownOpen(!isMainDropdownOpen);
@@ -25,6 +26,19 @@ export const Navbar = () => {
   };
 
   const isActive = (path: string) => router.pathname === path;
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (subNavbarRef.current && !subNavbarRef.current.contains(event.target as Node)) {
+      setIsShopDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <FlowbiteNavbar fluid className="fixed w-full z-[20000] shadow-md">
@@ -48,7 +62,7 @@ export const Navbar = () => {
             </Typography>
             <TbChevronUp
               size={19}
-              className={clsx(
+              className={clsxm(
                 'ml-1 text-black',
                 isShopDropdownOpen || isActive('/product' || '/product/industrial')
                   ? 'rotate-180 transform duration-300 ease-in-out text-gold'
@@ -78,6 +92,7 @@ export const Navbar = () => {
 
         {isShopDropdownOpen && (
           <SubNavbar
+            ref={subNavbarRef}
             items={[
               {
                 title: t('navbar.veloxShop'),
@@ -119,7 +134,7 @@ export const Navbar = () => {
                 </Typography>
                 <TbChevronUp
                   size={19}
-                  className={clsx('ml-1', isShopDropdownOpen ? 'rotate-180 transform duration-300 ease-in-out text-gold' : 'text-black')}
+                  className={clsxm('ml-1', isShopDropdownOpen ? 'rotate-180 transform duration-300 ease-in-out text-gold' : 'text-black')}
                 />
               </button>
               {isShopDropdownOpen && (

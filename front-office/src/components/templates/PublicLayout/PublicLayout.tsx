@@ -5,7 +5,7 @@ interface PublicLayoutProps {
   children: React.ReactNode;
 }
 
-export default function PublicLayout({ children }: PublicLayoutProps) {
+export const PublicLayout = ({ children }: PublicLayoutProps) => {
   return (
     <div className="flex flex-col min-h-screen w-full bg-white">
       <Navbar />
@@ -13,4 +13,4 @@ export default function PublicLayout({ children }: PublicLayoutProps) {
       <Footer />
     </div>
   );
-}
+};

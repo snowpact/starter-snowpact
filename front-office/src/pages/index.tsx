@@ -3,14 +3,14 @@ import { useTranslation } from 'next-i18next';
 import { SEO } from '@/components/atoms/SEO';
 import { Typography } from '@/components/atoms/Typography';
 import { FeatureCard } from '@/components/molecules/FeatureCard';
-import { TextBlock } from '@/components/molecules/TextBlock';
-import PublicLayout from '@/components/templates/PublicLayout/PublicLayout';
+import { PublicLayout } from '@/components/templates/PublicLayout';
 import { defaultSeoValues } from '@/configs/siteSettings';
-import { MainContainer } from '@/components/organisms/MainContainer';
+import { MainContainer } from '@/components/atoms/MainContainer';
 import { TextCards } from '@/components/molecules/TextCards';
 import { GetServerSideProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { ImageCarousel } from '@/components/molecules/ImageCarousel';
+import { Section } from '@/components/atoms/Section';
 
 import header1 from '../../public/images/header1.webp';
 import header2 from '../../public/images/header2.webp';
@@ -64,16 +64,15 @@ export default function Home() {
       </div>
 
       <MainContainer>
-        <section className="mt-24">
+        <Section className="mt-24">
           <FeatureCard features={FEATURES_LIST} />
-        </section>
+        </Section>
 
-        <section className="mb-24 flex flex-col mx-auto">
-          <TextBlock title={t('homePage.whoWeAreTitle.title')} description={t('homePage.whoWeAreTitle.subtitle')} />
+        <Section className="pb-24" title={t('homePage.whoWeAreTitle.title')} description={t('homePage.whoWeAreTitle.subtitle')}>
           <div className="max-w-4xl m-auto">
             <TextCards items={WHO_WE_ARE} />
           </div>
-        </section>
+        </Section>
       </MainContainer>
     </PublicLayout>
   );

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Image, { StaticImageData } from 'next/image';
-import clsx from 'clsx';
-
+import clsxm from '../../../../utils/clsxm';
 interface ImageCarouselProps {
   images: string[] | StaticImageData[];
 }
@@ -19,7 +18,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
         {images.map((src, index) => (
           <div
             key={index}
-            className={clsx(
+            className={clsxm(
               'absolute md:mt-20 mt-8 inset-0 transition-opacity duration-500 flex justify-center',
               currentIndex === index ? 'opacity-100' : 'opacity-0'
             )}
@@ -31,7 +30,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({ images }) => {
       <div className="flex justify-center md:mt-4">
         {images.map((_, index) => (
           <button
-            key={index}
+            key={`carousel-${index}`}
             className={`w-4 h-4 mx-2 rounded-sm ${currentIndex === index ? 'bg-gold outline outline-offset-2 outline-gray-300/50' : 'bg-gray-300'}`}
             onClick={() => handleImageClick(index)}
           />
