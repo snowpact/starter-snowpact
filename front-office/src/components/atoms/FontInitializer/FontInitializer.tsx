@@ -1,7 +1,7 @@
 import localFont from 'next/font/local';
 
-export const ebrimaRegular = localFont({ src: '../../../asset/font/ebrima-regular.ttf' });
-export const ebrimaBold = localFont({ src: '../../../asset/font/ebrima-bold.ttf' });
+export const ebrimaRegular = localFont({ src: '../../../assets/font/ebrima-regular.ttf' });
+export const ebrimaBold = localFont({ src: '../../../assets/font/ebrima-bold.ttf' });
 
 export const FontInitializer = () => {
   return (
