@@ -8,7 +8,7 @@ import { userTokenFactory } from '@/domain/entities/userToken/userToken.entity.f
 
 describe('authValidateAccount', () => {
   it('should validate the account', async () => {
-    const user = userFactory();
+    const user = userFactory({ emailVerified: false });
     const token = userTokenFactory({
       tokenType: UserTokenTypeEnum.accountValidation,
       userId: user.id,
