@@ -20,4 +20,5 @@ export interface UserTokenRepositoryInterface {
   deleteByValue: (tokenValue: string) => Promise<void>;
   deleteUserTokens: (userId: string, tokenTypes?: UserTokenType[]) => Promise<void>;
   update: (options: UpdateTokenOptions) => Promise<void>;
+  clearExpiredTokens: () => Promise<void>;
 }

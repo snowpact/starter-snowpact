@@ -3,7 +3,12 @@ export interface SendResetPasswordEmailOptions {
   tokenValue: string;
 }
 
+export interface SendRegisterEmailOptions {
+  email: string;
+  tokenValue: string;
+}
+
 export interface MailSenderInterface {
   sendResetPasswordEmail: (options: SendResetPasswordEmailOptions) => Promise<void>;
-  sendRegisterEmail: (email: string) => Promise<void>;
+  sendRegisterEmail: (options: SendRegisterEmailOptions) => Promise<void>;
 }

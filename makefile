@@ -74,8 +74,8 @@ db-drop: ## drop the database
 .PHONY: db-migration-generate
 db-migration-generate: ## generate migration, put YOUR_NAME in this command to custom the migration name
 	$(DOCKER_COMPOSE) up --remove-orphans $(MAIN_CONTAINERS) -d
-	pnpm migration:generate ./src/gateways/helpers/database/migrations/$(filter-out $@,$(MAKECMDGOALS))
-	pnpm lint:fix ./src/gateways/helpers/database/migrations/*.ts
+	pnpm migration:generate ./src/infrastructure/database/migrations/$(filter-out $@,$(MAKECMDGOALS))
+	pnpm lint:fix ./src/infrastructure/database/migrations/*.ts
 
 .PHONY: db-migration-run
 db-migration-run: ## run migrations for dev database

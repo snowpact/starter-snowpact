@@ -7,6 +7,7 @@ export class User implements UserInterface {
     public email: string,
     public password: string,
     public admin: boolean,
+    public emailVerified: boolean,
     public createdAt: Date,
     public updatedAt: Date,
     public userTokens: UserToken[],

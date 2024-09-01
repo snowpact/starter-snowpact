@@ -46,19 +46,10 @@ export class ResetPasswordUseCase implements ResetPasswordUseCaseInterface {
 
     await this.userTokenRepository.create(token);
 
-    try {
-      await this.mailSender.sendResetPasswordEmail({
-        email,
-        tokenValue: token.value,
-      });
-    } catch (error) {
-      throw new AppError({
-        message: 'Ask reset password failed',
-        code: AppErrorCodes.FAILED_TO_SEND_EMAIL,
-        privateContext: { email },
-        error,
-      });
-    }
+    await this.mailSender.sendResetPasswordEmail({
+      email,
+      tokenValue: token.value,
+    });
 
     this.loggerService.debug(`Ask reset password success: User found with email`, { email });
   }

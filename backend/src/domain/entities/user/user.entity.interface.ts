@@ -5,6 +5,7 @@ export interface UserInterface {
   email: string;
   password: string;
   admin: boolean;
+  emailVerified: boolean;
   createdAt: Date;
   updatedAt: Date;
   userTokens: UserTokenInterface[];

@@ -3,6 +3,7 @@ import { authRefreshRoute } from './authRefresh';
 import { authRegisterRoute } from './authRegister';
 import { authResetPasswordRoute } from './authResetPassword';
 import { authResetPasswordRequestRoute } from './authResetPasswordRequest';
+import { authValidateAccountRoute } from './authValidateAccount';
 import { healthcheckRoute } from './healthcheck';
 import { getHonoApp } from '../../loader/getHonoApp';
 
@@ -14,6 +15,7 @@ publicRouter
   .route('/auth', authRefreshRoute)
   .route('/auth', authResetPasswordRoute)
   .route('/auth', authResetPasswordRequestRoute)
+  .route('/auth', authValidateAccountRoute)
   .route('/healthcheck', healthcheckRoute);
 
 export { publicRouter };
