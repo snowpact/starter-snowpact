@@ -4,7 +4,7 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   test: {
-    silent: true,
+    silent: false,
     globals: true,
     environment: 'node',
     setupFiles: ['./src/configuration/tests/vitest.units.setup.ts'],

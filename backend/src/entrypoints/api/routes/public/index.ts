@@ -1,6 +1,7 @@
 import { authLoginRoute } from './authLogin';
 import { authRefreshRoute } from './authRefresh';
 import { authRegisterRoute } from './authRegister';
+import { authResendValidationEmailRoute } from './authResendValidationEmail';
 import { authResetPasswordRoute } from './authResetPassword';
 import { authResetPasswordRequestRoute } from './authResetPasswordRequest';
 import { authValidateAccountRoute } from './authValidateAccount';
@@ -16,6 +17,7 @@ publicRouter
   .route('/auth', authResetPasswordRoute)
   .route('/auth', authResetPasswordRequestRoute)
   .route('/auth', authValidateAccountRoute)
+  .route('/auth', authResendValidationEmailRoute)
   .route('/healthcheck', healthcheckRoute);
 
 export { publicRouter };

@@ -11,6 +11,7 @@ import { HttpStatuses } from '../../config/httpStatuses';
 import { CustomEnvInterface } from '../../loader/getHonoApp';
 
 export const appErrorMiddleware: ErrorHandler<CustomEnvInterface> = (error, c) => {
+  const appLogger = new Logger();
   if (isAppError(error)) {
     const { code, context, message } = error;
     const statusCode = getStatusCodeFromErrorCode(code);
@@ -25,6 +26,7 @@ export const appErrorMiddleware: ErrorHandler<CustomEnvInterface> = (error, c) =
   }
 
   if (error instanceof HTTPException) {
+    appLogger.debug(error.message, { error });
     // Get the custom response
     return error.getResponse();
   }
@@ -41,7 +43,6 @@ export const appErrorMiddleware: ErrorHandler<CustomEnvInterface> = (error, c) =
     );
   }
 
-  const appLogger = new Logger();
   appLogger.error(error.message, error);
   return c.json(
     {
@@ -60,6 +61,7 @@ export const getStatusCodeFromErrorCode = (errorCode?: string): HttpStatuses => 
     case AppErrorCodes.BAD_PASSWORD:
     case AppErrorCodes.INVALID_PASSWORD_COMPLEXITY:
     case AppErrorCodes.EMAIL_ALREADY_TAKEN:
+    case AppErrorCodes.ACCOUNT_ALREADY_VALIDATED:
       return HttpStatuses.BAD_REQUEST;
     case AppErrorCodes.FAILED_TO_SEND_EMAIL:
       return HttpStatuses.INTERNAL_SERVER_ERROR;

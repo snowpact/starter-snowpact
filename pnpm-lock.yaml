@@ -19,13 +19,13 @@ importers:
         version: 1.12.0
       '@hono/swagger-ui':
         specifier: 0.4.0
-        version: 0.4.0(hono@4.5.0)
+        version: 0.4.0(hono@4.5.10)
       '@hono/zod-openapi':
         specifier: 0.15.0
-        version: 0.15.0(hono@4.5.0)(zod@3.23.8)
+        version: 0.15.0(hono@4.5.10)(zod@3.23.8)
       '@hono/zod-validator':
         specifier: 0.2.2
-        version: 0.2.2(hono@4.5.0)(zod@3.23.8)
+        version: 0.2.2(hono@4.5.10)(zod@3.23.8)
       '@scalar/hono-api-reference':
         specifier: 0.5.107
         version: 0.5.107(postcss@8.4.39)(storybook@8.2.4(@babel/preset-env@7.24.8(@babel/core@7.24.7)))(tailwindcss@3.4.10(ts-node@10.9.2(@types/node@20.14.9)(typescript@5.5.4)))(typescript@5.5.4)(vitest@2.0.5(@types/node@20.14.9)(terser@5.31.6))
@@ -36,8 +36,8 @@ importers:
         specifier: 4.7.8
         version: 4.7.8
       hono:
-        specifier: 4.5.0
-        version: 4.5.0
+        specifier: 4.5.10
+        version: 4.5.10
       inversify:
         specifier: 6.0.2
         version: 6.0.2
@@ -2683,6 +2683,11 @@ packages:
   browser-assert@1.2.1:
     resolution: {integrity: sha512-nfulgvOR6S4gt9UKCeGJOuSGBPGiFT6oQ/2UBnvTY/5aQ1PnksW72fhZkM30DzoRRv2WpwZf1vHHEr3mtuXIWQ==}
 
+  browserslist@4.23.1:
+    resolution: {integrity: sha512-TUfofFo/KsK/bWZ9TWQ5O26tsWW4Uhmt8IYklbnUa70udB6P2wA7w7o4PY4muaEPBQaAX+CEnmmIA41NVHtPVw==}
+    engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
+    hasBin: true
+
   browserslist@4.23.3:
     resolution: {integrity: sha512-btwCFJVjI4YWDNfau8RhZ+B1Q/VLoUITrm3RlP6y1tYGWIOa+InuYiRGXUBXo8nA1qKmHMyLB/iVQg5TT4eFoA==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
@@ -3176,6 +3181,9 @@ packages:
 
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
+
+  electron-to-chromium@1.4.815:
+    resolution: {integrity: sha512-OvpTT2ItpOXJL7IGcYakRjHCt8L5GrrN/wHCQsRB4PQa1X9fe+X9oen245mIId7s14xvArCGSTIq644yPUKKLg==}
 
   electron-to-chromium@1.5.13:
     resolution: {integrity: sha512-lbBcvtIJ4J6sS4tb5TLp1b4LyfCdMkwStzXPyAgVgTRAsep4bvrAGaBOP7ZJtQMNJpSQ9SqG4brWOroNaQtm7Q==}
@@ -3884,8 +3892,8 @@ packages:
   hoist-non-react-statics@3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
 
-  hono@4.5.0:
-    resolution: {integrity: sha512-ZbezypZfn4odyApjCCv+Fw5OgweBqRLA/EsMyc4FUknFvBJcBIKhHy4sqmD1rWpBc/3wUlaQ6tqOPjk36R1ckg==}
+  hono@4.5.10:
+    resolution: {integrity: sha512-az6tdU1U8o/l0v8O37FIQuc+ER/TeD9vHt/qs8JnBDgMxw6Zu5L2AixUyHeXZNcu87r7iYo8Ey85R7IogOINKA==}
     engines: {node: '>=16.0.0'}
 
   hookable@5.5.3:
@@ -4815,6 +4823,9 @@ packages:
 
   node-readfiles@0.2.0:
     resolution: {integrity: sha512-SU00ZarexNlE4Rjdm83vglt5Y9yiQ+XI1XpflWlb7q7UTN1JUItm69xMeiQCTxtTfnzt+83T8Cx+vI2ED++VDA==}
+
+  node-releases@2.0.14:
+    resolution: {integrity: sha512-y10wOWt8yZpqXmOgRo77WaHEmhYQYGNA6y421PKsKYWEK8aW+cqAphborZDhqfyKrbZEN92CN1X2KbafY2s7Yw==}
 
   node-releases@2.0.18:
     resolution: {integrity: sha512-d9VeXT4SJ7ZeOqGX6R5EM022wpL+eWPooLI+5UpWn2jCT1aosUQEhQP214x33Wkwx3JQMvIm+tIoVOdodFS40g==}
@@ -5888,9 +5899,6 @@ packages:
   tailwind-merge@2.2.2:
     resolution: {integrity: sha512-tWANXsnmJzgw6mQ07nE3aCDkCK4QdT3ThPMCzawoYA2Pws7vSTCvz3Vrjg61jVUGfFZPJzxEP+NimbcW+EdaDw==}
 
-  tailwind-merge@2.4.0:
-    resolution: {integrity: sha512-49AwoOQNKdqKPd9CViyH5wJoSKsCDjUlzL8DxuGp3P1FsGY36NJDAa18jLZcaHAUUuTj+JB8IAo8zWgBNvBF7A==}
-
   tailwind-merge@2.5.2:
     resolution: {integrity: sha512-kjEBm+pvD+6eAwzJL2Bi+02/9LFLal1Gs61+QB7HvTfQQ0aXwC5LGT8PEt1gS0CWKktKe6ysPTAy3cBC5MeiIg==}
 
@@ -6274,6 +6282,12 @@ packages:
   untildify@4.0.0:
     resolution: {integrity: sha512-KK8xQ1mkzZeg9inewmFVDNkg3l5LUhoq9kN6iWYB/CC9YMG8HA+c1Q8HwDe6dEX7kErrEVNVBO3fWsVq5iDgtw==}
     engines: {node: '>=8'}
+
+  update-browserslist-db@1.0.16:
+    resolution: {integrity: sha512-KVbTxlBYlckhF5wgfyZXTWnMn7MMZjMu9XG8bPlliUOP9ThaF4QnhP8qrjrH7DRzHfSk0oQv1wToW+iA5GajEQ==}
+    hasBin: true
+    peerDependencies:
+      browserslist: '>= 4.21.0'
 
   update-browserslist-db@1.1.0:
     resolution: {integrity: sha512-EdRAaAyk2cUE1wOf2DkEhzxqOQvFOoRJFNS6NeyJ01Gp2beMRpBAINjM2iDXE3KCuKhwnvHIQCJm6ThL2Z+HzQ==}
@@ -6680,7 +6694,7 @@ snapshots:
     dependencies:
       '@babel/compat-data': 7.24.9
       '@babel/helper-validator-option': 7.24.8
-      browserslist: 4.23.3
+      browserslist: 4.23.1
       lru-cache: 5.1.1
       semver: 6.3.1
 
@@ -7796,20 +7810,20 @@ snapshots:
 
   '@hono/node-server@1.12.0': {}
 
-  '@hono/swagger-ui@0.4.0(hono@4.5.0)':
+  '@hono/swagger-ui@0.4.0(hono@4.5.10)':
     dependencies:
-      hono: 4.5.0
+      hono: 4.5.10
 
-  '@hono/zod-openapi@0.15.0(hono@4.5.0)(zod@3.23.8)':
+  '@hono/zod-openapi@0.15.0(hono@4.5.10)(zod@3.23.8)':
     dependencies:
       '@asteasolutions/zod-to-openapi': 7.1.1(zod@3.23.8)
-      '@hono/zod-validator': 0.2.2(hono@4.5.0)(zod@3.23.8)
-      hono: 4.5.0
+      '@hono/zod-validator': 0.2.2(hono@4.5.10)(zod@3.23.8)
+      hono: 4.5.10
       zod: 3.23.8
 
-  '@hono/zod-validator@0.2.2(hono@4.5.0)(zod@3.23.8)':
+  '@hono/zod-validator@0.2.2(hono@4.5.10)(zod@3.23.8)':
     dependencies:
-      hono: 4.5.0
+      hono: 4.5.10
       zod: 3.23.8
 
   '@humanwhocodes/config-array@0.11.14':
@@ -8294,7 +8308,7 @@ snapshots:
       cva: 1.0.0-beta.1(typescript@5.5.4)
       nanoid: 5.0.7
       radix-vue: 1.9.1(vue@3.4.31(typescript@5.5.4))
-      tailwind-merge: 2.4.0
+      tailwind-merge: 2.5.2
       vue: 3.4.31(typescript@5.5.4)
     transitivePeerDependencies:
       - '@jest/globals'
@@ -8316,7 +8330,7 @@ snapshots:
   '@scalar/hono-api-reference@0.5.107(postcss@8.4.39)(storybook@8.2.4(@babel/preset-env@7.24.8(@babel/core@7.24.7)))(tailwindcss@3.4.10(ts-node@10.9.2(@types/node@20.14.9)(typescript@5.5.4)))(typescript@5.5.4)(vitest@2.0.5(@types/node@20.14.9)(terser@5.31.6))':
     dependencies:
       '@scalar/api-reference': 1.24.46(postcss@8.4.39)(storybook@8.2.4(@babel/preset-env@7.24.8(@babel/core@7.24.7)))(tailwindcss@3.4.10(ts-node@10.9.2(@types/node@20.14.9)(typescript@5.5.4)))(typescript@5.5.4)(vitest@2.0.5(@types/node@20.14.9)(terser@5.31.6))
-      hono: 4.5.0
+      hono: 4.5.10
     transitivePeerDependencies:
       - '@jest/globals'
       - '@types/bun'
@@ -8722,7 +8736,7 @@ snapshots:
     dependencies:
       '@adobe/css-tools': 4.4.0
       '@babel/runtime': 7.24.8
-      aria-query: 5.1.3
+      aria-query: 5.3.0
       chalk: 3.0.0
       css.escape: 1.5.1
       dom-accessibility-api: 0.6.3
@@ -9731,6 +9745,13 @@ snapshots:
 
   browser-assert@1.2.1: {}
 
+  browserslist@4.23.1:
+    dependencies:
+      caniuse-lite: 1.0.30001639
+      electron-to-chromium: 1.4.815
+      node-releases: 2.0.14
+      update-browserslist-db: 1.0.16(browserslist@4.23.1)
+
   browserslist@4.23.3:
     dependencies:
       caniuse-lite: 1.0.30001655
@@ -9985,7 +10006,7 @@ snapshots:
 
   core-js-compat@3.37.1:
     dependencies:
-      browserslist: 4.23.3
+      browserslist: 4.23.1
 
   core-js@3.38.1: {}
 
@@ -10205,6 +10226,8 @@ snapshots:
       safe-buffer: 5.2.1
 
   ee-first@1.1.1: {}
+
+  electron-to-chromium@1.4.815: {}
 
   electron-to-chromium@1.5.13: {}
 
@@ -11339,7 +11362,7 @@ snapshots:
     dependencies:
       react-is: 16.13.1
 
-  hono@4.5.0: {}
+  hono@4.5.10: {}
 
   hookable@5.5.3: {}
 
@@ -12378,6 +12401,8 @@ snapshots:
   node-readfiles@0.2.0:
     dependencies:
       es6-promise: 3.3.1
+
+  node-releases@2.0.14: {}
 
   node-releases@2.0.18: {}
 
@@ -13672,8 +13697,6 @@ snapshots:
     dependencies:
       '@babel/runtime': 7.24.8
 
-  tailwind-merge@2.4.0: {}
-
   tailwind-merge@2.5.2: {}
 
   tailwindcss-animated@1.1.2(tailwindcss@3.4.10(ts-node@10.9.2(@types/node@20.14.9)(typescript@5.5.4))):
@@ -14076,6 +14099,12 @@ snapshots:
 
   untildify@4.0.0: {}
 
+  update-browserslist-db@1.0.16(browserslist@4.23.1):
+    dependencies:
+      browserslist: 4.23.1
+      escalade: 3.1.2
+      picocolors: 1.0.1
+
   update-browserslist-db@1.1.0(browserslist@4.23.3):
     dependencies:
       browserslist: 4.23.3
@@ -14239,7 +14268,7 @@ snapshots:
       '@webassemblyjs/wasm-parser': 1.12.1
       acorn: 8.12.0
       acorn-import-attributes: 1.9.5(acorn@8.12.0)
-      browserslist: 4.23.3
+      browserslist: 4.23.1
       chrome-trace-event: 1.0.4
       enhanced-resolve: 5.17.1
       es-module-lexer: 1.5.4

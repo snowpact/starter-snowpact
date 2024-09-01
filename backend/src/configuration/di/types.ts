@@ -10,6 +10,7 @@ const TYPES = {
   RefreshUseCase: Symbol.for('RefreshUseCase'),
   RegisterUseCase: Symbol.for('RegisterUseCase'),
   ValidateAccountUseCase: Symbol.for('ValidateAccountUseCase'),
+  ResendValidationEmailUseCase: Symbol.for('ResendValidationEmailUseCase'),
 
   // Services
   AuthService: Symbol.for('AuthService'),
