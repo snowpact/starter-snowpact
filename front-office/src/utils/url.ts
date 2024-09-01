@@ -15,5 +15,7 @@ export function urlJoin(...parts: string[]): string {
 
   const result = joined.join('/');
 
-  return result.replace(/\/+/g, '/').replace(/\/+$/, '');
+  const cleanedResult = result.replace(/([^:]\/)\/+/g, '$1').replace(/\/+$/, '');
+
+  return cleanedResult === '' && parts.some((part) => part === '/') ? '/' : cleanedResult;
 }
