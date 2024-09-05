@@ -1,0 +1,16 @@
+{
+  "name": "@starter/sdk",
+  "version": "0.0.0",
+  "main": "./src/index.ts",
+  "scripts": {
+    "generate-orval-sdk": "orval --config orval.config.ts"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "orval": "7.0.1"
+  },
+  "author": "SnowPact",
+  "license": "ISC"
+}

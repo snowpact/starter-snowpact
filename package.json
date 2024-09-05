@@ -8,6 +8,8 @@
     "fo": "pnpm --filter front-office",
     "bo": "pnpm --filter back-office",
     "be": "pnpm --filter backend",
+    "sdk": "pnpm --filter starter/sdk",
+    "sdk-local": "pnpm env:local pnpm --filter sdk",
     "be-local": "pnpm env:local pnpm --filter backend",
     "be-test": "pnpm env:test pnpm --filter backend",
     
@@ -47,8 +49,8 @@
     "start:be": "pnpm be-local start",
 
     "generate-openapi-doc": "pnpm be-local run generate-openapi-doc",
+    "generate-orval-sdk": "pnpm sdk-local run generate-orval-sdk",
     "generate-sdk": "pnpm run generate-openapi-doc && pnpm run generate-orval-sdk",
-    "generate-orval-sdk": "pnpm be-local run generate-orval-sdk",
 
     "script:setup-cron": "pnpm be-local run script:setup-cron"
   },

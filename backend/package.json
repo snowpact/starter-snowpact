@@ -8,26 +8,27 @@
   "scripts": {
     "dev": "nodemon",
     "dev:queue": "nodemon --exec 'ts-node -r tsconfig-paths/register ./src/entrypoints/queueConsumer/index.ts'",
-    "generate-openapi-doc": "ts-node -r tsconfig-paths/register src/entrypoints/api/openApi/generateOpenapiDocJson.ts",
-    "generate-orval-sdk": "orval --config src/configuration/sdkGenerator/orval.config.ts",
     "clean": "pnpm rimraf dist",
     "build": "pnpm clean && pnpm copy-templates && tsc -p ./tsconfig.build.json && tsc-alias -p ./tsconfig.build.json",
     "start": "node dist/entrypoints/api/index.js",
+
     "lint": "eslint --ext .ts src/ ",
     "lint:fix": "pnpm lint --fix",
     "test": "pnpm test:unit && pnpm test:integration",
     "test:integration": "vitest run --config=vitest.config.container.ts",
     "test:unit": "vitest run --config=vitest.config.unit.ts",
     "test:unit:coverage": "vitest run --config=vitest.config.unit.ts --coverage",
-    "typeorm": "ts-node -P tsconfig.json -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d src/infrastructure/database/typeorm.config.ts",
+
     "copy-templates": "pnpm copyfiles -u 1 './src/**/*.hbs' ./dist",
+
+    "typeorm": "ts-node -P tsconfig.json -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d src/infrastructure/database/typeorm.config.ts",
     "migration:generate": "pnpm typeorm migration:generate --pretty",
     "migration:run": "pnpm typeorm migration:run",
     "migration:revert": "pnpm typeorm migration:revert",
     "migration:create": "pnpm typeorm migration:create",
     "database:drop": "pnpm typeorm schema:drop",
 
-    "script:setup-cron": "ts-node -r tsconfig-paths/register src/entrypoints/scripts/setupCron/index.ts"
+    "generate-openapi-doc": "ts-node -r tsconfig-paths/register src/entrypoints/api/openApi/generateOpenapiDocJson.ts"
   },
   "dependencies": {
     "@hono/node-server": "1.12.0",

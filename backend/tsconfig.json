@@ -27,7 +27,7 @@
     ".prettierrc.js",
     "vitest.config.container.ts",
     "vitest.config.unit.ts"
-  ],
+, "../packages/sdk/orval.config.ts"  ],
   "outDir": "dist",
   "exclude": ["node_modules", "dist"]
 }

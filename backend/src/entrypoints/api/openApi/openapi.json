@@ -6,26 +6,19 @@
   },
   "components": {
     "schemas": {
-      "GetUserResponse": {
+      "ErrorResponse": {
         "type": "object",
         "properties": {
           "message": {
             "type": "string"
-          }
-        },
-        "required": [
-          "message"
-        ]
-      },
-      "GetProductResponse": {
-        "type": "object",
-        "properties": {
-          "id": {
+          },
+          "code": {
             "type": "string"
           }
         },
         "required": [
-          "id"
+          "message",
+          "code"
         ]
       },
       "LoginTokens": {
@@ -43,37 +36,60 @@
           "refreshToken"
         ]
       },
-      "ErrorResponse": {
+      "RefreshTokens": {
         "type": "object",
         "properties": {
-          "message": {
+          "accessToken": {
             "type": "string"
           },
-          "code": {
+          "refreshToken": {
             "type": "string"
           }
         },
         "required": [
-          "message",
-          "code"
+          "accessToken",
+          "refreshToken"
         ]
       },
       "ResetPasswordResponse": {
         "type": "object",
         "properties": {
+          "code": {
+            "type": "string"
+          },
           "message": {
             "type": "string"
           }
         },
         "required": [
+          "code",
           "message"
+        ]
+      },
+      "HealthcheckResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "timestamp": {
+            "type": "string"
+          },
+          "uptime": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "message",
+          "timestamp",
+          "uptime"
         ]
       }
     },
     "parameters": {}
   },
   "paths": {
-    "/api/admin/user/{id}": {
+    "/api/admin/user/:id": {
       "get": {
         "parameters": [
           {
@@ -92,37 +108,50 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetUserResponse"
+                  "type": "object",
+                  "properties": {
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    },
+                    "admin": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "email",
+                    "admin"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
           },
           "404": {
-            "description": "User not found"
-          }
-        }
-      }
-    },
-    "/api/product/:id": {
-      "get": {
-        "parameters": [
-          {
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "required": true,
-            "name": "id",
-            "in": "path"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Get product successfully",
+            "description": "User not found",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetProductResponse"
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -130,7 +159,7 @@
         }
       }
     },
-    "/api/login": {
+    "/api/public/auth/login": {
       "post": {
         "requestBody": {
           "content": {
@@ -145,6 +174,7 @@
                   },
                   "password": {
                     "type": "string",
+                    "minLength": 1,
                     "example": "password"
                   }
                 },
@@ -180,7 +210,144 @@
         }
       }
     },
-    "/api/ask-reset-password": {
+    "/api/public/auth/register": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "john.doe@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "password"
+                  }
+                },
+                "required": [
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Email already taken or invalid password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/auth/refresh": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accessToken": {
+                    "type": "string",
+                    "example": "access_token_123"
+                  },
+                  "refreshToken": {
+                    "type": "string",
+                    "example": "refresh_token_456"
+                  }
+                },
+                "required": [
+                  "accessToken",
+                  "refreshToken"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Refresh successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RefreshTokens"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/auth/reset-password": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "token",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResetPasswordResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/auth/reset-password-request": {
       "post": {
         "requestBody": {
           "content": {
@@ -214,7 +381,7 @@
         }
       }
     },
-    "/api/reset-password": {
+    "/api/public/auth/validate-account": {
       "post": {
         "requestBody": {
           "content": {
@@ -223,15 +390,13 @@
                 "type": "object",
                 "properties": {
                   "token": {
-                    "type": "string"
-                  },
-                  "password": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 1,
+                    "example": "validation_token_123"
                   }
                 },
                 "required": [
-                  "token",
-                  "password"
+                  "token"
                 ]
               }
             }
@@ -239,11 +404,81 @@
         },
         "responses": {
           "200": {
-            "description": "Password reset successfully",
+            "description": "Account validated successfully",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResetPasswordResponse"
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/auth/resend-validation-email": {
+      "post": {
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "token": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Validation email resent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/healthcheck": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Healthcheck OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthcheckResponse"
                 }
               }
             }

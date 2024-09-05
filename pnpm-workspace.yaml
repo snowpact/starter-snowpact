@@ -1,4 +1,5 @@
 packages:
-- "backend"
-- "front-office"
+  - "backend"
+  - "front-office"
+  - "./packages/**"
 # - "back-office"
