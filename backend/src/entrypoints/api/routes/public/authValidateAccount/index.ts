@@ -24,6 +24,7 @@ const route = createRoute({
       },
     },
   },
+  tags: ['public', 'auth'],
   responses: {
     200: {
       content: {

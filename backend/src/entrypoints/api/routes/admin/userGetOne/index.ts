@@ -18,10 +18,11 @@ const userGetOneRoute = getHonoApp();
 
 const route = createRoute({
   method: 'get',
-  path: '/:id',
+  path: '/{id}',
   request: {
     params: getUserSchema.params,
   },
+  tags: ['admin', 'user'],
   responses: {
     200: {
       content: {

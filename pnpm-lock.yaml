@@ -165,7 +165,7 @@ importers:
 
   front-office:
     dependencies:
-      '@starter/sdk':
+      '@packages/sdk':
         specifier: workspace:*
         version: link:../packages/sdk
       '@tailwindcss/aspect-ratio':
@@ -274,6 +274,12 @@ importers:
       orval:
         specifier: 7.0.1
         version: 7.0.1(openapi-types@12.1.3)(typescript@5.5.4)
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
+      rimraf:
+        specifier: ^5.0.10
+        version: 5.0.10
 
 packages:
 
@@ -5286,6 +5292,11 @@ packages:
 
   prettier@3.3.2:
     resolution: {integrity: sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA==}
+    engines: {node: '>=14'}
+    hasBin: true
+
+  prettier@3.3.3:
+    resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -13022,6 +13033,8 @@ snapshots:
       fast-diff: 1.3.0
 
   prettier@3.3.2: {}
+
+  prettier@3.3.3: {}
 
   pretty-bytes@6.1.1: {}
 

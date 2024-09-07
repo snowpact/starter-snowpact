@@ -1,15 +1,17 @@
 {
-  "name": "@starter/sdk",
+  "name": "@packages/sdk",
   "version": "0.0.0",
   "main": "./src/index.ts",
   "scripts": {
-    "generate-orval-sdk": "orval --config orval.config.ts"
+    "generate-orval-sdk": "rimraf ./src && orval --config orval.config.ts"
   },
   "engines": {
     "node": ">=20"
   },
   "devDependencies": {
-    "orval": "7.0.1"
+    "orval": "7.0.1",
+    "prettier": "^3.3.3",
+    "rimraf": "^5.0.10"
   },
   "author": "SnowPact",
   "license": "ISC"

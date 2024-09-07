@@ -1,3 +1,4 @@
+import { getApiAdminUserId, getPublicApi } from '@packages/sdk';
 import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -20,6 +21,8 @@ const IMAGES_DATA = [header1, header2, header3];
 
 export default function Home() {
   const { t } = useTranslation();
+
+  getPublicApi().postAuthLogin({ email: 'test@test.com', password: 'test' });
 
   const handleClickScroll = () => {
     const element = document.getElementById('section-a-aller');

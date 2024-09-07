@@ -10,6 +10,7 @@ const healthcheckRoute = getHonoApp();
 const route = createRoute({
   method: 'get',
   path: '/',
+  tags: ['public', 'healthcheck'],
   responses: {
     200: {
       content: {
