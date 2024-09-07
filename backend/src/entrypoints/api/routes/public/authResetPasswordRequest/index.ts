@@ -26,6 +26,8 @@ const route = createRoute({
       },
     },
   },
+  tags: ['public', 'auth'],
+  operationId: 'authResetPasswordRequest',
   responses: {
     200: {
       content: {

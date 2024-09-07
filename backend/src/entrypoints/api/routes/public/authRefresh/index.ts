@@ -27,6 +27,8 @@ const route = createRoute({
       },
     },
   },
+  tags: ['public', 'auth'],
+  operationId: 'authRefresh',
   responses: {
     200: {
       content: {

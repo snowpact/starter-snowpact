@@ -27,6 +27,8 @@ const route = createRoute({
       },
     },
   },
+  operationId: 'authLogin',
+  tags: ['public', 'auth'],
   responses: {
     200: {
       content: {

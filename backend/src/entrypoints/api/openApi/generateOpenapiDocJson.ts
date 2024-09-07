@@ -16,9 +16,27 @@ const generateOpenapiDocJson = async (): Promise<void> => {
     // Générer le document OpenAPI
     const openApiDoc = app.getOpenAPI31Document({
       openapi: '3.1.0',
+      tags: [
+        {
+          name: 'public',
+          description: 'Public API',
+        },
+        {
+          name: 'protected',
+          description: 'Protected API',
+        },
+        {
+          name: 'internal',
+          description: 'Internal API',
+        },
+        {
+          name: 'admin',
+          description: 'Admin API',
+        },
+      ],
       info: {
         version: '1.0.0',
-        title: 'My API',
+        title: 'Starter API',
       },
     });
 

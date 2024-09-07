@@ -12,21 +12,23 @@ import { getHonoApp } from '@/entrypoints/api/loader/getHonoApp';
 import { defaultResponseSchema } from '@/entrypoints/api/schemas/common.schema';
 import { UserSerializer } from '@/entrypoints/api/serializers/user.serializer';
 
-import { getUserSchema } from './schema';
+import { userGetByIdSchema } from './schema';
 
-const userGetOneRoute = getHonoApp();
+const userGetByIdRoute = getHonoApp();
 
 const route = createRoute({
   method: 'get',
-  path: '/:id',
+  path: '/{id}',
   request: {
-    params: getUserSchema.params,
+    params: userGetByIdSchema.params,
   },
+  tags: ['admin', 'user'],
+  operationId: 'userGetById',
   responses: {
     200: {
       content: {
         'application/json': {
-          schema: getUserSchema.response,
+          schema: userGetByIdSchema.response,
         },
       },
       description: 'Get user successfully',
@@ -58,7 +60,7 @@ const route = createRoute({
   },
 });
 
-userGetOneRoute.openapi(route, async (c) => {
+userGetByIdRoute.openapi(route, async (c) => {
   const { id } = c.req.valid('param');
   const currentUser = c.get('currentUser');
 
@@ -68,7 +70,7 @@ userGetOneRoute.openapi(route, async (c) => {
   return c.json(UserSerializer.serialize(user), HttpStatuses.OK);
 });
 
-userGetOneRoute.onError((error, c) => {
+userGetByIdRoute.onError((error, c) => {
   if (!(error instanceof AppError)) {
     throw error;
   }
@@ -85,4 +87,4 @@ userGetOneRoute.onError((error, c) => {
   }
 });
 
-export { userGetOneRoute };
+export { userGetByIdRoute };

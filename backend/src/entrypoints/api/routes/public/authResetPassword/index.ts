@@ -23,6 +23,8 @@ const route = createRoute({
       },
     },
   },
+  tags: ['public', 'auth'],
+  operationId: 'authResetPassword',
   responses: {
     200: {
       content: {

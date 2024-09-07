@@ -46,3 +46,15 @@ Pour lancer les tests :
 - Tests backend `pnpm test:be`
 - Tests back-office `pnpm test:bo`
 - Tests front-office `pnpm test:fo`
+
+## Génération d'openapi et du sdk
+
+- Génération d'openapi `pnpm generate-openapi-doc`
+- Génération du sdk `pnpm generate-orval-sdk`
+
+Cela va générer le dossier `./packages/sdk` avec les fichiers d'interface pour les endpoints.
+Pour importer dans un client (exemple webapp) :
+
+```typescript
+import { getPublicApiCollection } from "@/packages/sdk";
+```

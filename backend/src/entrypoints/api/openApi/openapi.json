@@ -1,8 +1,26 @@
 {
   "openapi": "3.1.0",
+  "tags": [
+    {
+      "name": "public",
+      "description": "Public API"
+    },
+    {
+      "name": "protected",
+      "description": "Protected API"
+    },
+    {
+      "name": "internal",
+      "description": "Internal API"
+    },
+    {
+      "name": "admin",
+      "description": "Admin API"
+    }
+  ],
   "info": {
     "version": "1.0.0",
-    "title": "My API"
+    "title": "Starter API"
   },
   "components": {
     "schemas": {
@@ -89,8 +107,13 @@
     "parameters": {}
   },
   "paths": {
-    "/api/admin/user/:id": {
+    "/api/admin/user/{id}": {
       "get": {
+        "tags": [
+          "admin",
+          "user"
+        ],
+        "operationId": "userGetById",
         "parameters": [
           {
             "schema": {
@@ -161,6 +184,11 @@
     },
     "/api/public/auth/login": {
       "post": {
+        "operationId": "authLogin",
+        "tags": [
+          "public",
+          "auth"
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -212,6 +240,11 @@
     },
     "/api/public/auth/register": {
       "post": {
+        "tags": [
+          "public",
+          "auth"
+        ],
+        "operationId": "authRegister",
         "requestBody": {
           "content": {
             "application/json": {
@@ -263,6 +296,11 @@
     },
     "/api/public/auth/refresh": {
       "post": {
+        "tags": [
+          "public",
+          "auth"
+        ],
+        "operationId": "authRefresh",
         "requestBody": {
           "content": {
             "application/json": {
@@ -312,6 +350,11 @@
     },
     "/api/public/auth/reset-password": {
       "post": {
+        "tags": [
+          "public",
+          "auth"
+        ],
+        "operationId": "authResetPassword",
         "requestBody": {
           "content": {
             "application/json": {
@@ -349,6 +392,11 @@
     },
     "/api/public/auth/reset-password-request": {
       "post": {
+        "tags": [
+          "public",
+          "auth"
+        ],
+        "operationId": "authResetPasswordRequest",
         "requestBody": {
           "content": {
             "application/json": {
@@ -383,6 +431,11 @@
     },
     "/api/public/auth/validate-account": {
       "post": {
+        "tags": [
+          "public",
+          "auth"
+        ],
+        "operationId": "authValidateAccount",
         "requestBody": {
           "content": {
             "application/json": {
@@ -428,6 +481,11 @@
     },
     "/api/public/auth/resend-validation-email": {
       "post": {
+        "tags": [
+          "public",
+          "auth"
+        ],
+        "operationId": "authResendValidationEmail",
         "requestBody": {
           "content": {
             "application/json": {
@@ -472,6 +530,11 @@
     },
     "/api/public/healthcheck": {
       "get": {
+        "tags": [
+          "public",
+          "healthcheck"
+        ],
+        "operationId": "healthcheck",
         "responses": {
           "200": {
             "description": "Healthcheck OK",

@@ -57,6 +57,8 @@ For API routes and URLs, we use the following conventions:
 | Create product         | `productCreate`            | `/product/create`               |
 | List orders            | `orderList`                | `/order/list`                   |
 | Update settings        | `settingsUpdate`           | `/settings/update`              |
+| Get user by id         | `userGetById`              | `/user/{id}`                    |
+| Get all users          | `userGetAll`               | `/user/`                        |
 
 Route naming convention: `<business><actions (2-3 words)>`, in **camelCase**
 URL path convention: `/<business>/<action>` in **kebab-case**

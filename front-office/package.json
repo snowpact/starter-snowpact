@@ -11,8 +11,9 @@
     "test": "vitest"
   },
   "dependencies": {
-    "@starter/sdk": "workspace:*",
+    "@packages/sdk": "workspace:*",
     "@tailwindcss/aspect-ratio": "^0.4.2",
+    "axios": "^1.7.7",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.11",
     "file-loader": "^6.2.0",

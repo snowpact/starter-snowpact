@@ -1,16 +1,26 @@
 {
-  "name": "@starter/sdk",
+  "name": "@packages/sdk",
+  "private": true,
   "version": "0.0.0",
-  "main": "./src/index.ts",
+  "main": "./dist/index.ts",
   "scripts": {
-    "generate-orval-sdk": "orval --config orval.config.ts"
+    "clear": "rimraf ./src && rimraf ./dist",
+    "build": "tsc",
+    "generate-orval-sdk": "pnpm clear && orval --config orval.config.ts && node usesCustomAxiosInstanceOption && pnpm build"
   },
   "engines": {
     "node": ">=20"
   },
   "devDependencies": {
-    "orval": "7.0.1"
+    "orval": "7.0.1",
+    "prettier": "^3.3.3",
+    "rimraf": "^5.0.10"
   },
   "author": "SnowPact",
-  "license": "ISC"
+  "license": "ISC",
+  "peerDependencies": {
+    "@tanstack/react-query": "^5.55.0",
+    "axios": ">= 1.7.7",
+    "zod": ">= 3.23.8"
+  }
 }
