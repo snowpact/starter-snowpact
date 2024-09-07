@@ -11,6 +11,7 @@ const route = createRoute({
   method: 'get',
   path: '/',
   tags: ['public', 'healthcheck'],
+  operationId: 'healthcheck',
   responses: {
     200: {
       content: {

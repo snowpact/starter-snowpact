@@ -25,6 +25,7 @@ const route = createRoute({
     },
   },
   tags: ['public', 'auth'],
+  operationId: 'authValidateAccount',
   responses: {
     200: {
       content: {

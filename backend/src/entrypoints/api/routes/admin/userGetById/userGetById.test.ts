@@ -11,7 +11,7 @@ import { HttpCodes } from '@/entrypoints/api/config/httpCode';
 
 import { getUserUseCaseMock } from '@/application/useCases/getUser/getUser.useCase.mock';
 
-import { userGetOneRoute } from './index';
+import { userGetByIdRoute } from './index';
 
 vi.mock('@/configuration/di/mainContainer', () => ({
   mainContainer: {
@@ -23,7 +23,7 @@ vi.mock('@/entrypoints/api/loader/getHonoApp', () => ({
   getHonoApp: () => new OpenAPIHono(),
 }));
 
-describe('userGetOneRoute', () => {
+describe('userGetByIdRoute', () => {
   const userUseCaseMock = getUserUseCaseMock();
 
   beforeEach(() => {
@@ -40,7 +40,7 @@ describe('userGetOneRoute', () => {
 
     userUseCaseMock.executeGetUser.mockResolvedValue(user);
 
-    const response = await userGetOneRoute.request(`/${userId}`, {
+    const response = await userGetByIdRoute.request(`/${userId}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     });
@@ -57,7 +57,7 @@ describe('userGetOneRoute', () => {
       new AppError({ message: 'User not found', code: AppErrorCodes.CURRENT_USER_NOT_FOUND }),
     );
 
-    const response = await userGetOneRoute.request(`/${userId}`, {
+    const response = await userGetByIdRoute.request(`/${userId}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     });
@@ -77,7 +77,7 @@ describe('userGetOneRoute', () => {
       new AppError({ message: 'Unauthorized', code: AppErrorCodes.CURRENT_USER_NOT_ALLOWED }),
     );
 
-    const response = await userGetOneRoute.request(`/${userId}`, {
+    const response = await userGetByIdRoute.request(`/${userId}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
     });

@@ -15,14 +15,10 @@ export default defineConfig({
       override: {
         title: (title) => `${title}ApiCollection`,
         transformer: (options) => {
-          const firstTag = options.tags[0] || 'Default';
-          // const secondTag = options.tags[1] || 'Default';
-
           options = {
             ...options,
             // only generate one file per tag
-            tags: [firstTag],
-            operationName: options.operationName.replace(capitalize(firstTag), '').replace(/Api/, '')
+            tags: [options.tags[0] || 'Default']
           };
 
           return options;
@@ -47,12 +43,10 @@ export default defineConfig({
     output: {
       override: {
         transformer: (options) => {
-          const firstTag = options.tags[0] || 'Default';
-
           options = {
             ...options,
-            // only generate one file per tag
-            tags: [firstTag]
+            tags: [options.tags[0] || 'Default'],
+            operationName: options.operationName + 'Api'
           };
 
           return options;
@@ -83,11 +77,9 @@ export default defineConfig({
     output: {
       override: {
         transformer: (options) => {
-          const firstTag = options.tags[0] || 'Default';
-
           options = {
             ...options,
-            tags: [firstTag],
+            tags: [options.tags[0] || 'Default'],
             operationName: 'zod' + capitalize(options.operationName)
           };
 

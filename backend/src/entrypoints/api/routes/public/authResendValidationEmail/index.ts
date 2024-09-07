@@ -25,6 +25,7 @@ const route = createRoute({
     },
   },
   tags: ['public', 'auth'],
+  operationId: 'authResendValidationEmail',
   responses: {
     200: {
       content: {

@@ -36,7 +36,7 @@ const generateOpenapiDocJson = async (): Promise<void> => {
       ],
       info: {
         version: '1.0.0',
-        title: 'My API',
+        title: 'Starter API',
       },
     });
 
