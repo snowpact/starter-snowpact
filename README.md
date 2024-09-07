@@ -56,5 +56,5 @@ Cela va générer le dossier `./packages/sdk` avec les fichiers d'interface pour
 Pour importer dans un client (exemple webapp) :
 
 ```typescript
-import { api } from "@/packages/sdk";
+import { getPublicApiCollection } from "@/packages/sdk";
 ```
