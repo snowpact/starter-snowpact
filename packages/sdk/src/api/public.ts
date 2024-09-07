@@ -4,8 +4,8 @@
  * My API
  * OpenAPI spec version: 1.0.0
  */
-import axios from 'axios';
-import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+
+import type { AxiosRequestConfig, AxiosResponse, AxiosInstance } from 'axios';
 import type {
   ErrorResponse,
   HealthcheckResponse,
@@ -21,7 +21,7 @@ import type {
   ResetPasswordResponse
 } from './index.schemas';
 
-export const getPublicApi = () => {
+export const getPublicApi = (axios: AxiosInstance) => {
   const postAuthLogin = <TData = AxiosResponse<LoginTokens>>(
     postApiPublicAuthLoginBody: PostApiPublicAuthLoginBody,
     options?: AxiosRequestConfig

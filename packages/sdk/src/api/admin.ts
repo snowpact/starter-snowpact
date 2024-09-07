@@ -4,11 +4,11 @@
  * My API
  * OpenAPI spec version: 1.0.0
  */
-import axios from 'axios';
-import type { AxiosRequestConfig, AxiosResponse } from 'axios';
+
+import type { AxiosRequestConfig, AxiosResponse, AxiosInstance } from 'axios';
 import type { GetApiAdminUserId200 } from './index.schemas';
 
-export const getAdminApi = () => {
+export const getAdminApi = (axios: AxiosInstance) => {
   const getUserId = <TData = AxiosResponse<GetApiAdminUserId200>>(id: string, options?: AxiosRequestConfig): Promise<TData> => {
     return axios.get(`/api/admin/user/${id}`, options);
   };
