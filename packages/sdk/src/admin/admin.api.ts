@@ -6,9 +6,9 @@
  */
 
 import type { AxiosRequestConfig, AxiosResponse, AxiosInstance } from 'axios';
-import type { GetApiAdminUserId200 } from './index.schemas';
+import type { GetApiAdminUserId200 } from '.././models';
 
-export const getAdminApi = (axios: AxiosInstance) => {
+export const getAdminApiCollection = (axios: AxiosInstance) => {
   const getUserId = <TData = AxiosResponse<GetApiAdminUserId200>>(id: string, options?: AxiosRequestConfig): Promise<TData> => {
     return axios.get(`/api/admin/user/${id}`, options);
   };

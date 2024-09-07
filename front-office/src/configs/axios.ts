@@ -11,14 +11,12 @@ export const isAxiosError = <T>(error: unknown): error is AxiosError<T> => {
   return false;
 };
 
-const axiosInstance = axios.create();
-
-axiosInstance.interceptors.request.use((config) => {
-  config.baseURL = apiURL;
-  config.headers.Accept = 'application/json';
-  config.headers['Content-Type'] = config.headers['Content-Type'] ?? 'application/json';
-
-  return config;
+const axiosInstance = axios.create({
+  baseURL: apiURL,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json'
+  }
 });
 
 export const configureAxios = ({ onTokenError, onPaymentError }: { onTokenError: () => void; onPaymentError: () => void }) => {

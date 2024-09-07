@@ -1,5 +1,7 @@
 import { defineConfig } from 'orval';
 
+const capitalize = (str: string) => str[0].toUpperCase() + str.slice(1);
+
 export default defineConfig({
   axios: {
     hooks: {
@@ -11,29 +13,62 @@ export default defineConfig({
     },
     output: {
       override: {
-        title: (title) => `${title}Api`,
-        // mutator: {
-        //   path: '../customInstance.ts',U
-        //   name: 'customInstance'
-        // },
+        title: (title) => `${title}ApiCollection`,
         transformer: (options) => {
           const firstTag = options.tags[0] || 'Default';
           // const secondTag = options.tags[1] || 'Default';
-          const firstTagCamelCase = firstTag[0].toUpperCase() + firstTag.slice(1);
 
           options = {
             ...options,
             // only generate one file per tag
             tags: [firstTag],
-            operationName: options.operationName.replace(firstTagCamelCase, '').replace(/Api/, '')
+            operationName: options.operationName.replace(capitalize(firstTag), '').replace(/Api/, '')
           };
 
           return options;
         }
       },
       client: 'axios',
-      mode: 'tags',
-      target: './api/index.ts',
+      mode: 'tags-split',
+      target: './',
+      schemas: './models',
+      fileExtension: '.api.ts',
+      workspace: './src/'
+    }
+  },
+  reactQuery: {
+    hooks: {
+      afterAllFilesWrite: 'prettier --write'
+    },
+    input: {
+      target: '../../backend/src/entrypoints/api/openApi/openapi.json',
+      validation: true
+    },
+    output: {
+      override: {
+        transformer: (options) => {
+          const firstTag = options.tags[0] || 'Default';
+
+          options = {
+            ...options,
+            // only generate one file per tag
+            tags: [firstTag]
+          };
+
+          return options;
+        },
+        query: {
+          usePrefetch: true
+        }
+      },
+      allParamsOptional: true,
+      urlEncodeParameters: true,
+      optionsParamRequired: true,
+      client: 'react-query',
+      mode: 'tags-split',
+      target: './',
+      schemas: './models',
+      fileExtension: '.query.ts',
       workspace: './src/'
     }
   },
@@ -52,15 +87,18 @@ export default defineConfig({
 
           options = {
             ...options,
-            tags: [firstTag]
+            tags: [firstTag],
+            operationName: 'zod' + capitalize(options.operationName)
           };
 
           return options;
         }
       },
       client: 'zod',
-      mode: 'single',
-      target: './zod/index.ts',
+      mode: 'tags-split',
+      target: './',
+      schemas: './models',
+      fileExtension: '.zod.ts',
       workspace: './src/'
     }
   }

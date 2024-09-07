@@ -19,9 +19,9 @@ import type {
   PostApiPublicAuthValidateAccountBody,
   RefreshTokens,
   ResetPasswordResponse
-} from './index.schemas';
+} from '.././models';
 
-export const getPublicApi = (axios: AxiosInstance) => {
+export const getPublicApiCollection = (axios: AxiosInstance) => {
   const postAuthLogin = <TData = AxiosResponse<LoginTokens>>(
     postApiPublicAuthLoginBody: PostApiPublicAuthLoginBody,
     options?: AxiosRequestConfig
