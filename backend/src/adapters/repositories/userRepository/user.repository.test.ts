@@ -39,7 +39,7 @@ describe('User Repository', () => {
 
       expect(dbUser?.id).toEqual(user.id);
     });
-    it('should return undefined if user not found', async () => {
+    it('should return null if user not found', async () => {
       const user = userFactory();
       await testDbService.persistUser(user);
 

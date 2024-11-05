@@ -10,7 +10,10 @@
     "dev:queue": "nodemon --exec 'ts-node -r tsconfig-paths/register ./src/entrypoints/queueConsumer/index.ts'",
     "clean": "pnpm rimraf dist",
     "build": "pnpm clean && pnpm copy-templates && tsc -p ./tsconfig.build.json && tsc-alias -p ./tsconfig.build.json",
+    "build:analyze": "ANALYZE=true pnpm build",
     "start": "node dist/entrypoints/api/index.js",
+    "start-inspect": "NODE_OPTIONS='--inspect' node dist/entrypoints/api/index.js",
+    "start-doctor": "clinic doctor --on-port 'autocannon -c 100 -d 300 http://localhost:$PORT/api/public/healthcheck' -- node ./node_modules/next/dist/bin/next start",
 
     "lint": "eslint --ext .ts src/ ",
     "lint:fix": "pnpm lint --fix",

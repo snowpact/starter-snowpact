@@ -10,7 +10,7 @@ Notre application est structurée en trois groupements principaux :
 2. **Couches Externes**
 
    - Entrypoint
-   - Gateways
+   - Adapterss
    - Infrastructure
 
 3. **Couche Transversale**
@@ -50,13 +50,13 @@ La couche `application` orchestre les actions métier de notre application.
 **Règles :**
 
 - Peut utiliser les `entités` et `interfaces` du `domaine`.
-- Ne doit pas être appelée par la couche `gateway`.
-- Ne peut appeler les couches externes que via les `interfaces du domaine`, et uniquement pour la couche `gateway`.
+- Ne doit pas être appelée par la couche `adapters`.
+- Ne peut appeler les couches externes que via les `interfaces du domaine`, et uniquement pour la couche `adapters`.
 - Peut être appelée par la couche `entrypoint`.
 
-### 3. Couche Gateway
+### 3. Couche Adapters
 
-La couche `gateway` interagit avec les services externes tels que les bases de données, les services d'e-mail, les variables d'environnement, etc.
+La couche `adapters` interagit avec les services externes tels que les bases de données, les services d'e-mail, les variables d'environnement, etc.
 
 **Composition :**
 
@@ -64,7 +64,7 @@ La couche `gateway` interagit avec les services externes tels que les bases de d
 
 **Règles :**
 
-- Ne doit dépendre que de la couche domaine.
+- Ne doit dépendre que de la couche domaine et de la couche infrastructure.
 - Peut être appelée par toutes les couches sauf la couche domaine.
 - Doit adhérer aux contrats définis par les interfaces du domaine.
 
@@ -84,7 +84,7 @@ La couche `infrastructure` gère les dépendances externes telles que les bases 
 **Règles :**
 
 - Ne doit dépendre que de la couche domaine.
-- Peut être appelée par les couches `entrypoint` et `gateway`.
+- Peut être appelée par les couches `entrypoint` et `adapters`.
 
 ### 6. Couche Configuration
 
@@ -98,6 +98,6 @@ La couche `configuration` gère les paramètres à l'échelle de l'application.
 
 Le flux de contrôle général dans l'application est :
 
-`Entrypoint` -> `Application` -> `Gateways`
+`Entrypoint` -> `Application` -> `Adapterss`
 
 Cette architecture assure une séparation claire des responsabilités, favorise la testabilité et maintient une structure propre et modulaire pour l'application.

@@ -20,7 +20,7 @@ const TYPES = {
   Logger: Symbol.for('Logger'),
   UserTokenService: Symbol.for('UserTokenService'),
 
-  // Gateways
+  // Adapters
   SendResetPasswordEmailService: Symbol.for('SendResetPasswordEmailService'),
   MailSender: Symbol.for('MailSender'),
   AccountTokenService: Symbol.for('AccountTokenService'),

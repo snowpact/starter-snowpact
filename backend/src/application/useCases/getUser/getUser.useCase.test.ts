@@ -3,8 +3,8 @@ import { describe, beforeEach, vi, expect, it } from 'vitest';
 import { AppError } from '@/application/errors/app.error';
 import { userFactory } from '@/domain/entities/user/user.factory';
 
-import { getLoggerMock } from '@/gateways/logger/logger.mock';
-import { getUserRepositoryMock } from '@/gateways/repositories/userRepository/user.repository.mock';
+import { getLoggerMock } from '@/adapters/logger/logger.mock';
+import { getUserRepositoryMock } from '@/adapters/repositories/userRepository/user.repository.mock';
 
 import { GetUserUseCase } from './getUser.useCase';
 
@@ -53,7 +53,7 @@ describe('GetUserUseCase', () => {
   });
   it('should throw error - user not found', async () => {
     const currentUser = userFactory();
-    userRepositoryMock.findById.mockResolvedValue(undefined);
+    userRepositoryMock.findById.mockResolvedValue(null);
 
     await expect(
       getUserUseCase.executeGetUser({ currentUser, userId: '2', shouldBeSameUser: false }),

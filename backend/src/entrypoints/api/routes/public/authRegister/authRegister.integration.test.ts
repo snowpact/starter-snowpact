@@ -8,7 +8,7 @@ import { mainContainer } from '@/configuration/di/mainContainer';
 import { TYPES } from '@/configuration/di/types';
 import { app, testDbService } from '@/configuration/tests/vitest.containers.setup';
 
-import { getMailSenderMock } from '@/gateways/mailSender/mailSender.mock';
+import { getMailSenderMock } from '@/adapters/mailSender/mailSender.mock';
 
 describe('authRegister', () => {
   const mailSenderMock = getMailSenderMock();

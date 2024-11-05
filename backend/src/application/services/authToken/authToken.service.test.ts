@@ -2,8 +2,8 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 import { UserTokenTypeEnum } from '@/domain/entities/userToken/userToken.entity.interface';
 
+import { EnvConfig } from '@/adapters/envConfig/envConfig';
 import { userTokenFactory } from '@/domain/entities/userToken/userToken.entity.factory';
-import { EnvConfig } from '@/gateways/envConfig/envConfig';
 
 import { AuthService } from './authToken.service';
 import { getStatelessTokenServiceMock } from '../statelessToken/statelessToken.service.mock';

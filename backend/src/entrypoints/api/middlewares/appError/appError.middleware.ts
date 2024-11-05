@@ -4,8 +4,8 @@ import { ZodError } from 'zod';
 
 import { AppErrorCodes } from '@/application/errors/app.error.interface';
 
+import { Logger } from '@/adapters/logger/logger';
 import { isAppError } from '@/application/errors/error.util';
-import { Logger } from '@/gateways/logger/logger';
 
 import { HttpStatuses } from '../../config/httpStatuses';
 import { CustomEnvInterface } from '../../loader/getHonoApp';

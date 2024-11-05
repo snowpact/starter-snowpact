@@ -6,8 +6,8 @@ import { ResendValidationEmailUseCaseInterface } from '@/application/useCases/re
 
 import { ResendValidationEmailUseCase } from '@/application/useCases/resendValidationEmail/resendValidationEmail.useCase';
 
+import { adaptersContainer } from './adaptersContainer';
 import { entityContainer } from './entityContainer';
-import { gatewayContainer } from './gatewayContainer';
 import { infraContainer } from './infraContainer';
 import { serviceContainer } from './serviceContainer';
 import { TYPES } from './types';
@@ -19,7 +19,7 @@ mainContainer.load(serviceContainer);
 mainContainer.load(useCaseContainer);
 mainContainer.load(entityContainer);
 mainContainer.load(infraContainer);
-mainContainer.load(gatewayContainer);
+mainContainer.load(adaptersContainer);
 
 // Add this binding in the container configuration
 mainContainer

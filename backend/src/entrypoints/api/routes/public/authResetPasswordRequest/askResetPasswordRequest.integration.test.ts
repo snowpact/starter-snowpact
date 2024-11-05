@@ -8,7 +8,7 @@ import { TYPES } from '@/configuration/di/types';
 import { testDbService, app } from '@/configuration/tests/vitest.containers.setup';
 import { userFactory } from '@/domain/entities/user/user.factory';
 
-import { getMailSenderMock } from '@/gateways/mailSender/mailSender.mock';
+import { getMailSenderMock } from '@/adapters/mailSender/mailSender.mock';
 
 describe('authResetPasswordRequest', () => {
   const mailSenderMock = getMailSenderMock();

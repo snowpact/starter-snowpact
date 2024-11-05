@@ -3,17 +3,17 @@ import { describe, beforeEach, it, vi, expect } from 'vitest';
 
 import { UserTokenTypeEnum } from '@/domain/entities/userToken/userToken.entity.interface';
 
+import { EnvConfig } from '@/adapters/envConfig/envConfig';
 import { AppError } from '@/application/errors/app.error';
 import { userFactory } from '@/domain/entities/user/user.factory';
 import { userTokenFactory } from '@/domain/entities/userToken/userToken.entity.factory';
-import { EnvConfig } from '@/gateways/envConfig/envConfig';
 
+import { getLoggerMock } from '@/adapters/logger/logger.mock';
+import { getMailSenderMock } from '@/adapters/mailSender/mailSender.mock';
+import { getUserRepositoryMock } from '@/adapters/repositories/userRepository/user.repository.mock';
+import { getUserTokenRepositoryMock } from '@/adapters/repositories/userTokenRepository/userToken.repository.mock';
 import { getPasswordServiceMock } from '@/application/services/password/password.service.mock';
 import { getUserTokenServiceMock } from '@/application/services/userToken/userToken.service.mock';
-import { getLoggerMock } from '@/gateways/logger/logger.mock';
-import { getMailSenderMock } from '@/gateways/mailSender/mailSender.mock';
-import { getUserRepositoryMock } from '@/gateways/repositories/userRepository/user.repository.mock';
-import { getUserTokenRepositoryMock } from '@/gateways/repositories/userTokenRepository/userToken.repository.mock';
 
 import { ResetPasswordUseCase } from './resetPassword.useCase';
 

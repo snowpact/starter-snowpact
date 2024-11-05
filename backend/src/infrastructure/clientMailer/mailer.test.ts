@@ -1,8 +1,8 @@
 import { createTransport } from 'nodemailer';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-import { getEnvConfigMock } from '@/gateways/envConfig/envConfig.mock';
-import { getLoggerMock } from '@/gateways/logger/logger.mock';
+import { getEnvConfigMock } from '@/adapters/envConfig/envConfig.mock';
+import { getLoggerMock } from '@/adapters/logger/logger.mock';
 
 import { Mailer } from './mailer';
 

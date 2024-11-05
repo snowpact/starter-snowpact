@@ -9,9 +9,9 @@ import { MailSenderInterface } from '@/domain/interfaces/mailSender.interface';
 import { UserRepositoryInterface } from '@/domain/interfaces/repositories/user.repository.interface';
 import { UserTokenRepositoryInterface } from '@/domain/interfaces/repositories/userToken.repository.interface';
 
+import { EnvConfig } from '@/adapters/envConfig/envConfig';
 import { AppError } from '@/application/errors/app.error';
 import { TYPES } from '@/configuration/di/types';
-import { EnvConfig } from '@/gateways/envConfig/envConfig';
 
 import { ResetPasswordUseCaseInterface } from './resetPassword.useCase.interface';
 

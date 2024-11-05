@@ -1,4 +1,4 @@
-import { Logger } from '@/gateways/logger/logger';
+import { Logger } from '@/adapters/logger/logger';
 
 import { AppErrorCodes, AppErrorInterface, AppErrorOptions } from './app.error.interface';
 

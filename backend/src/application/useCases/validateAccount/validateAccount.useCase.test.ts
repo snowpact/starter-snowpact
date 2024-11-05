@@ -7,10 +7,10 @@ import { AppError } from '@/application/errors/app.error';
 import { userFactory } from '@/domain/entities/user/user.factory';
 import { userTokenFactory } from '@/domain/entities/userToken/userToken.entity.factory';
 
+import { getLoggerMock } from '@/adapters/logger/logger.mock';
+import { getUserRepositoryMock } from '@/adapters/repositories/userRepository/user.repository.mock';
+import { getUserTokenRepositoryMock } from '@/adapters/repositories/userTokenRepository/userToken.repository.mock';
 import { getUserTokenServiceMock } from '@/application/services/userToken/userToken.service.mock';
-import { getLoggerMock } from '@/gateways/logger/logger.mock';
-import { getUserRepositoryMock } from '@/gateways/repositories/userRepository/user.repository.mock';
-import { getUserTokenRepositoryMock } from '@/gateways/repositories/userTokenRepository/userToken.repository.mock';
 
 import { ValidateAccountUseCase } from './validateAccount.useCase';
 

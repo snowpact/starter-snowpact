@@ -6,13 +6,13 @@ import { AppError } from '@/application/errors/app.error';
 import { userFactory } from '@/domain/entities/user/user.factory';
 import { userTokenFactory } from '@/domain/entities/userToken/userToken.entity.factory';
 
+import { getEnvConfigMock } from '@/adapters/envConfig/envConfig.mock';
+import { getLoggerMock } from '@/adapters/logger/logger.mock';
+import { getMailSenderMock } from '@/adapters/mailSender/mailSender.mock';
+import { getUserRepositoryMock } from '@/adapters/repositories/userRepository/user.repository.mock';
+import { getUserTokenRepositoryMock } from '@/adapters/repositories/userTokenRepository/userToken.repository.mock';
 import { getPasswordServiceMock } from '@/application/services/password/password.service.mock';
 import { getUserTokenServiceMock } from '@/application/services/userToken/userToken.service.mock';
-import { getEnvConfigMock } from '@/gateways/envConfig/envConfig.mock';
-import { getLoggerMock } from '@/gateways/logger/logger.mock';
-import { getMailSenderMock } from '@/gateways/mailSender/mailSender.mock';
-import { getUserRepositoryMock } from '@/gateways/repositories/userRepository/user.repository.mock';
-import { getUserTokenRepositoryMock } from '@/gateways/repositories/userTokenRepository/userToken.repository.mock';
 
 import { RegisterUseCase } from './register.useCase';
 
@@ -73,6 +73,7 @@ describe('RegisterUseCase', () => {
     userRepositoryMock.findByEmail.mockResolvedValue(userFactory());
 
     await expect(registerUseCase.executeRegister(email, password)).rejects.toThrow(AppError);
+
     expect(userRepositoryMock.create).not.toBeCalled();
     expect(mailSenderMock.sendRegisterEmail).not.toBeCalled();
     expect(userTokenRepositoryMock.create).not.toBeCalled();
@@ -84,6 +85,7 @@ describe('RegisterUseCase', () => {
     passwordServiceMock.checkPasswordComplexity.mockReturnValue(false);
 
     await expect(registerUseCase.executeRegister(email, password)).rejects.toThrow(AppError);
+
     expect(userRepositoryMock.create).not.toBeCalled();
     expect(mailSenderMock.sendRegisterEmail).not.toBeCalled();
     expect(userTokenRepositoryMock.create).not.toBeCalled();

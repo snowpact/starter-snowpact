@@ -5,14 +5,14 @@ import { ZodError } from 'zod';
 
 import { AppErrorCodes } from '@/application/errors/app.error.interface';
 
+import { Logger } from '@/adapters/logger/logger';
 import { AppError } from '@/application/errors/app.error';
-import { Logger } from '@/gateways/logger/logger';
 
 import { appErrorMiddleware, getStatusCodeFromErrorCode } from './appError.middleware';
 import { HttpStatuses } from '../../config/httpStatuses';
 import { CustomEnvInterface } from '../../loader/getHonoApp';
 
-vi.mock('@/gateways/logger/logger');
+vi.mock('@/adapters/logger/logger');
 
 describe('appErrorMiddleware', () => {
   let mockContext: Context<CustomEnvInterface>;
