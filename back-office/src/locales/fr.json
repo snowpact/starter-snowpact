@@ -1,0 +1,37 @@
+{
+  "app": {
+    "name": "YOURAPP - BackOffice"
+  },
+  "common": {
+    "submit": "Soumettre",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "view": "Voir",
+    "create": "Créer",
+    "close": "Fermer",
+    "logout": "Se déconnecter",
+    "select": "Sélectionner"
+  },
+  "dataTable": {
+    "search": "Rechercher",
+    "searchEmpty": "Aucun résultat trouvé",
+    "paginationSize": "Éléments par page :",
+    "element": {
+      "elements": "éléments",
+      "elementWithCount_zero": "Aucun élément",
+      "elementWithCount_one": "{{count}} élément",
+      "elementWithCount_other": "{{count}} éléments"
+    }
+  },
+  "data": {
+    "title": "Titre",
+    "subtitle": "Sous-titre",
+    "description": "Description",
+    "content": "Contenu",
+    "image": "Image",
+    "imageUrl": "Url de l'image",
+    "draft": "Brouillon",
+    "lang": "Langue"
+  }
+}

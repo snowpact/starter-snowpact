@@ -2,4 +2,4 @@ packages:
   - "backend"
   - "front-office"
   - "./packages/**"
-# - "back-office"
+  - "back-office"
