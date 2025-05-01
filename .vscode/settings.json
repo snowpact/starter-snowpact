@@ -10,7 +10,11 @@
       "changeProcessCWD": true,
       "pattern": "front-office"
     },
-    { "pattern": "back-office" }
+    {
+      "directory": "back-office",
+      "changeProcessCWD": true,
+      "pattern": "back-office"
+    },
   ],
   "files.exclude": {
     "**/.git": true,
